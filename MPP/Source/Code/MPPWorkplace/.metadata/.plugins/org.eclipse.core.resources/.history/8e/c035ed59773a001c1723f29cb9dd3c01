@@ -1,0 +1,22 @@
+package factory;
+
+public class ConcreteProduct implements Product{
+	private String productName;
+	
+//	ConcreteProduct(String productName){
+//		this.productName=productName;
+//	}
+	
+	
+	private ConcreteProduct(String productName){
+		this.productName=productName;
+	}
+	
+	public ConcreteProduct getNewConcreteProduct(String pName) {
+		return new ConcreteProduct(pName);
+	}
+	
+	public String getProductName() {
+		return productName;
+	}
+}

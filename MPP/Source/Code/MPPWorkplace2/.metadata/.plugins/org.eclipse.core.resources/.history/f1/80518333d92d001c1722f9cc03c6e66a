@@ -1,0 +1,22 @@
+package lesson11.wildcard;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Main {
+	public static void main(String[] args) {
+		Employee[] empArr = new Employee[2];
+		empArr[0] = new Employee("Win");
+		empArr[1] = new Manager("Win", "To check employee performance");
+
+		System.out.println(Arrays.toString(empArr));
+		
+		
+		List<Employee> empList = new ArrayList<Employee>();
+		empList.add(new Employee("Win"));
+		empList.add(new Manager("Win", "To check employee performance"));
+
+		System.out.println(empList.toString());
+	}
+}

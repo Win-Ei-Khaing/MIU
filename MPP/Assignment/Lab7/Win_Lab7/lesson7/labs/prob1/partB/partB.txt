@@ -1,0 +1,1 @@
+﻿Employee class’s equals(Employee e) method is not overridden. It’s just that class’s own method. listsAreEqual(List<Employee> l1, List<Employee> l2) method in EmployeeInfo class used contains method. It’s checked with the Object class’s original equals method. So, we got incorrect results. So, to make it correct, we have to override equals properly in Employee class.

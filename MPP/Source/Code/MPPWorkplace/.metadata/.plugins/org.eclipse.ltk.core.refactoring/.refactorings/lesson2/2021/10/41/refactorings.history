@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;lesson2&apos;&#x0A;- Original project: &apos;lesson2&apos;&#x0A;- Original elements:&#x0A;     lesson2/lecture/bidir.onetomany.extpackage&#x0A;     lesson2/lecture/bidir.onetoone_factory.extpackage&#x0A;     lesson2/lecture/bidir.onetoone.extpackage&#x0A;     lesson2/lecture/birdir.onetoone_factory" description="Delete elements" element1="/lecture&lt;birdir.onetoone_factory" element2="/lecture&lt;bidir.onetoone_factory.extpackage" element3="/lecture&lt;bidir.onetoone_factory" element4="/lecture&lt;bidir.onetoone.extpackage" element5="/lecture&lt;bidir.onetoone" element6="/lecture&lt;bidir.onetomany.extpackage" element7="/lecture&lt;bidir.onetomany" element8="/lecture&lt;bidir" elements="8" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1633695426203" subPackages="false" version="1.0"/>
+</session>

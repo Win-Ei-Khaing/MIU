@@ -1,0 +1,10 @@
+public class SingletonNotLazy {
+	private static SingletonNotLazy instance = null;
+	private SingletonNotLazy(){}
+	public static SingletonNotLazy getInstance() {
+		if(instance == null) {
+			instance = new SingletonNotLazy();
+		}
+		return instance;
+	}
+}

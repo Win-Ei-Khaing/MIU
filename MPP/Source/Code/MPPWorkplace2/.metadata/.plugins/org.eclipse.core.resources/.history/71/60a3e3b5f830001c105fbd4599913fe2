@@ -1,0 +1,14 @@
+package streamtest;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class joining {
+public static void main(String[] args) {
+	String s=Stream.of("hello", "world", "i", "am","Win").collect(Collectors.joining(", "));
+	System.out.println(s);
+	
+	System.out.println(Stream.of("hello", "world", "i", "am","Win").max(Comparator.comparing(String::length)));
+}
+}

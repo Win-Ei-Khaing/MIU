@@ -1,0 +1,22 @@
+package Final.prob4.exam;
+
+import java.util.function.Function;
+
+@FunctionalInterface
+public interface FunctionWithException<T, R> {
+	R apply(T t) throws Exception;
+	
+	public static <T,R> Function<T,R> unchecked(FunctionWithException<T,R> f) {
+		return x -> {	
+			try {
+				return f.apply(x);
+			} catch(Exception e) {
+				System.out.println("in interface");
+				throw new RuntimeException(e);
+			}
+			finally{
+				System.out.println("finished in interface");
+			}
+		};
+	}
+}

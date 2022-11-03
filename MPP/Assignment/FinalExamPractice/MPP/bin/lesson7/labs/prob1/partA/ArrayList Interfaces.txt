@@ -1,0 +1,5 @@
+Interfaces:
+List, RandomAccess, Cloneable, Serializable, Collection, Iterable
+
+Class:
+AbstractList

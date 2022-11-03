@@ -1,0 +1,22 @@
+package lesson9.labs.prob10a;
+
+import java.util.*;
+
+public class Or {
+
+	public static void main(String[] args) {
+		List<Simple> list = Arrays.asList(new Simple(false), new Simple(false), new Simple(true));
+		System.out.println(someSimpleIsTrue(list));
+	}
+	
+	public static boolean someSimpleIsTrue(List<Simple> list) {
+		Simple accum = new Simple(false);
+
+		Optional<Simple> result = list.stream().reduce((Simple a,Simple b)->(a.flag||b.flag) ? ((a.flag)?a:b) : accum);
+		/*for(Simple s: list) {
+			accum = accum || s.flag;
+		}*/
+		return result.isPresent() ? result.get().flag : false;
+	}
+
+}

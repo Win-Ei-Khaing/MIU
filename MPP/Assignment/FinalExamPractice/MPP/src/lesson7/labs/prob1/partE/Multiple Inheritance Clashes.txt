@@ -1,0 +1,3 @@
+I- Type D is class: To resolve clash, method() needs to be overriden. method() can't be declared abstract as type D is a class and not an abstract class.
+			
+II- Type D is interface: Clash could be resolved, either by making method() abstract or by overriding it in a new default method .

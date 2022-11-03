@@ -1,0 +1,16 @@
+package lesson11.wildcard;
+
+public class Manager extends Employee{
+
+	private String responsibility;
+	public Manager(String name, String responsibility) {
+		super(name);
+		this.responsibility=responsibility;
+	}
+	public String getResponsibility() {
+		return responsibility;
+	}
+	public void setResponsibility(String responsibility) {
+		this.responsibility = responsibility;
+	}
+}

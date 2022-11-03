@@ -1,0 +1,5 @@
+package Final.prob4.exam;
+
+public interface Win {
+
+}

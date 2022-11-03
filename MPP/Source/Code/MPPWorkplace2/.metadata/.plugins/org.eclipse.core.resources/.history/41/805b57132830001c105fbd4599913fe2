@@ -1,0 +1,15 @@
+package prob2;
+
+import java.util.List;
+
+public class CheckoutRecord {
+	private List<CheckoutRecordEntry> checkoutRecordEntryList;
+
+	public List<CheckoutRecordEntry> getCheckoutRecordEntryList() {
+		return checkoutRecordEntryList;
+	}
+
+	public void setCheckoutRecordEntryList(List<CheckoutRecordEntry> checkoutRecordEntryList) {
+		this.checkoutRecordEntryList = checkoutRecordEntryList;
+	}
+}

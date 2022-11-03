@@ -1,0 +1,3 @@
+double dbl = sum(ints);
+
+It is not allowed to read a value in a parametrized type with super wildcard parameter.

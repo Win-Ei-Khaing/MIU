@@ -1,0 +1,8 @@
+package defaultmethodrules.intfaceclash;
+
+public interface SupInt1 {
+	//void myMethod(int x);
+	default void myMethod(int x) {
+		System.out.print(x+1);
+	}
+}

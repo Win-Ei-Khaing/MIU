@@ -1,0 +1,18 @@
+import java.util.Optional;
+
+public class MySingletonTest {
+	public static void main(String[] args) {
+		MySingletonLazy lazySingleton1 = MySingletonLazy.getInstance();
+		System.out.println(lazySingleton1);
+		MySingletonLazy lazySingleton2 = MySingletonLazy.getInstance();
+		System.out.println(lazySingleton2);
+		
+		MySingletonNotLazy notLazySingleton1 = MySingletonNotLazy.getInstance();
+		System.out.println(notLazySingleton1);
+		MySingletonNotLazy notLazySingleton2 = MySingletonNotLazy.getInstance();
+		System.out.println(notLazySingleton2);
+		
+		String s = null;
+		System.out.println(Optional.ofNullable(s));
+	}
+}

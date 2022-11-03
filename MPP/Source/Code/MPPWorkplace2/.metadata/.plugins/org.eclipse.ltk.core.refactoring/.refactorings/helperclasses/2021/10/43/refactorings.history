@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 8 elements to &apos;test&apos;&#x0A;- Original project: &apos;helperclasses&apos;&#x0A;- Destination element: &apos;test&apos;&#x0A;- Original elements:&#x0A;     CheckoutRecord.java&#x0A;     BookCopy.java&#x0A;     Util.java&#x0A;     Address.java&#x0A;     TestData.java&#x0A;     Book.java&#x0A;     LibraryMember.java&#x0A;     CheckoutRecordEntry.java" description="Copy files" element1="CheckoutRecord.java" element2="BookCopy.java" element3="Util.java" element4="Address.java" element5="TestData.java" element6="Book.java" element7="LibraryMember.java" element8="CheckoutRecordEntry.java" files="8" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1634690106407" target="/helperclasses/test" units="0" version="1.0"/>
+</session>

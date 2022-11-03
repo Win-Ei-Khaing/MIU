@@ -1,0 +1,34 @@
+Write a short essay discussing the relationship between an SCI principle
+of your choosing and a Computer Science principle that is relevant for
+this MPP course. Richer content will be awarded more credit.
+
+//Win SCI answer
+
+	Java generics gives stronger type-checking and it can catch potential casting errors at compile time.
+In many cases, it can also eliminate the need for downcasting. We can get the generalized API method by using Generics 
+because it involves type variables that can stand for any possible type; in this sense they embody a universal quality.
+e.g. finding max/min, sorting, Stream's filter/map
+
+	Yet, it is by virtue of this universal quality that we are able to specify particular types (instead of using a 
+raw List, we can use List<T>, which allows us to specify a list of Strings – List<String> -- rather than a list of Objects, 
+as we have to do with the raw List). 
+	This shows how the lively presence of the universal sharpens and enhances the particulars of individual expressions. 
+Likewise, contact with the universal level of intelligence sharpens and enhances individual traits. 
+
+	The stream API is an abstraction of collections that supports aggregate operations like filter and map. These operations 
+make it possible to process collections in a declarative style that supports parallelization, compact and readable code, 
+and processing without side effects. 
+	Deeper laws of nature are ultimately responsible for how things appear in the world. Efforts to modify the world 
+from the surface level lead to struggle and partial success. Affecting the world by accessing the deep underlying laws 
+that structure everything can produce enormous impact with little effort. 
+	The key to accessing and winning support from deeper laws is going beyond the surface of awareness to the depths within. 
+					
+				
+			
+		
+
+				
+			
+		
+
+ 

@@ -1,0 +1,8 @@
+public interface Polygon {
+	public double[] getSides();
+	
+	default double computePerimeter() {
+		
+		return 0.0;
+	}
+}

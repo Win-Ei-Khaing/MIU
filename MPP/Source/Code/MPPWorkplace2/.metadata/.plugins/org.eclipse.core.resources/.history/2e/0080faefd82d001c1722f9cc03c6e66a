@@ -1,0 +1,13 @@
+package lesson11.wildcard;
+
+import java.util.Arrays;
+
+public class Main {
+	public static void main(String[] args) {
+		Employee[] empArr = new Employee[2];
+		empArr[0] = new Employee("Win");
+		empArr[1] = new Manager("Win", "To check employee performance");
+
+		System.out.println(Arrays.toString(empArr));
+	}
+}

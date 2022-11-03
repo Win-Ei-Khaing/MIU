@@ -1,0 +1,14 @@
+package prob2;
+
+public class Book {
+	private String isbn;
+	private String title;
+	private String authorFirstName;
+	private String authorLastName;
+	public Book(String isbn, String title, String fName, String lName) {
+		this.isbn = isbn;
+		this.title = title;
+		authorFirstName = fName;
+		authorLastName = lName;
+	}
+}

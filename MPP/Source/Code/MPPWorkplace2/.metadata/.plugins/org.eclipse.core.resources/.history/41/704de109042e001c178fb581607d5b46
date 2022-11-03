@@ -1,0 +1,31 @@
+package prob1;
+import java.util.*;
+public class Group<T> {
+	private final Class<T> type;
+
+	private T specialElement;
+	private List<T> elements = new ArrayList<>();
+
+	public Group(T special, List<T> elements, Class<T> type) {
+		this.specialElement = special;
+		this.elements = elements;
+		this.type = type;
+	}
+	
+	public Class<T> getType() {
+		return this.type;
+	}
+	public T getSpecialElement() {
+		return specialElement;
+	}
+	public List<T> getElements() {
+		return elements;
+	}
+	@Override
+	public String toString() {
+		return "[special : " + specialElement.toString() 
+		+ ", elements :\n   " + elements.toString() + "]";
+	}
+
+
+}

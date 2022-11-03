@@ -1,0 +1,1 @@
+﻿Employee class needs to override hashCode() method. Because it’s not overridden yet, the result is being incorrect at removeDuplicates method while using HashMap.

@@ -1,0 +1,3 @@
+List<Number> nums = ints;
+
+Generic Subtyping Is Not Covariant. List<Integer> is not subtype of List<Number>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="pair"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="pair"/>
+			<item value="Gemasio"/>
+			<item value="6000"/>
+			<item value="equals("/>
+			<item value="equal"/>
+			<item value="equal("/>
+			<item value="max3"/>
+			<item value="localdate"/>
+			<item value="new T"/>
+			<item value="T"/>
+			<item value="abstractList"/>
+			<item value="abstract"/>
+			<item value="default"/>
+			<item value="for(Simple s: list) {"/>
+			<item value="&#x0A;    public static boolean isPrime(int number) {&#x0A;        for (int i = 2; i &lt;= number / 2; i++) {&#x0A;            if (number % i == 0) {&#x0A;                return false;&#x0A;            }&#x0A;        }&#x0A;        return true;&#x0A;    }"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="898"/>
+		<item key="DIALOG_Y_ORIGIN" value="131"/>
+		<item key="DIALOG_WIDTH" value="292"/>
+		<item key="DIALOG_HEIGHT" value="402"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+</section>

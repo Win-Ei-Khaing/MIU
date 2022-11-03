@@ -1,0 +1,7 @@
+
+public class MySingletonTest {
+public static void main(String[] args) {
+	MySingletonLazy singleton = MySingletonLazy.getInstance();
+	System.out.println(singleton);
+}
+}

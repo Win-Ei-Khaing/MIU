@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Win_FinalExam/WinFinalProject"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/FinalExamPractice/Exam 2/two"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Solution/lesson11_Lab_Sol"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Solution/lesson10_Lab_Sol"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/Lab10/lesson10_Lab_Question"/>
+			<item value="/Users/wineikhaing/Downloads/helperclasses"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/After Mid Term/lesson10_sol"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/After Mid Term/solnsLab9"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/FinalExamPractice/MPP"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/FinalExamPractice/Quiz1/startup_code"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/MPPWorkplace2/Lesson8Lab/src"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Solution/Lesson8LabSolution"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Solution/lesson8"/>
+			<item value="/Users/wineikhaing/Downloads/MPP_Final_Preparation/QuizSolutions2019"/>
+			<item value="/Users/wineikhaing/Downloads/MPP_Final_Preparation/Quiz"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/lesson10"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/lesson11_exercise_solution"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/Lab11/Win_Lab11_Code"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/lesson11"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/Lab9/Resource/Win_LabCode_Part2"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/Lab9/Resource/Win_LabCode_Part1"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/Lab9/Resource/startup_code_part1"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/lesson9"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/lesson8"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/After Mid Term/InClassExercises"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Assignment/Lab7/Win_Lab7/lesson7/labs"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/After Mid Term/lesson7"/>
+			<item value="/Users/wineikhaing/Desktop/MIU/MPP/Source/Code/lesson7"/>
+		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="418"/>
+		<item key="DIALOG_Y_ORIGIN" value="95"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
+	</section>
+	<section name="NewWizardAction">
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.jdt.ui.wizards.JavaProjectWizard"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+		</list>
+	</section>
+</section>

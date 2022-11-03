@@ -1,0 +1,25 @@
+package streamtest;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class joining {
+public static void main(String[] args) {
+	String s=Stream.of("hello", "world", "i", "am","Win").collect(Collectors.joining(", "));
+	System.out.println(s);
+	
+	System.out.println(Stream.of("hello", "world", "i", "am","Win").min((x,y)->{
+		if(x.length()<y.length()) return -1;
+		else if(x.length()>y.length()) return 1;
+		else return 0;
+	}));
+	
+	
+	IntStream intStream=IntStream.of(0,1,2,3);
+	IntStream intStream1=IntStream.range(0, 10);
+	System.out.println(intStream.boxed().collect(Collectors.toList()));
+	System.out.println(intStream1.boxed().collect(Collectors.toList()));
+}
+}

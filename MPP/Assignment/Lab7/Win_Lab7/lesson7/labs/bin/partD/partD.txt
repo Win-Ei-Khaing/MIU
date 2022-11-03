@@ -1,0 +1,1 @@
+﻿In the EmployeeInfo class’s removeDuplicates method, object value, setVisited, was changed. Although now it’s getting correct results, it will lead to incorrect results in some cases. To use an object as a key in a hashtable, keys should be immutable.

@@ -1,0 +1,15 @@
+package exercise1;
+
+import org.junit.Test;
+
+import junit.framework.TestCase;
+
+public class TestLambda extends TestCase {
+	@Test
+	public void testLambda() {
+		Customer c1 = new Customer("101", "Win", "Ei");
+		c1.getCheckingAccount().updateBalance(1000);
+		Customer c2 = new Customer("102", "Winn", "Eii");
+		c2.getCheckingAccount().updateBalance(10000);
+	}
+}

@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T15:42:46.553195Z</date>
+  <millis>1634398966553</millis>
+  <nanos>195000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T15:43:38.503237Z</date>
+  <millis>1634399018503</millis>
+  <nanos>237000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClassMyBuff</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T15:44:34.305425Z</date>
+  <millis>1634399074305</millis>
+  <nanos>425000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClassMyBuff</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:18:59.925680Z</date>
+  <millis>1634408339925</millis>
+  <nanos>680000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch1.MyClass_old</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>1st IOException: textt (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:18:59.943843Z</date>
+  <millis>1634408339943</millis>
+  <nanos>843000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch1.MyClass_old</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Caught 2nd IOException: error closing readers</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:20:07.587599Z</date>
+  <millis>1634408407587</millis>
+  <nanos>599000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch1.MyClass</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>IOException thrown: Caught 2nd IOException: error closing readers</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:21:35.481940Z</date>
+  <millis>1634408495481</millis>
+  <nanos>940000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch1.MyClass_old</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>1st IOException: textt (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:21:35.503065Z</date>
+  <millis>1634408495503</millis>
+  <nanos>65000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch1.MyClass_old</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Caught 2nd IOException: error closing readers</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:25:09.975836Z</date>
+  <millis>1634408709975</millis>
+  <nanos>836000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch2.MyClass2</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>IOException thrown: 2nd IOException</message>
+</record>
+<record>
+  <date>2021-10-16T18:25:09.993754Z</date>
+  <millis>1634408709993</millis>
+  <nanos>754000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch2.MyClass2</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:27:11.175548Z</date>
+  <millis>1634408831175</millis>
+  <nanos>548000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:27:11.195382Z</date>
+  <millis>1634408831195</millis>
+  <nanos>382000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:28:25.500754Z</date>
+  <millis>1634408905500</millis>
+  <nanos>754000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:28:34.857527Z</date>
+  <millis>1634408914857</millis>
+  <nanos>527000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:30:46.789018Z</date>
+  <millis>1634409046789</millis>
+  <nanos>18000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:32:16.428051Z</date>
+  <millis>1634409136428</millis>
+  <nanos>51000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:32:16.449410Z</date>
+  <millis>1634409136449</millis>
+  <nanos>410000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:32:44.888528Z</date>
+  <millis>1634409164888</millis>
+  <nanos>528000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:32:44.908291Z</date>
+  <millis>1634409164908</millis>
+  <nanos>291000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 1st IOException</message>
+</record>
+<record>
+  <date>2021-10-16T18:32:44.908602Z</date>
+  <millis>1634409164908</millis>
+  <nanos>602000</nanos>
+  <sequence>2</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:33:03.022896Z</date>
+  <millis>1634409183022</millis>
+  <nanos>896000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:33:03.056206Z</date>
+  <millis>1634409183056</millis>
+  <nanos>206000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:33:12.886783Z</date>
+  <millis>1634409192886</millis>
+  <nanos>783000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:33:12.909075Z</date>
+  <millis>1634409192909</millis>
+  <nanos>75000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 1st IOException</message>
+</record>
+<record>
+  <date>2021-10-16T18:33:12.909297Z</date>
+  <millis>1634409192909</millis>
+  <nanos>297000</nanos>
+  <sequence>2</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:33:34.864814Z</date>
+  <millis>1634409214864</millis>
+  <nanos>814000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main IOException thrown: text (No such file or directory)</message>
+</record>
+<record>
+  <date>2021-10-16T18:33:34.884579Z</date>
+  <millis>1634409214884</millis>
+  <nanos>579000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 1st IOException</message>
+</record>
+<record>
+  <date>2021-10-16T18:33:34.884802Z</date>
+  <millis>1634409214884</millis>
+  <nanos>802000</nanos>
+  <sequence>2</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch3_suppressed.MyClass</class>
+  <method>lambda$0</method>
+  <thread>1</thread>
+  <message>Suppressed message: 2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:34:57.499063Z</date>
+  <millis>1634409297499</millis>
+  <nanos>63000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:36:45.524825Z</date>
+  <millis>1634409405524</millis>
+  <nanos>825000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClassMyBuff</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:37:47.830471Z</date>
+  <millis>1634409467830</millis>
+  <nanos>471000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:37:49.303833Z</date>
+  <millis>1634409469303</millis>
+  <nanos>833000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch4_trywithres.MyClass</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>Main exception: textt (No such file or directory)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:44:54.570550Z</date>
+  <millis>1634409894570</millis>
+  <nanos>550000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch2.MyClass2</class>
+  <method>handleFile</method>
+  <thread>1</thread>
+  <message>IOException thrown: 2nd IOException</message>
+</record>
+<record>
+  <date>2021-10-16T18:44:54.590736Z</date>
+  <millis>1634409894590</millis>
+  <nanos>736000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>trickycatch2.MyClass2</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>2nd IOException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-10-16T18:45:23.799748Z</date>
+  <millis>1634409923799</millis>
+  <nanos>748000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>WARNING</level>
+  <class>trickycatch1.MyClass</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>IOException thrown: Caught 2nd IOException: error closing readers</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>

@@ -1,0 +1,40 @@
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Main {
+	public static void main(String[] args) {
+		List<CheckoutRecordEntry> rList = TestData.INSTANCE.allEntries;
+
+		System.out.println(rList);
+		
+		List<String> s= TestData.INSTANCE.allEntries
+				.stream()
+				.filter(e->e.getCheckoutDate().isEqual(LocalDate.of(2011, 01, 12)))
+				.map(e->e.getCopy().getBook().getTitle())
+				.sorted(Comparator.comparing(String::length).thenComparing((String x, String y)->x.compareTo(y)))
+				.collect(Collectors.toList());
+//		
+//		List<CheckoutRecord> s = rList.stream()
+//				.filter(r->r.getCheckoutRecordEntries()
+//						.stream()
+//						.filter((CheckoutRecordEntry e)->e.getCheckoutDate().isEqual(LocalDate.of(2015, 6, 27)))
+//						.count()>0
+//						)
+//				//.sorted(Comparator.comparing((CheckoutRecord c)->c.get))
+//				.map(x->x.getCheckoutRecordEntries())
+//				.map(x->x.getCopy().getBook().getTitle())
+//				.collect(Collectors.toList());
+		System.out.println(s);
+		
+		System.out.println(TestData.INSTANCE.allEntries.stream()
+		.filter(x->x.getCheckoutDate().isEqual(LocalDate.of(2015, 6, 27)))
+		.map(x->x.getCopy().getBook().getTitle())
+		.sorted(Comparator.comparing(String::length))
+		.collect(Collectors.toList()));
+
+
+
+	}
+}
