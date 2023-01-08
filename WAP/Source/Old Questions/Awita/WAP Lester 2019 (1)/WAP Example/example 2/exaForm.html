@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea rows="4" cols="20">
+    Type your comments here.
+    </textarea> <br>
+    <input type="checkbox" name="lettuce" /> Lettuce
+    <input type="checkbox" name="tomato" checked /> Tomato
+    <input type="checkbox" name="pickles" checked /> Pickle
+    <br>
+    <input type="radio" name="cc" value="visa" checked /> Visa
+    <input type="radio" name="cc" value="mastercard" /> MasterCard
+    <input type="radio" name="cc" value="amex" /> American Express
+    <br>
+    <label><input type="radio" name="cc" value="visa" checked="checked" /> Visa</label>
+    <label><input type="radio" name="cc" value="mastercard" /> MasterCard</label>
+    <label><input type="radio" name="cc" value="amex" /> American Express</label>
+    <div>
+        <h1>Gender</h1>
+        <select name="favoritecharacter" size="2" multiple>
+            <option>Male</option>
+            <option>Female</option>
+            <option>None</option>
+        </select>
+    </div>
+    <div>
+        <h1>Hidden</h1>
+        <input type="text" name="username" /> Name <br />
+        <input type="text" name="sid" /> SID <br />
+        <input type="hidden" name="school" value="MUM" />
+        <input type="hidden" name="year" value="2048" />
+    </div>
+    <div>
+        <h1>fieldset</h1>
+        <fieldset>
+            <legend>Credit cards:</legend>
+            <input type="radio" name="cc" value="visa" checked="checked" /> Visa
+            <input type="radio" name="cc" value="mastercard" /> MasterCard
+            <input type="radio" name="cc" value="amex" /> American Express
+        </fieldset>
+    </div>
+    <div>
+        <h1>regular expression</h1>
+        <form action="demo_form.jsp">
+            Password:
+            <input type="password" name="pw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8}" title="Must contain at least one number and one uppercase and lowercase
+            letter, and at least 8 or more characters">
+            <input type="submit">
+        </form>
+    </div>
+    <div>
+        <h1>Popup box</h1>
+        <h2>JavaScript Alert</h2>
+
+        <button onclick="myFunction()">Try it</button>
+
+        <script>
+            function myFunction() {
+                alert("I am an alert box!");
+            }
+        </script>
+    </div>
+
+
+</body>
+
+</html>

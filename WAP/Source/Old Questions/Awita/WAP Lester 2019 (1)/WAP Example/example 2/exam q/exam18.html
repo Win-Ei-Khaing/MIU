@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul>
+        <li>Shift <button>Delete</button></li>
+        <li>Tie <button>Delete</button></li>
+        <li>Jacket <button>Delete</button></li>
+        <li>Hat <button>Delete</button></li>
+    </ul>
+    <script>
+        (function() {
+            function deleteItem() {
+                $("h1").hide();
+                $("li").hide();
+            }
+            $(document).ready(function() {
+                $("button").click(deleteItem);
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+http://mumstudents.org/cs472/2019-10-BL
+https://www.youtube.com/watch?v=PpsEaqJV_A0
+https://www.youtube.com/watch?v=DuSURHrZG6I
+https://www.careerride.com/Java-servlet-life-cycle.aspx
+https://www.youtube.com/watch?v=A3x-Fs7UsEc
+https://www.youtube.com/watch?v=A3x-Fs7UsEc&list=PLV8vIYTIdSnb99DPBprW8ySecLRzHhNf4
+
+
+Apache is a server, And Tomcat is a Container.
+
+Apache Takes The request from user, And handover to Tomcat. And Tomcat handover the request to suitable programs.
+
+Programs process the request and provide a response and request back to Tomcat, Then Tomcat handover request and response object to Apache server and Finally Apache give a response to user.

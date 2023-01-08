@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    line-height: 1;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: pink;
+}
+
+p {
+    color: green;
+}
+
+a {
+    text-decoration: underline;
+}
+
+h2 {
+    font-weight: bold;
+    text-align: center;
+}
+
+#YelloColor {
+    color: yellow;
+}
+
+.RedColor {
+    color: red;
+}
+
+.BlueColor {
+    color: blue;
+}
+
+ul>li {
+    background-color: blue;
+}
+
+li strong {
+    color: red;
+}
+
+li>strong {
+    color: green;
+}
+
+#ad li.line strong {
+    text-decoration: underline;
+}
+
+.div3 {
+    width: 300px;
+    height: 100px;
+    padding: 50px;
+    border: 1px solid blue;
+    box-sizing: content-box;
+}
+
+.div4 {
+    width: 300px;
+    height: 100px;
+    padding: 50px;
+    border: 1px solid red;
+    box-sizing: border-box;
+}

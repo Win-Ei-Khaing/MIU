@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" type="text/css" href="tipCalculator.css">
+</head>
+<body>
+    <h1>
+        <img id="logo" src=" calc.jpg" alt="++--**//">
+          Tip Calculator
+    </h1>
+    <div>
+        <h2> What is 
+            <input type="number" id="percent" />
+             % of 
+             <input type="number" id="num" /> 
+             ?
+        </h2>
+        <button onclick="percentage_1()">
+            Calculator
+        </button><br>
+        <input type="text" id="value1" readonly />
+    </div>
+  <script>
+     function percentage_1() {
+         var percent = document.getElementById("percent").valvue;
+         var num = document.getElementById("num").valvue;
+         document.getElementById("valvue1").value = (num/100)*percent;
+     }
+
+  </script>
+    
+</body>
+</html>

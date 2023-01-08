@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Contact Form</h1>
+    <form action="" method="POST">
+        <fieldset>
+            Search <input type="text" name="search" >
+        </fieldset>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phonenumber</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:if test="${search='false'}" />
+            <c:forEach item="${contact}" var="phoneBook" />
+            <tr>
+                <th>
+                    <c: value="${phoneBook.Id}"></c:>
+                </th>
+                <th>
+                    <c: value="${phoneBook.Name}"></c:>
+                </th>
+                <th>
+                    <c: value="${phoneBook.Phonenumber}"></c:>
+                </th>
+            </tr>
+            </c:forEach>
+            </c:if>
+
+            <c:if test="${search='true'}" />
+            <c:forEach item="${contact}" var="phoneBook" />
+            <tr>
+                <th>
+                    <c:out value="${phoneBook.Id}" />
+                </th>
+                <th>
+                    <c:out value="${phoneBook.Name}" />
+                </th>
+                <th>
+                    <c:out value="${phoneBook.Phonenumber}" />
+                </th>
+            </tr>
+            </c:forEach>
+            </c:if>
+
+        </tbody>
+    </table>
+    <form action="" method="POST">
+        <fieldset>
+            Name: <input id="" type="text" name="name" placeholder="name" required><br>
+            Phone Number: <input type="phoneNumber" name="phoneNumber" placeholder="phone number" required><br>
+            <input type="submit" name="btn" id="">
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

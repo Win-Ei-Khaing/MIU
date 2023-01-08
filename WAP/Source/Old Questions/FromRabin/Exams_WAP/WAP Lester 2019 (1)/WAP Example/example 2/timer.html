@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .fence {
+
+            border: 1px solid red;
+
+        }
+    </style>
+
+    <script>
+
+        let div = document.createElement("div");
+
+        div.classList.add('fence');
+
+        div.innerHTML = "<h1>This is the main heading.</h1>";
+        document.body.append(div);
+
+    </script>
+
+</body>
+
+</html>

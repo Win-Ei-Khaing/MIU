@@ -1,0 +1,30 @@
+.redC {
+    color: red;
+}
+
+.blueC {
+    color: blue;
+}
+
+p {
+    margin: -20px 0 0 0;
+    font-size: 2em;
+    background-color: yellow;
+    max-width: 20%;
+}
+
+ul>strong {
+    background-color: blue;
+}
+
+li strong {
+    color: red;
+}
+
+li>strong {
+    color: green;
+}
+
+#ad li.line strong {
+    text-decoration: underline;
+}

@@ -1,0 +1,15 @@
+http://www.pskills.org/test.jsp?test=jsptest1
+https://www.w3schools.com/
+https://www.javatpoint.com/directload.jsp?val=198
+
+
+
+Mid and final exam links
+
+1.	https://www.w3schools.com/quiztest/quiztest.asp?Qtest=HTML
+2.	https://www.javatpoint.com/javascript-quiz
+3.	https://www.w3schools.com/js/exercise_js.asp?filename=exercise_js_dom_html1
+4.	https://www.w3schools.com/js/js_quiz.asp
+5.	https://www.javatpoint.com/examaccess (please work on servlet and jsp questions)
+
+https://habtomab.github.io/

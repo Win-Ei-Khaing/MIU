@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <title>Jump for Joy</title>
+    <link href="jj.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <h2>Jump for Joy Sale</h2>
+    </div>
+    <div id="main">
+        <div class="guess_box"><img src="images/429-4291582_face-emoji-png-transparent-jumping-png-download.png" />
+        </div>
+        <div class="guess_box"><img src="images/download.jfif" alt=""> </div>
+        <div class="guess_box"><img src="images/download.png" alt=""> </div>
+        <div class="guess_box"><img
+                src="images/emoticon-jumping-mascot-vector-cartoon-illustration-original-character-113901000.jpg"
+                alt=""></div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".guess_box").click(function () {
+                $(".guess_box p").remove();
+                var discount = Math.floor((Math.random() * 5) + 5);
+                var discount_msg = "Your Discount is " + discount ;
+                alert(discount_msg);
+                $("this").append(discount_msg);
+            });
+        });
+    </script>
+</body>
+
+</html>

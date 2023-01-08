@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <button>Load</button>
+    <p></p>
+    <script type="text/javascript">
+        $("button").on('click', function() {
+            $.ajax("http://jsonplaceholder.typicode.com/comments", {
+                    "type": "get",
+                    "data": {
+                        "postId": 1
+                    },
+                    "dataType": "json"
+                })
+                .done(function(data) {
+                    alert(data);
+                    data.forEach(element => {
+                        $("p").append("<h5>" + element.email + "</h5>");
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+strong{
+    color: gold;
+}
+
+h1, h2{
+    color: rgb(80, 100, 220);
+    background-color: gainsboro;
+    text-align: center;
+}
+
+dt{
+    font-family: Arial, "Arial Black", Verdana;
+    font-size: 10pt;
+    font-weight: bold;
+    font-style: italic;
+    color: green;
+}
+
+ul{
+    font-family: Tahoma, "Courier New", "Times New Roman";
+    font-size: 12pt;
+    font-weight:lighter;
+    font-style: oblique;
+}
+
+body{
+    background-color: rgb(184, 173, 194);
+    padding: 10px;
+}
+
+div{
+    bottom: 0%; 
+}
+
+a{
+    color: indianred;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+ }
+
+ p::first-letter{
+     font-size: 1.5em;
+     font-weight: bold;
+ }
+
+ ol{
+     display: flex;
+     flex-direction: column-reverse;
+ }
