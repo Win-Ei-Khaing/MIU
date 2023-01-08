@@ -1,0 +1,138 @@
+10-Jan-2022 14:04:28.467 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.55
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Nov 10 2021 08:26:45 UTC
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.55.0
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            11.4
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          aarch64
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk-17.0.1.jdk/Contents/Home
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.1+12-LTS-39
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 14:04:28.470 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55/conf/logging.properties
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+10-Jan-2022 14:04:28.527 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+10-Jan-2022 14:04:28.528 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+10-Jan-2022 14:04:28.528 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+10-Jan-2022 14:04:28.528 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55
+10-Jan-2022 14:04:28.528 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55
+10-Jan-2022 14:04:28.528 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55/temp
+10-Jan-2022 14:04:28.529 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/wineikhaing/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+10-Jan-2022 14:04:28.656 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 14:04:28.697 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [326] milliseconds
+10-Jan-2022 14:04:28.714 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+10-Jan-2022 14:04:28.714 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.55]
+10-Jan-2022 14:04:28.717 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/docs]
+10-Jan-2022 14:04:28.819 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/docs] has finished in [101] ms
+10-Jan-2022 14:04:28.819 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/manager]
+10-Jan-2022 14:04:28.834 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/manager] has finished in [15] ms
+10-Jan-2022 14:04:28.834 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/examples]
+10-Jan-2022 14:04:28.941 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/examples] has finished in [107] ms
+10-Jan-2022 14:04:28.941 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/ROOT]
+10-Jan-2022 14:04:28.948 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/ROOT] has finished in [7] ms
+10-Jan-2022 14:04:28.949 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/host-manager]
+10-Jan-2022 14:04:28.957 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/host-manager] has finished in [9] ms
+10-Jan-2022 14:04:28.959 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 14:04:28.964 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [266] milliseconds
+10-Jan-2022 14:33:33.032 INFO [Thread-2] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 14:33:33.042 INFO [Thread-2] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+10-Jan-2022 14:33:33.065 INFO [Thread-2] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 14:33:33.069 INFO [Thread-2] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 15:30:34.889 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.55
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Nov 10 2021 08:26:45 UTC
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.55.0
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            11.4
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          aarch64
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk-17.0.1.jdk/Contents/Home
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.1+12-LTS-39
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 15:30:34.891 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55/conf/logging.properties
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55
+10-Jan-2022 15:30:34.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/wineikhaing/desktop/miu/waa/apache-tomcat-9.0.55/temp
+10-Jan-2022 15:30:34.900 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/wineikhaing/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+10-Jan-2022 15:30:35.019 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 15:30:35.034 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [227] milliseconds
+10-Jan-2022 15:30:35.049 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+10-Jan-2022 15:30:35.049 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.55]
+10-Jan-2022 15:30:35.052 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/docs]
+10-Jan-2022 15:30:35.146 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/docs] has finished in [94] ms
+10-Jan-2022 15:30:35.146 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/manager]
+10-Jan-2022 15:30:35.161 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/manager] has finished in [15] ms
+10-Jan-2022 15:30:35.162 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/examples]
+10-Jan-2022 15:30:35.268 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/examples] has finished in [106] ms
+10-Jan-2022 15:30:35.268 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/ROOT]
+10-Jan-2022 15:30:35.276 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/ROOT] has finished in [7] ms
+10-Jan-2022 15:30:35.276 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/host-manager]
+10-Jan-2022 15:30:35.285 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/host-manager] has finished in [9] ms
+10-Jan-2022 15:30:35.286 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 15:30:35.291 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [257] milliseconds
+10-Jan-2022 15:32:59.973 INFO [Thread-2] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 15:32:59.983 INFO [Thread-2] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+10-Jan-2022 15:33:00.007 INFO [Thread-2] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 15:33:00.023 INFO [Thread-2] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 19:57:22.230 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.55
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Nov 10 2021 08:26:45 UTC
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.55.0
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            11.4
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          aarch64
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk-17.0.1.jdk/Contents/Home
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.1+12-LTS-39
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 19:57:22.232 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 19:57:22.239 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+10-Jan-2022 19:57:22.239 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+10-Jan-2022 19:57:22.239 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+10-Jan-2022 19:57:22.239 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+10-Jan-2022 19:57:22.239 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+10-Jan-2022 19:57:22.239 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/conf/logging.properties
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/temp
+10-Jan-2022 19:57:22.240 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/wineikhaing/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+10-Jan-2022 19:57:22.364 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 19:57:22.381 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [240] milliseconds
+10-Jan-2022 19:57:22.398 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+10-Jan-2022 19:57:22.398 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.55]
+10-Jan-2022 19:57:22.401 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/docs]
+10-Jan-2022 19:57:22.501 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/docs] has finished in [100] ms
+10-Jan-2022 19:57:22.501 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/manager]
+10-Jan-2022 19:57:22.517 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/manager] has finished in [16] ms
+10-Jan-2022 19:57:22.517 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/examples]
+10-Jan-2022 19:57:22.624 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/examples] has finished in [107] ms
+10-Jan-2022 19:57:22.624 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/ROOT]
+10-Jan-2022 19:57:22.631 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/ROOT] has finished in [7] ms
+10-Jan-2022 19:57:22.631 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/host-manager]
+10-Jan-2022 19:57:22.641 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/wineikhaing/Desktop/MIU/WAA/apache-tomcat-9.0.55/webapps/host-manager] has finished in [10] ms
+10-Jan-2022 19:57:22.642 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 19:57:22.648 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [266] milliseconds
+10-Jan-2022 20:12:29.371 INFO [Thread-2] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 20:12:29.381 INFO [Thread-2] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+10-Jan-2022 20:12:29.402 INFO [Thread-2] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+10-Jan-2022 20:12:29.408 INFO [Thread-2] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
