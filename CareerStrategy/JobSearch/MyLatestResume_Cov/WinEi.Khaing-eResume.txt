@@ -1,0 +1,207 @@
+WIN EI KHAING
+Fairfield, Iowa 52557 * 641-819-1641
+khai.winei@gmail.com 
+https://www.linkedin.com/in/win-ei-khaing 
+
+
+
+SOFTWARE ENGINEER
+
+Versatile software engineer with more than 4 years 
+of experience designing, developing, testing, and 
+maintaining a wide variety of software solutions. 
+Familiar with all phases of the Software 
+Development Life Cycle for both front-end and back-
+end components, including requirement gathering, 
+coding, implementation, testing, and maintenance. 
+Expertise includes languages and tools like C#, 
+Java,.NET Framework, Spring Framework, MS SQL, 
+Visual Studio, and Git.
+
+
+
+Software Development Life Cycle * System Design 
+C# & Java Programming * Database Development
+Requirement Gathering * Testing & Troubleshooting
+Documentation * RFID Integration
+
+
+
+Languages:  C#, Java
+Web:  HTML5, CSS3, JavaScript, Bootstrap, React
+Web Services:  REST API
+Web/App Servers:  IIS, Tomcat
+Frameworks:  Kendo, .NET, .NET Core, Spring, Spring 
+Boot, Entity Framework, Hibernate
+Databases:  MS SQL, MySQL
+Design Patterns:  MVC, Singleton, Prototype, 
+Observer, Proxy, Session Factory, Multi-Threading, 
+Template, Façade
+SDLC:  Agile-Scrum, Waterfall
+Tools:  Visual Studio, Visual Studio Code, Eclipse, 
+IntelliJ IDEA, Trello, SVN, Git, Postman, StarUML
+Platforms:  Windows, Mac OS
+
+
+
+PROFESSIONAL EXPERIENCE
+
+CAREER NOTE: Completed on-campus studies and 
+currently taking distance education courses to 
+complete a Master's Degree in Computer Science 
+(Available for full-time, W-2 employment).
+
+
+ETAG RFID, Yangon, Myanmar * May 2019 – July 2021
+A software house providing RFID-related solutions 
+in Myanmar, with head office in Singapore.
+
+Software Engineer
+Key contributor to both front-end and back-end 
+software development, implementation, and testing.
+
+* Proposed and implemented MS SQL database design.
+* Developed comprehensive web applications, C# 
+Windows Forms applications, and APIs.
+* Integrated RFID and reader technologies into new 
+and existing systems.
+* Prepared documentation, such as UAT and operation 
+manuals.
+
+Technologies Used: C#, .NET, .NET Core, HTML5, 
+CSS3, JSON, JavaScript, jQuery, Kendo, MS SQL, SVN, 
+Git, Bootstrap, REST, IIS, Entity Framework
+
+
+UNIQUE COMM, Yangon, Myanmar * Dec 2018 – April 
+2019
+A telecommunications and Information Technology 
+company.
+
+Junior .NET Developer
+Participated in accounting software development, 
+beginning with requirement gathering.
+
+* Communicated with customers to gather 
+requirements and perform maintenance.
+* Developed web applications for accounting and 
+warehouse management.
+* Tested software using unit, integration, and user 
+acceptance testing techniques.
+* Prepared user manuals and other documentation.
+
+Technologies Used: C#, .NET, JSON, JavaScript, 
+jQuery, MS SQL, Bootstrap, REST, IIS
+
+
+MANDALAY CITY DEVELOPMENT COMMITTEE, Mandalay, 
+Myanmar * Sept – Nov 2018
+A governmental office for city development.
+
+Software Tester (volunteer)
+Conducted software testing and created reports for 
+the government.
+
+* Thoroughly tested and troubleshot e-government 
+software projects.
+* Wrote and implemented test cases and test result  
+documentation.
+* Provided suggestions and advice on usefulness of 
+proposed government projects.
+
+Technologies Used: Java, Spring, PHP, MS SQL, 
+MySQL, Bootstrap, IIS
+
+
+GRAPE CITY, Yangon, Myanmar * May – July 2018
+A software testing company for software developed 
+in the head office in Japan.
+
+Software Tester (intern)
+Investigated, tested, and reported bugs.
+
+* Developed C# Windows Forms applications with MS 
+Access databases.
+* Prepared test points, test scenarios, and test 
+cases.
+
+Technologies Used: C#, MS Access
+
+
+FREELANCE, Mandalay & Yangon, Myanmar * May 2017 – 
+Nov 2018
+In collaboration with 5 other freelancers.
+
+Freelance Developer
+Active participant in the full Software Development 
+Life Cycle for a variety of clients.
+
+* Contacted and communicated with clients to gather 
+project requirements.
+* Analyzed requirements to determine business needs 
+and create technical specifications.
+* Proposed and implemented database designs.
+* Developed comprehensive web applications, Windows 
+Forms applications, APIs, and web services using a 
+broad variety of client-required technologies.
+* Tested software using unit, integration, and user 
+acceptance testing techniques.
+* Prepared user manuals, UAT, and operation 
+manuals, and other documentation.
+* Provided project support and maintenance after 
+deployment.
+
+Technologies Used: Java, Spring, MS SQL, MySQL, 
+Bootstrap, React, Tomcat
+
+
+
+ACADEMIC PROJECTS
+
+Blog API, MIU (2022): Created a blogging API as a 
+group of 3, with 3 called microservices (User, 
+Post, and Comment). T
+echnologies Used: Spring Boot, MySQL, Hibernate
+
+Library Management System, MIU (2021): Worked with 
+a team of 4 to develop a library management 
+application capable of registering authors, books, 
+and library users; and completing the checkout 
+process. 
+Technologies Used: Java Swing
+
+Mini Online Market System, MIU (2021): In a team of 
+5, developed an online market application allowing 
+sellers to add products, buyers to create orders, 
+admins to manage seller accounts, and users to 
+trace order and payment status. 
+Technologies Used: Spring, REST API, React, 
+Hibernate
+
+
+
+EDUCATION
+
+Master of Science in Computer Science
+(In progress via distance education; expected 
+completion April 2024)
+Maharishi International University – Fairfield, 
+Iowa
+
+Key Courses: Fundamental Programming Practice, 
+Modern Programming Practice, Web Application 
+Programming, Web Application Architecture, 
+Enterprise Architecture, Algorithm
+
+Bachelor of Computer Science in Software 
+Engineering (2018)
+University of Computer Studies – Mandalay, Myanmar
+
+
+
+PROFESSIONAL DEVELOPMENT
+
+Certificate, Information Technology Passport – 
+ITPEC 
+
+Certificate, Fundamental Engineering – ITPEC 
