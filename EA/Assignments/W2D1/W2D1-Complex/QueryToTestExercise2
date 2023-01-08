@@ -1,0 +1,9 @@
+DESCRIBE Appointment;
+DESCRIBE Address;
+DESCRIBE Patient;
+DESCRIBE Doctor;
+
+SELECT * FROM Appointment;
+SELECT * FROM Address;
+SELECT * FROM Patient;
+SELECT * FROM Doctor;

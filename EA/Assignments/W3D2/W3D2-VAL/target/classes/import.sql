@@ -1,0 +1,2 @@
+INSERT INTO Book(id, title, ISBN, author, price) VALUES(NULL, 'Java For All', '11-242-001B', 'Beza', 19);
+INSERT INTO Book(id, title, ISBN, author, price) VALUES(NULL, 'Spring For All', '01-242-001W', 'Win', 21);

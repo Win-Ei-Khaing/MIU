@@ -1,0 +1,10 @@
+DESCRIBE Customer;
+DESCRIBE CustomerOrder;
+DESCRIBE OrderLine;
+DESCRIBE Product;
+
+SELECT * FROM  Customer;
+SELECT * FROM  CustomerOrder;
+SELECT * FROM  OrderLine;
+SELECT * FROM CustomerOrder_OrderLine;
+SELECT * FROM  Product;
