@@ -1,0 +1,26 @@
+package lab11_undirected;
+
+
+
+public class PathExists extends BreadthFirstSearch {
+	boolean pathFound = false;
+	Vertex v;
+	Vertex u;
+	public PathExists(Graph graph) {
+		super(graph);
+	}
+	@Override
+	protected void processVertex(Vertex v) {
+		if(this.v.equals(v))
+			pathFound = true;
+	}
+
+	//TO-DO
+	public boolean pathExists(Vertex u, Vertex v) {
+		this.u = u;
+		this.v = v;
+		start(u);
+		return pathFound;
+	}
+	
+}

@@ -1,0 +1,60 @@
+package dynamic;
+
+import java.util.HashMap;
+
+public class CoinChangeCount {
+	
+	public static int countChange1(int[] s, int p, int t) {
+		if(t == 0)
+			return 1;
+		if(t<0)
+			return 0;
+		if(t>=0 && p<0)
+			return 0;
+
+		return countChange1(s, p-1, t)+countChange1(s, p, t-s[p]);
+	}
+
+	static class Key{
+		int p;
+		int t;
+		Key(int p, int t){
+			this.p = p;
+			this.t = t;
+		}
+	}
+	static HashMap<Key,Integer> table = new HashMap<Key, Integer>();
+	public static int countChange2(int[] s, int p, int t) {
+		Key k = new Key(p,t);
+		if(table.containsKey(k))
+			return table.get(k);
+		if(t == 0) {
+			table.put(k, 1);
+			return 1;
+		}
+		if(t<0) {
+			table.put(k,0);
+			return 0;
+		}
+		if(t>=0 && p<0) {
+			table.put(k,0);
+			return 0;
+		}
+		int l = countChange2(s, p-1, t);
+		Key kl = new Key(p-1,t);
+		int r = countChange2(s, p, t-s[p]);
+		Key kr = new Key(p, t-s[p]);
+		table.put(kl, l);
+		table.put(kr, r);
+		return l+r;
+	}
+
+
+	public static void main(String[] args) {
+//		List<Integer> list = Arrays.asList(1,2,3);
+		int[] coins = new int[] {1,2,3};
+		System.out.println(countChange2(coins,coins.length-1, 105));
+//		System.out.println(countChange1(coins,coins.length-1, 1005));
+		// {1,1,1,1}, {2,2}, {1,1,2}, {3,1}
+	}
+}

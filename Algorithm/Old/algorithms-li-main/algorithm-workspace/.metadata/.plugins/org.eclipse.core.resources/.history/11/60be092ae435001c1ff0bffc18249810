@@ -1,0 +1,66 @@
+package problem05;
+
+import java.util.ArrayList;
+import java.util.List;
+
+//A recursive solution for subset sum
+//problem
+class SubsetSum {
+
+	// Returns true if there is a subset
+	// of set[] with sum equal to given sum
+	static List<Integer> getSubsetSum(List<Integer> set,
+							int n, int sum, List<Integer> indices)
+	{
+		// Base Cases
+		if (sum == 0)
+			return indices;
+		if (n == 0)
+			return null;
+
+		// If last element is greater than
+		// sum, then ignore it
+		int last = set.get(n-1);
+		if (last > sum)
+			return getSubsetSum(set, n - 1, sum, indices);
+     
+     // last element
+     List<Integer> newIndices = new ArrayList<>(indices);
+     newIndices.add(last);
+
+     /* else, check if sum can be obtained
+		by any of the following
+			(a) including the last element
+			(b) excluding the last element */
+		getSubsetSum(set, n - 1, sum, newIndices);
+		getSubsetSum(set, n - 1, sum - set.get(n - 1), indices);
+		return indices;
+	}
+
+	/* Driver code */
+	public static void main(String args[])
+	{
+		List<Integer> set = new ArrayList<>();
+		set.add(3); set.add(34); set.add(4); 
+		set.add(12); set.add(5); set.add(5); 
+		set.add(2);
+
+		int sum = 9;
+		int n = set.size();
+
+		System.out.println(getSubsetSum(set, n, sum, new ArrayList<Integer>()));
+	}
+}
+
+
+
+
+
+
+
+/*
+
+[3, 100,2,3, 100]
+sum = 4
+
+*/

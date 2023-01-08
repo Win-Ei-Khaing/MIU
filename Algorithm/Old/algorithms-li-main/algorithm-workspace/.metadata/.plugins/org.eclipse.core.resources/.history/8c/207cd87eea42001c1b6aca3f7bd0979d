@@ -1,0 +1,37 @@
+package lab11_undirected;
+
+import java.util.HashMap;
+
+public class IsConnected extends BreadthFirstSearch {
+	private HashMap<Vertex,Vertex> traversedVertices = new HashMap<Vertex,Vertex>();
+	private int numberOfComponenets = 0;
+	public IsConnected(Graph graph) {
+		super(graph);
+	}
+	@Override
+	protected void processVertex(Vertex v) {
+		traversedVertices.put(v, v);
+	}
+	@Override
+	protected void additionalProcessing() {
+		numberOfComponenets++;
+	}
+	public int getNumberOfComponents() {
+		return numberOfComponenets;
+	}
+	public HashMap<Vertex,Vertex> computeTraversedVertices() {
+		start(vertices.get(0));
+		return traversedVertices;
+	}
+
+	//TO-DO
+	public boolean isConnected() {
+//		for(Vertex u: vertices) {
+//			if(!traversedVertices.containsKey(u)) {
+//				return false;
+//			};
+//		}
+//		return true;
+		return ic.getNumberOfComponents() == 1;
+	}
+}

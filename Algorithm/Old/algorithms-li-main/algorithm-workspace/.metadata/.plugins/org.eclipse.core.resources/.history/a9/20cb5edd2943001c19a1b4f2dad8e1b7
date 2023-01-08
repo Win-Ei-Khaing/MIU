@@ -1,0 +1,18 @@
+package lab11_undirected;
+
+import java.util.ArrayList;
+
+
+public class HasCycle extends BreadthFirstSearch {
+	
+	public HasCycle(Graph graph) {
+		super(graph);
+	}
+	
+	//TO-DO
+	public boolean hasCycle() {
+		int edgeCount = graph.edges();
+		return false;
+	}
+
+}

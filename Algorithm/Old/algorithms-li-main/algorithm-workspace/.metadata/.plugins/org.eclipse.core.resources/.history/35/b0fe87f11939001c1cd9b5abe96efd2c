@@ -1,0 +1,63 @@
+package problem05;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+// A recursive solution for subset sum
+// problem
+class SubsetSum {
+
+	// Returns true if there is a subset
+	// of set[] with sum equal to given sum
+	static List<Integer> isSubsetSum(List<Integer> set,
+							int n, int sum)
+	{
+//		List<Integer> list = new ArrayList<>(indices);
+		// Base Cases
+		if (sum == 0)
+			return new ArrayList<>();
+		if (n == 0 && sum != 0)
+			return null;
+
+		// If last element is greater than
+		// sum, then ignore it
+		if (set.get(n - 1) > sum)
+			return isSubsetSum(set, n - 1, sum);
+
+		/* else, check if sum can be obtained
+		by any of the following
+			(a) including the last element
+			(b) excluding the last element */
+
+		List<Integer> exclude = isSubsetSum(set, n - 1, sum);
+		List<Integer> include = isSubsetSum(set, n - 1, sum - set.get(n-1));
+		if(include!= null) {
+			include.add(set.get(n-1));
+			return include;
+		}
+		if(include!= null) {
+			include.add(set.get(n-1));
+			return include;
+		}
+		return null;
+//		if(include == null) {
+//			List<Integer> exclude = isSubsetSum(set, n - 1, sum - set.get(n - 1));
+//			if(exclude == null)
+//				return null;
+//			exclude.add(set.get(n-1));
+//			return exclude;
+//		}
+//		return include;
+	}
+
+	/* Driver program to test above function */
+	public static void main(String args[])
+	{
+		List<Integer> set = Arrays.asList(3,34,4,12,2);
+//		set = Arrays.asList(2, 1, 4, 12, 15, 2);
+		Integer sum = 19;
+		int n = set.size();
+		System.out.println(isSubsetSum(set, n, sum));
+	}
+}

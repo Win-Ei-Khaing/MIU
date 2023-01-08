@@ -1,0 +1,15 @@
+package lab11_undirected;
+
+import java.util.ArrayList;
+
+public class IsConnected extends BreadthFirstSearch {
+	private ArrayList<Vertex> traversedVertices;
+	public IsConnected(Graph graph) {
+		super(graph);
+	}
+
+	//TO-DO
+	public boolean isConnected() {
+		return false;
+	}
+}

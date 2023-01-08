@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class SubsetSum {
+	public Set<Integer> subsetSum(Set<Integer> set, int k) {
+		List<Integer> list = new ArrayList<Integer>();
+		list.addAll(set);
+		List<Set<Integer>> subsets = powerSet(list);
+		for (Set<Integer> s : subsets) {
+			int sum = 0;
+			for (Integer i : s) {
+				sum += i;
+			}
+			if (sum == k)
+				return s;
+		}
+		return null;
+	}
+
+	private List<Set<Integer>> powerSet(List<Integer> X) {
+		List<Set<Integer>> P = new ArrayList<>();
+		Set<Integer> S = new HashSet<>(); // S is the empty set
+		P.add(S);
+		Set<Integer> T = new HashSet<>();
+		while (!X.isEmpty()) {
+			Integer f = X.remove(0);
+			int size = P.size();
+			for (int i = 0; i < size; i++) {
+				T = new HashSet<>();
+				T.add(f);
+				T.addAll(P.get(i));
+				P.add(T);
+			}
+		}
+		return P;
+	}
+
+	public static void main(String[] args) {
+		Integer[] array = new Integer[] { 1, 3, 9, 4, 8, 5 };
+		Set<Integer> b = new HashSet<Integer>();
+		b.addAll(Arrays.asList(array));
+		SubsetSum s = new SubsetSum();
+		System.out.println(s.subsetSum(b, 21));
+	}
+}

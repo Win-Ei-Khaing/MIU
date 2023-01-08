@@ -1,0 +1,29 @@
+package lab11_undirected;
+
+import java.util.HashMap;
+
+
+public class ShortestPath extends BreadthFirstSearch {
+	int level = 0;
+	private HashMap<Vertex, Integer> levelsMap = new HashMap<Vertex, Integer>();
+	private HashMap<Vertex, Vertex> parentMap = new HashMap<Vertex, Vertex>();
+
+	/** Assumes g is connected */
+	public ShortestPath(Graph g) {
+		super(g);
+	}
+	@Override
+	protected void processVertex(Vertex w) {
+		System.out.println("found -- "+level);
+		if(!parentMap.containsKey(w)) {
+			level++;
+			parentMap.put(w, w);
+			levelsMap.put(w, level);
+		}
+	}
+	//TO-DO
+	public int computeShortestPathLength(Vertex s, Vertex v) {
+		start(s);
+		return levelsMap.get(v);
+	}
+}

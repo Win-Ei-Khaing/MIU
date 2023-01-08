@@ -1,0 +1,3 @@
+do inversion with different algorithms 
+try amortized cost solution
+verify you remembered formulas

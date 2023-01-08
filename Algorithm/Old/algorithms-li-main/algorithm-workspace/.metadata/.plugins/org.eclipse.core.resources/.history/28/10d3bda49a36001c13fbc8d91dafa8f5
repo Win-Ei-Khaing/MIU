@@ -1,0 +1,27 @@
+package problem04;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PowersetGenerator {
+	
+	List<List<Object>> powerSet(List<Object> set){
+		List<List<Object>> powerset = new ArrayList<List<Object>>();
+		List<Object> emptyset = new ArrayList<>();
+		powerset.add(emptyset);
+		List<Object> temp = new ArrayList<>();
+		while(!set.isEmpty()) {
+			Object f = set.remove(0);
+			for(List<Object> p: powerset) {
+				p.add(f);
+				powerset.add(p);
+			}
+		}
+		return null;
+		
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

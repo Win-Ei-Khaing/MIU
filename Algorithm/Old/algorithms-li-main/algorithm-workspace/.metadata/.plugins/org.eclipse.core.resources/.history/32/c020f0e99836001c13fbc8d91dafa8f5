@@ -1,0 +1,12 @@
+package problem04;
+
+public class PowersetGenerator {
+	
+	List<List<Object>> powerSet(List<Object>){
+		
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

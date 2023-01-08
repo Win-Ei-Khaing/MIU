@@ -1,0 +1,15 @@
+package lab11_undirected;
+
+public class UnreachableVertices extends BreadthFirstSearch {
+	int componentCount = 0;
+	public UnreachableVertices(Graph graph) {
+		super(graph);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected void additionalProcessing() {
+		componentCount++;
+	}
+
+}

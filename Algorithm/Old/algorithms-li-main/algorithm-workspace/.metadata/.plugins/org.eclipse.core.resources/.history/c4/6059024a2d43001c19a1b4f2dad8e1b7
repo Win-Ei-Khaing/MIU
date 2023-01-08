@@ -1,0 +1,20 @@
+package lab11_undirected;
+
+
+public class HasCycle extends BreadthFirstSearch {
+	
+	public HasCycle(Graph graph) {
+		super(graph);
+	}
+	
+	//TO-DO
+	public boolean hasCycle() {
+		int numberOfEdgesInGraph = graph.edges().size();
+		FindSpanningTree fst = new FindSpanningTree(graph);
+		fst.computeSpanningTree();
+		int numberOfEdgesInTree = fst.getTreeSize();
+		System.out.println("Number of Edges in tree: "+numberOfEdgesInTree);
+		System.out.println("Number of Edges in graph: "+numberOfEdgesInGraph);
+		return numberOfEdgesInTree < numberOfEdgesInGraph;
+	}
+}

@@ -1,0 +1,16 @@
+package problem04;
+
+import java.util.List;
+
+public class PowersetGenerator {
+	
+	List<List<Object>> powerSet(List<Object> set){
+		List<ArrayList<Object>> powerset = new ArrayList<>();
+		return null;
+		
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

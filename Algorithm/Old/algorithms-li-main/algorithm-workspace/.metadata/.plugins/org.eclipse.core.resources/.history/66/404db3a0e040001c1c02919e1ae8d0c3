@@ -1,0 +1,46 @@
+package dynamic;
+
+import java.util.HashMap;
+
+public class LeastPerfectSquareSumCount {
+	static int lps1(int n) {
+		if(n<=1)
+			return n;
+		int i = 1;
+		int min = Integer.MAX_VALUE;
+		while(i*i<=n) {
+			int c = lps1(n-i*i)+1;
+			if(c<min)
+				min = c;
+			i++;
+		}
+		return min;
+	}
+	
+	static HashMap<Integer, Integer> table = new HashMap<Integer,Integer>();
+	static int lps2(int n) {
+		if(table.containsKey(n))
+			return table.get(n);
+		if(n<=1) {
+			table.put(n, n);
+			return n;
+		}
+		int i = 1;
+		int min = Integer.MAX_VALUE;
+		while(i*i<=n) {
+			int c = lps2(n-i*i)+1;
+			if(c<min)
+				min = c;
+			i++;
+		}
+		table.put(n, min);
+		return min;
+	}
+	
+	public static void main(String[] args) {
+//		System.out.println(lps1(64));
+		System.out.println(lps2(67));
+	}
+	
+	
+}

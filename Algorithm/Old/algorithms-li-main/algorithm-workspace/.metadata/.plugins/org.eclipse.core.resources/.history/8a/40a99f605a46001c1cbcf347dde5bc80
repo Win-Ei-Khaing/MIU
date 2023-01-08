@@ -1,0 +1,5 @@
+package lab11_undirected;
+
+public class UnreachableVertices {
+
+}

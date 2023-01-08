@@ -1,0 +1,22 @@
+package lab11_undirected;
+
+import java.util.HashMap;
+
+public class IsConnected extends BreadthFirstSearch {
+	private int numberOfComponents = 0;
+	public IsConnected(Graph graph) {
+		super(graph);
+	}
+	@Override
+	protected void additionalProcessing() {
+		numberOfComponents++;
+	}
+	public int getNumberOfComponents() {
+		return numberOfComponents;
+	}
+
+	//TO-DO
+	public boolean isConnected() {
+		return numberOfComponents == 1;
+	}
+}

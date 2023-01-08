@@ -1,0 +1,8 @@
+INDEX VERSION 1.131+C:\Users\avend\Documents\algorithm-workspace\.metadata\.plugins\org.eclipse.jdt.core
+2781440747.index
+75931715.index
+1865797976.index
+3329446765.index
+1601831639.index
+2977195003.index
+789640792.index
