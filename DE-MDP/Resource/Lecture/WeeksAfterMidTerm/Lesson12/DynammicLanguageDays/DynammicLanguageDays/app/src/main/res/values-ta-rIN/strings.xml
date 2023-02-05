@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">kotlin-multi-language</string>
+    <string name="days">• %s\n• %s\n• %s\n• %s\n• %s\n• %s\n• %s</string>
+    <string name="friday">வெள்ளி</string>
+    <string name="saturday">சனிக்கிழமை</string>
+    <string name="wednesday">புதன்கிழமை</string>
+    <string name="tuesday">செவ்வாய்க்கிழமை</string>
+    <string name="monday">திங்கட்கிழமை</string>
+    <string name="title_days">ஒரு வாரத்தில் நாட்கள்</string>
+    <string name="thursday">வியாழக்கிழமை</string>
+    <string name="sunday">ஞாயிறு</string>
+    <string name="title_language">மொழியை தேர்ந்தெடுங்கள்</string>
+</resources>
