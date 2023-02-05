@@ -1,0 +1,16 @@
+class test{
+	public static void main(String[] args) {
+		new test();
+	}
+	private int value=3;
+	test(){
+		innerclass ic=new innerclass();
+		System.out.println(ic.compute());
+	}
+	
+	class innerclass{
+		private int compute() {
+			return value;
+		}
+	}
+}

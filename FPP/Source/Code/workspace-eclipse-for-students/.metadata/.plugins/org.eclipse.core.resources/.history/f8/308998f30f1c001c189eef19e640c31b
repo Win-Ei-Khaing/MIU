@@ -1,0 +1,59 @@
+package finalexampreparation;
+
+import java.util.StringJoiner;
+
+import finalexampreparation.MyCharacterDoubleLinkedList.Node;
+
+public class CommonSingleLinkedListWithSentinel<E> {
+	Node<E> header;
+
+	CommonSingleLinkedListWithSentinel(){
+		header=new Node<E>(null, null);
+	}
+
+	void addFirst(E data) {
+		Node<E> newNode=new Node<E>(data, header.next);
+		header.next=newNode;
+	}
+
+
+	@Override
+	public String toString() {
+		return header.next.toString();
+	}
+
+	void printAllInReverse( ) {
+		Node last=header.next;
+		while(last.next!=null)
+			last=last.next;
+		StringJoiner sj=new StringJoiner(", ","[","]");
+		while(last!=header) {
+			sj.add(last.data.toString());
+			last=last.previous;
+		}
+		System.out.println(sj.toString());
+	}
+	
+	static class Node<E>{
+		E data;
+		Node<E> next;
+
+		Node(E data, Node<E> next){
+			this.data=data;
+			this.next=next;
+		}
+
+		@Override
+		public String toString() {
+			StringJoiner sj=new StringJoiner(", ", "[", "]");
+			sj.add(data.toString());
+			while(next!=null) {
+				sj.add(next.data.toString());
+				next=next.next;	
+			}
+			return sj.toString();
+		}
+
+
+	}
+}

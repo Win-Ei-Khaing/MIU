@@ -1,0 +1,10 @@
+package exercise4;
+
+public class Main {
+	public static void main(String[] args) {
+		String[] strAry=new String[] {"Ei", "Bob", "Andrew", "Susan", "Win"};
+		StringSort strStort=new StringSort(new StringLengthComparator());
+		String[] result=strStort.stringSort(strAry);
+		System.out.println(result.toString());
+	}
+}

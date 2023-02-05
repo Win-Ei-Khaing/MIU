@@ -1,0 +1,37 @@
+package prog7_2;
+
+public class MinSort {
+
+	public static void main(String[] args) {
+		MinSort ms=new MinSort();
+		String result = ms.sort("edcba");//
+		System.out.println(result);
+	}
+
+	private String sort(String s) {
+		StringBuilder sb = new StringBuilder(s);
+		if(s==null || s=="") return null;
+		String newString=s;
+		for(int i=0;i<s.length();i++) {
+			char minChar=minChar(newString);
+			int minpos=newString.indexOf(minChar);
+			
+			char temp=newString.charAt(i);
+			sb.setCharAt(i, minChar);
+			sb.setCharAt(minpos, temp);
+			
+			newString=newString.substring(i);
+		}
+		
+		
+		return sb.toString();
+	}
+	char minChar(String s) {
+		char ch=s.charAt(0);
+		if(s.length()==1) return ch;
+		char c=minChar(s.substring(1));
+		return (ch<c)?ch:c;
+	}
+	
+
+}

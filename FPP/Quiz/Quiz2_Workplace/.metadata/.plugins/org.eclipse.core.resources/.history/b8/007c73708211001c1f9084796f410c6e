@@ -1,0 +1,13 @@
+package edu.miu.cs.cs390fpp.mid.crm;
+
+import edu.miu.cs.cs390fpp.mid.crm.model.Customer;
+
+public class CustomerDataMgmtApp {
+	public static void main(String[] args) {
+		Customer[] customerAry=new Customer[2];
+		Customer cus1=new Customer();
+		Customer cus2=cus1;
+		
+		System.out.println(cus1.equals(cus2));
+	}
+}

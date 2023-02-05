@@ -1,0 +1,15 @@
+/**
+ * 
+ * this is by javacdoc testing for mid-term
+ * @author wineikhaing
+ *
+ */
+public class Hello {
+	/**
+	 * this is main method
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+	}
+}

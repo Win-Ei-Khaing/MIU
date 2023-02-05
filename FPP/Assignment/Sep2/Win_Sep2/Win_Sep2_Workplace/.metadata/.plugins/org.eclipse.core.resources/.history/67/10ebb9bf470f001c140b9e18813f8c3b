@@ -1,0 +1,5 @@
+package prog5.scope.more;
+
+public class test {
+	System.out.println("hello");
+}

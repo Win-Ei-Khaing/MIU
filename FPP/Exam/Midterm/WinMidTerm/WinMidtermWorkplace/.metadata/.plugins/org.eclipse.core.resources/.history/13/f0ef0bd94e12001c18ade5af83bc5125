@@ -1,0 +1,10 @@
+package edu.miu.cs.cs390fpp.mid.pdmapp;
+
+public class ProductDataMgmtApp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

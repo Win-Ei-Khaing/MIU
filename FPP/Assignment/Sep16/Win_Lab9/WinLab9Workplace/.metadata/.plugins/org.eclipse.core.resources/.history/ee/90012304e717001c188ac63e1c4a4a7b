@@ -1,0 +1,24 @@
+package prog9_1_startup;
+
+public class MyStack {
+	private MyStringLinkedList list;
+	public MyStack() {
+		list = new MyStringLinkedList();
+	}
+	
+	public String pop() {
+		//implemented by win
+		String deletedString=peek();
+		list.remove(peek());
+		return deletedString;
+	}
+	public String peek() {
+		//implemented by win
+		return list.get(0);
+	}
+	
+	public void push(String s) {
+		//implement
+		list.add(s);
+	}
+}

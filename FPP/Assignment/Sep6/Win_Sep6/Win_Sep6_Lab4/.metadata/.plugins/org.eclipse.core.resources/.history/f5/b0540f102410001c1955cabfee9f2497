@@ -1,0 +1,14 @@
+package lab4_2.closedcurve.good;
+
+public class Rectangle extends ClosedCurve{
+	private final double width;
+	private final double length;
+	
+	public Square(double side){
+		this.side = side;
+		
+	}
+	public double computeArea() {
+		return side * side;
+	}
+}

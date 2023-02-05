@@ -1,0 +1,22 @@
+package prog7_2_soln.closedcurve.good;
+
+public class IllegalClosedCurveException extends Exception{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 431311101783154646L;
+
+	public IllegalClosedCurveException() {
+		super();
+	}
+
+	public IllegalClosedCurveException(String message) {
+		super(message);
+	}
+
+	public IllegalClosedCurveException(Throwable cause) {
+		super(cause);
+	}
+
+}

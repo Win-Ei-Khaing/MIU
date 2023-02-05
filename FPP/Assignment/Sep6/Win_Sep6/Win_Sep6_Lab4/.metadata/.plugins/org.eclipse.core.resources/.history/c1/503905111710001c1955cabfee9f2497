@@ -1,0 +1,13 @@
+package exercise1;
+
+import exercise1.model.Professor;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Professor prof1=new Professor("James", 10000.00, 2000, 01, 01, 21);
+		Professor prof2=new Professor("Suzy", 30000.00, 2005, 01, 01, 15);
+		Professor prof3=new Professor("Bok", 20000.00, 2008, 01, 01, 3);
+	}
+
+}

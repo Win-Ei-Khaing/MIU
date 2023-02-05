@@ -1,0 +1,19 @@
+package list;
+
+public class Main {
+	public static void main(String[] args) {
+		/*var list=new SinglyList<Character>();
+		list.addFirst('A');
+		list.addFirst('B');
+		list.addFirst('C');
+		System.out.println(list.toString());*/
+
+		var list=new SinglyListWithSentinel<Character>();
+		list.addFirst('A');
+		list.addFirst('B');
+		list.addFirst('C');
+		System.out.println(list.toString());
+		
+		list.forEach(c -> System.out.println(c)); 
+	}
+}

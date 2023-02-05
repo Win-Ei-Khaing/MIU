@@ -1,0 +1,20 @@
+package prog4;
+
+import java.text.DecimalFormat;
+
+public class Main {
+
+	public static void main(String[] args) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		
+		Triangle tri=new Triangle(2.0,6.0);
+		System.out.printf("Area of Triangle is %2f \n", df.format(tri.computeArea(tri.getBase(), tri.getHeight())));
+		
+		Rectangle rec=new Rectangle(6.0,6.0);
+		System.out.printf("Area of Rectangle is %2f \n", df.format((rec.computeArea(rec.getWidth(), rec.getLength()))));
+		
+		Circle cir=new Circle(4.0);
+		System.out.printf("Area of Circle is %2f", df.format(cir.computeArea(cir.getRadius())));
+	}
+
+}

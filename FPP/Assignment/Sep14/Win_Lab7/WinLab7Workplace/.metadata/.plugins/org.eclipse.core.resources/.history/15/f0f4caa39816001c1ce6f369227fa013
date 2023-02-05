@@ -1,0 +1,10 @@
+package prog7_3;
+
+import org.junit.Test;
+
+public class BinarySearchTest {
+@Test
+	public void test() {
+	boolean result=BinarySearch.search("abcdefghijklmnopqrs", 'i');
+}
+}

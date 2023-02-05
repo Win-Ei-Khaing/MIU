@@ -1,0 +1,16 @@
+package prog7_4;
+
+public class DivideSort {
+
+	public static void main(String[] args) {
+		String s="edcba";
+		System.out.println(s);
+		System.out.println("After divideSort");
+		String sortedString=divideSort(s);
+		System.out.println(sortedString);
+	}
+
+	public static String divideSort(String s) {
+		
+	}
+}

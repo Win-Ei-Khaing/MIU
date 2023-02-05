@@ -1,0 +1,9 @@
+public class test { 
+	private static double value=10.0;
+	{
+		value=20.0;
+	}
+	public static void main(String[] args) {
+		System.out.println(value);
+	}
+} 

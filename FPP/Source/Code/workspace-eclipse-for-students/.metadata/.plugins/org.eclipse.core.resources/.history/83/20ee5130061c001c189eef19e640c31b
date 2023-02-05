@@ -1,0 +1,37 @@
+package lesson7.calcSum.sample_question;
+
+import java.util.Arrays;
+
+public class SumCalculatorApp {
+
+	public static void main(String[] args) {
+//		int[] a = null; // sum should be 0
+//		int[] a = new int[]{}; // sum should be 0
+		int[] a = new int[]{1,2,3,4,5,6,7,8,9};
+		System.out.printf("The sum of numbers in array, %s is: %d.\n",
+				Arrays.toString(a), calcSumUsingIteration(a));		
+		System.out.printf("The sum of numbers in array, %s is: %d.\n",
+				Arrays.toString(a), calcSumUsingRecursion(a));
+	}
+	
+	public static int calcSumUsingIteration(int[] a) {
+		// TODO Implement your solution here
+		int sum=0;
+		for(int i : a)
+			sum+=i;
+		return sum;
+	}
+	
+	public static int calcSumUsingRecursion(int[] a) {
+		// TODO Implement your solution here
+		if(a.length==0 || a==null) 
+			return 0;
+		else
+			return calcSumUsingRecursion(a, 0, 0);
+	}
+	
+	private static int calcSumUsingRecursion(int[] a, int i, int sum) {
+		if(i==a.length-1) return sum+i;
+		return calcSumUsingRecursion(a, i+1,sum+a[i]);
+	}
+}

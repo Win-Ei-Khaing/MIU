@@ -1,0 +1,14 @@
+package exercise1.model;
+
+public class Secretary extends DeptEmployee{
+	private double overtimeHours;
+
+	public double getOvertimeHours() {
+		return overtimeHours;
+	}
+
+	public void setOvertimeHours(double overtimeHours) {
+		this.overtimeHours = overtimeHours;
+	}
+	
+}

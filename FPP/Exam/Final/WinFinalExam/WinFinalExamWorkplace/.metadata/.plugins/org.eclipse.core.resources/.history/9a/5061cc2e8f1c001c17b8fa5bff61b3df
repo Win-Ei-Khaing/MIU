@@ -1,0 +1,32 @@
+
+public class Student {
+private int studentId;
+private String name;
+private float cgpa;
+public Student(int studentId, String name, float cgpa) {
+	super();
+	this.studentId = studentId;
+	this.name = name;
+	this.cgpa = cgpa;
+}
+public int getStudentId() {
+	return studentId;
+}
+public String getName() {
+	return name;
+}
+public float getCgpa() {
+	return cgpa;
+}
+@Override
+public boolean equals(Object o) {
+	if(o==null) return false;
+	if(this==o) return true;
+	if(!(o instanceof Student)) return false;
+	Student otherStudent=(Student)o;
+	return (this.studentId==otherStudent.studentId 
+			&& this.name.equals(otherStudent.name)
+			&& this.cgpa == otherStudent.cgpa);
+}
+
+}

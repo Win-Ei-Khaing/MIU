@@ -1,0 +1,5 @@
+package prog3_2.employeeinfo;
+
+public class RetirementAccount extends Account {
+
+}

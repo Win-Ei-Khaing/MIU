@@ -1,0 +1,10 @@
+package prog7_2;
+
+public class MinSort {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,39 @@
+package prog3_2.employeeinfo;
+
+class Account {
+	private final static double DEFAULT_BALANCE = 0.0;
+	private double balance;
+	private Employee employee;
+
+	Account(Employee emp, double balance) {
+		employee = emp;
+		this.balance = balance;
+	}
+
+	Account(Employee emp) {
+		this(emp, DEFAULT_BALANCE);
+	}
+
+	public String toString() {
+		return "Account type: "+this.getClass().getSimpleName()+" && Current bal: "+balance;
+	}
+
+	public void createNewChecking(double startAmount) {
+		//checkingAcct=new Account(this, AccountType.CHECKING, startAmount);
+		Account acct=new CheckingAccount(this, startAmount);
+		
+	}
+
+	public boolean makeWithdrawal(double amount) {
+		if(amount > balance)
+			return false;
+		else {
+			balance-=amount;
+			return true;
+		}
+	}
+	
+	public double getBalance() {
+		return balance;
+	}
+}

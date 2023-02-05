@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/Users/wineikhaing/Desktop/MIU/FPP/Assignment/Sep20/Win_Lab12/WinLab12Workplace/.metadata/.plugins/org.eclipse.jdt.core
+3787740244.index
+477657618.index

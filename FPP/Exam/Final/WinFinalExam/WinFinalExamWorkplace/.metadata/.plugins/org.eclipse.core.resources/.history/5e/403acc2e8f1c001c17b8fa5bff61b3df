@@ -1,0 +1,35 @@
+import java.util.Comparator;
+
+public class CGPAComparator implements Comparator<Student>{
+	@Override
+	public int compare(Student s1, Student s2){
+		int s1Id=s1.getStudentId();
+		String s1Name=s1.getName();
+		float s1Cgpa=s1.getCgpa();
+
+		int s2Id=s2.getStudentId();
+		String s2Name=s2.getName();
+		float s2Cgpa=s2.getCgpa();
+
+		if(s1Id < s2Id) return -1;
+
+		if(s1Id > s2Id) return 1;
+
+		if(s1Id == s2Id){
+
+			if(s1Name.compareTo(s2Name) < 0) return -1;
+
+			if(s1Name.compareTo(s2Name) < 0) return 1;
+
+			if(s1Name.compareTo(s2Name) == 0 ){
+
+				if(s1Cgpa < s2Cgpa) return -1;
+
+				if(s1Cgpa  > s2Cgpa) return 1;
+
+				if(s1Cgpa == s2Cgpa) return 0;
+			}
+		}
+		return 0;
+	}
+}

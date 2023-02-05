@@ -1,0 +1,60 @@
+package lesson7.examples_returning_boolean;
+
+import java.util.Arrays;
+
+public class BinarySearchTest{
+
+	public static void main(String[] args) {
+		var arr = new String[]{"Anna", "Bob", "Carlos", "Dave", "Erin", "Fred"};
+		var target1 = "Dave";
+		var target2 = "Alice";
+		var result1 = binarySearchRecursively(arr, target1); // Expected result: true
+		var result2 = binarySearchRecursively(arr, target2); // Expected result: false
+		System.out.printf("The array, %s, contains target string, %s: %s\n", 
+				Arrays.toString(arr), target1, result1);
+		System.out.printf("The array, %s, contains target string, %s: %s\n", 
+				Arrays.toString(arr), target2, result2);	
+		var result3 = binarySearchIteratively(arr, target1); // Expected result: true
+		var result4 = binarySearchIteratively(arr, target2); // Expected result: false
+		System.out.printf("The array, %s, contains target string, %s: %s\n", 
+				Arrays.toString(arr), target1, result3);
+		System.out.printf("The array, %s, contains target string, %s: %s\n", 
+				Arrays.toString(arr), target2, result4);	
+	}
+
+	public static boolean binarySearchRecursively(String[] arr, String target) {
+		if(arr==null || arr.length<1) 
+			return false;
+		if(arr.length==1) return arr[0].equals(target);
+		return binarySearchRecursively(0, arr.length-1, arr, target);
+	}
+
+	public static boolean binarySearchRecursively(int lowIndex, int highIndex, String[] arr, String target) {
+		if(lowIndex>highIndex) return false;
+		int midIndex=(lowIndex+highIndex)/2;
+		if(arr[midIndex].equals(target)) return true;
+		else if(arr[midIndex].compareTo(target) < 1)
+			return binarySearchRecursively(midIndex+1, highIndex, arr, target);
+		else
+			return binarySearchRecursively(lowIndex, midIndex-1, arr, target);
+	}
+
+	public static boolean binarySearchIteratively(String[] arr, String target) { 
+		if(arr==null || arr.length<1) return false;
+		if(arr.length==1) return arr[0].equals(target);
+		int lowIndex=0;
+		int highIndex=arr.length-1;
+		int midIndex;
+
+		while(lowIndex<highIndex) {
+			midIndex=(lowIndex+highIndex)/2;
+			if(arr[midIndex].equals(target)) return true;
+			else if(arr[midIndex].compareTo(target) > 0)
+				highIndex=midIndex-1;
+			else
+				lowIndex=midIndex+1;
+		}
+		
+		return false;
+	}
+}

@@ -1,0 +1,18 @@
+
+class superClass{
+	public int getType() {
+		return 2;
+	}
+}
+
+class test extends superClass{
+	public static void main(String[] args) {
+		superClass s=new test();
+		System.out.println(s.getType());
+	}
+	
+	public int getType() {
+		System.out.println("in child");
+		return 3;
+	}
+}

@@ -1,0 +1,17 @@
+package prog4;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Triangle tri=new Triangle(2.0,6.0);
+		double triArea=Math.round(tri.computeArea(tri.getBase(), tri.getHeight()));
+		System.out.printf("Area of Triangle is %2f \n",triArea);
+		
+		Rectangle rec=new Rectangle(6.0,6.0);
+		System.out.printf("Area of Rectangle is %2f \n", (rec.computeArea(rec.getWidth(), rec.getLength())));
+		
+		Circle cir=new Circle(4.0);
+		System.out.printf("Area of Circle is %2f", cir.computeArea(cir.getRadius()));
+	}
+
+}

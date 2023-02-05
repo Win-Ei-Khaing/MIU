@@ -1,0 +1,14 @@
+package exercise1.model;
+
+public class Professor extends DeptEmployee{
+	private int numberOfPublications;
+
+	public int getNumberOfPublications() {
+		return numberOfPublications;
+	}
+
+	public void setNumberOfPublications(int numberOfPublications) {
+		this.numberOfPublications = numberOfPublications;
+	}
+	
+}

@@ -1,0 +1,5 @@
+package com.bankoffairfield.bankapp.model;
+
+public final class Customer {
+
+}

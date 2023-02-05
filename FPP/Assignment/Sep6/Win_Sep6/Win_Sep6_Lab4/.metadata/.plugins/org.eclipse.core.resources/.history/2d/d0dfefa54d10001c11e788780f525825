@@ -1,0 +1,7 @@
+package prog3_2.employeeinfo;
+
+public class SavingsAccount extends Account {
+	public AccountType getAcctType() {
+        return AccountType.SAVINGS;
+	}
+}

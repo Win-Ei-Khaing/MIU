@@ -1,0 +1,15 @@
+package lab4_4.closedcurve.good;
+
+public class Test2 {
+	public static void main(String[] args) {
+		Polygon[] objects = {new Rectangle(3,4),
+				new Triangle(4,5,6),
+				new Square(3)};
+		//compute areas
+		for(Polygon cc : objects) {
+			System.out.println("The area of this "+cc.getClass().getSimpleName()+
+					" \n    Number of sides = "+cc.getNumberOfSides()+
+					" \n    Perameter = "+cc.computePerimeter());			
+		}
+	}
+}

@@ -1,0 +1,12 @@
+package prog7_3;
+
+public class BinarySearch {
+
+	public static void main(String[] args) {
+		System.out.println(search("Hello",'e'));
+	}
+
+	private boolean search(String s, char c) {
+		return false;
+	}
+}

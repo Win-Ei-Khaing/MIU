@@ -1,0 +1,18 @@
+package prog7_2_soln.closedcurve.good;
+
+import java.util.logging.Logger;
+
+public class Circle extends ClosedCurve {
+	double radius;
+	
+	Logger log=Logger.getLogger("colsedcurve.good");
+	public Circle(Double radius){
+		this(radius.doubleValue());
+	}
+	public Circle(double radius) {
+		this.radius = radius;
+	}
+	double computeArea() {
+		return (Math.PI * radius * radius);
+	}
+}

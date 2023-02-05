@@ -1,0 +1,8 @@
+package prog3_1_startup;
+
+public class Snippet {
+	public static void main(String[] args) {
+		prog3_1_startup
+	}
+}
+

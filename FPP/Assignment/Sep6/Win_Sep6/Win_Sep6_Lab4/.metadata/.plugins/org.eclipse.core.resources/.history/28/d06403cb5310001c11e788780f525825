@@ -1,0 +1,117 @@
+package prog3_2.employeeinfo;
+
+import java.util.StringJoiner;
+
+public class AccountList {
+	private final int INITIAL_LENGTH = 2;
+	private Account[] accountArray; 
+	private int size;
+	
+	public AccountList() {
+		accountArray = new Account[INITIAL_LENGTH];
+		size = 0;
+	}
+	
+	public void add(Account acc){
+		if(size==accountArray.length) resize();
+		accountArray[size]=acc;
+		size++;
+	}
+	
+	public Account get(int i){
+		if(i<0 || i>accountArray.length-1)
+			return null;
+		return accountArray[i];
+	}
+	
+	public boolean find(String s){
+		//implememented by win
+		for(int i=0;i<accountArray.length;i++) {
+			if(accountArray[i].equalsIgnoreCase(s))
+				return true;
+		}
+		return false;
+	}
+	
+	public void insert(String s, int pos){
+		//implemented by win
+		if(pos>=0  && pos<accountArray.length){
+			accountArray[pos]=s;
+			size++;
+		}
+	}
+	
+	public boolean remove(String s){
+		//implemented by win
+		for(int i=0;i<accountArray.length;i++) {
+			if(accountArray[i] != null) {
+				if(accountArray[i].equalsIgnoreCase(s)) {
+					accountArray[i]=null;
+					size--;
+					return true;
+				}
+			}
+		}
+		return true;
+	}
+	
+	
+	private void resize(){
+		//implemented by win
+		if(size>=accountArray.length) {
+			System.out.println("Resizing...");
+			Account[] newStrAry=new Account[accountArray.length*2];
+			System.arraycopy(accountArray, 0, newStrAry, 0, accountArray.length);
+			accountArray=newStrAry;
+			//System.out.println(accountArray.length+"__"+newStrAry.length);
+		}
+	}
+	public String toString(){
+		//implemented by win
+		StringJoiner sj=new StringJoiner(", ", "[", "]");
+		for(int i=0;i<accountArray.length;i++)
+		{
+			if(accountArray[i]!=null)
+				sj.add(accountArray[i]);
+		}
+		return sj.toString();
+	}
+	public int size() {
+		return size;
+	}
+
+	public static void main(String[] args){
+		MyStringList l = new MyStringList();
+		l.add("Bob");
+		l.add("Steve");
+		l.add("Susan");
+		l.add("Mark");
+		l.add("Dave");
+		System.out.println("The list of size "+l.size()+" is "+l);
+		l.remove("Mark");
+		l.remove("Bob");
+		System.out.println("The list of size "+l.size()+" is "+l);
+		l.insert("Richard",3);
+		System.out.println("The list of size "+l.size()+" after inserting Richard into pos 3 is "+l);
+		l.insert("Tonya",0);
+		System.out.println("The list of size "+l.size()+" after inserting Tonya into pos 0 is "+l);		
+	
+		//testing with question codes
+		System.out.println("\nSecond test with codes from question\n");
+		MyStringList m = new MyStringList(); 
+		m.add("Bob"); 
+		System.out.println("The list of size "+m.size+ " is "+m);
+		m.add("Steve");
+		System.out.println("The list of size "+m.size+ " is "+m);
+		m.add("Susan");
+		System.out.println("The list of size "+m.size+ " is "+m);
+		m.add("Mark");
+		System.out.println("The list of size "+m.size+ " is "+m);
+		m.add("Dave");
+		System.out.println("The list of size "+m.size+ " is "+m);
+		m.remove("Mark");
+		System.out.println("The list of size "+m.size+ " is "+m);
+		m.remove("Bob");
+		System.out.println("The list of size "+m.size+ " is "+m);
+	}
+}

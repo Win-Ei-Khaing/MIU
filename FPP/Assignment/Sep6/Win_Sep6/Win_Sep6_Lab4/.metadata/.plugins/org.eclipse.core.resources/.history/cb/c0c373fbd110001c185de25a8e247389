@@ -1,0 +1,15 @@
+package prog3_2.employeeinfo;
+
+public class CheckingAccount extends Account {
+	public CheckingAccount(Employee emp, double balance) {
+		super(emp, balance);
+	}
+
+	public CheckingAccount(Employee emp) {
+		super(emp);
+	}
+
+	public AccountType getAcctType() {
+        return AccountType.CHECKING;
+	}
+}

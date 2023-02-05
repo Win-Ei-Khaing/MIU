@@ -1,0 +1,9 @@
+package prog3_1_startup;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Employee employee=new Employee("WinEiKhaing", "Welda",10000.0, 2019, 05, 01);
+	}
+
+}

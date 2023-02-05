@@ -1,0 +1,3 @@
+The InClassExercises archive is a zipped Eclipse Java project.
+Unzip into your workspace and import. These exercises will be
+referred to in every lesson of the course.

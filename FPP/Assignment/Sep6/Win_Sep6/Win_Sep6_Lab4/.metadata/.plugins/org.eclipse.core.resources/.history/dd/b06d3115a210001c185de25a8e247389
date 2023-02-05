@@ -1,0 +1,25 @@
+class test{
+	public static void main(String[] args) {
+		test c1=new cTest();
+		System.out.println(c1.compute());
+	}
+	
+	private int value=3;
+	
+	public int compute() {
+		return value;
+	}
+}
+
+class cTest extends test{
+	cTest(){}
+	public int compute() {
+		return (new innerClass()).compute();
+	}
+	
+	class innerClass{
+		private int compute() {
+			return 11;
+		}
+	}
+}

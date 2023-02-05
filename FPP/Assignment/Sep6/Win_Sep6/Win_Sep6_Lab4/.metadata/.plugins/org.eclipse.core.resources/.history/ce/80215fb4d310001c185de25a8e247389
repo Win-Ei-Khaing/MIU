@@ -1,0 +1,16 @@
+package prog4_3.employeeinfo;
+
+public class RetirementAccount extends Account {
+	
+	public RetirementAccount(Employee emp, double balance) {
+		super(emp, balance);
+	}
+
+	public RetirementAccount(Employee emp) {
+		super(emp);
+	}
+
+	public AccountType getAcctType() {
+        return AccountType.RETIREMENT;
+	}
+}

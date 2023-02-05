@@ -1,0 +1,5 @@
+package lesson7.examples_returning_boolean;
+
+public class BinarySearchTest {
+
+}

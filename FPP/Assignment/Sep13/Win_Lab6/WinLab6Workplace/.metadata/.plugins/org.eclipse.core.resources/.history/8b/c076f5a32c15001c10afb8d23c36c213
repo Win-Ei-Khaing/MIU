@@ -1,0 +1,11 @@
+package exercise4;
+
+import java.util.Comparator;
+
+public class StringSort {
+	Comparator<String> myComparator;
+
+	StringSort(Comparator<String> myComparator) {
+		this.myComparator=myComparator;
+	}
+}

@@ -1,0 +1,37 @@
+package list;
+
+import java.util.StringJoiner;
+
+public class SinglyList<E> {
+	Node<E> head;
+	
+	public SinglyList(){
+		head=null;
+	}
+	
+	void addFirst(E e) {
+		if(head.next!=null)
+			head=new Node(e, null);	
+		else
+			head=new Node(e, head.next);
+	}
+
+	private static class Node<E>{
+		E data;
+		Node<E> next;
+
+		public Node(E data, Node<E> next){
+			this.data=data;
+			this.next=next;
+		}
+
+		public String toString() {
+			StringJoiner sj=new StringJoiner(", ","[","]");
+			while(next!=null) {
+				sj.add(next.data.toString());
+				next=next.next;
+			}
+			return sj.toString();
+		}
+	}
+}

@@ -1,0 +1,33 @@
+package prog7_2;
+
+public class MinSort2 {
+	static String temp="";
+	static String answer ="";
+	static int i=0;
+	public static String sort(String s)
+	{
+		if(s.length()==0 || s.length()==1) {
+			return s;
+		}
+		String k=""+chmin(s);
+		int x=s.indexOf(k);
+		char d=s.charAt(0);
+		return k+sort(s.substring(1));
+	}
+	public static Character chmin(String str) {
+		if(str==null) {
+			return null;
+		}
+		char ch=str.charAt(0);
+		if(str.length()==1) {
+			return ch;
+		}
+		char c=chmin(str.substring(1));
+		return (ch<c)?ch:c;
+	}
+	public static void main(String[] args) {
+		MinSort mn=new MinSort();
+		String result=mn.sort("zwxuabfkafutbbbb");
+		System.out.println(result);
+	}
+}

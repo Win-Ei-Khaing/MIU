@@ -1,0 +1,16 @@
+package prog3_2.employeeinfo;
+
+public class SavingsAccount extends Account {
+	
+	public SavingsAccount(Employee emp, double balance) {
+		super(emp, balance);
+	}
+
+	public SavingsAccount(Employee emp) {
+		super(emp);
+	}
+	
+	public AccountType getAcctType() {
+        return AccountType.SAVINGS;
+	}
+}

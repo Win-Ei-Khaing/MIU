@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="pencil_7.prob2.Enclosing"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="exercise1.model.Professor"/>
+    <fullyQualifiedTypeName name="exercise1.model.DeptEmployee"/>
+    <fullyQualifiedTypeName name="exercise1.model.Secretary"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="prog4_3.employeeinfo.AccountType"/>
+    <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
+    <fullyQualifiedTypeName name="prog4_3.MyStringList"/>
+    <fullyQualifiedTypeName name="java.util.StringJoiner"/>
+    <fullyQualifiedTypeName name="prog4_3.employeeinfo.AccountList"/>
+    <fullyQualifiedTypeName name="prog4_3.employeeinfo.Account"/>
+    <fullyQualifiedTypeName name="prog4_3.employeeinfo.CheckingAccount"/>
+    <fullyQualifiedTypeName name="lab4_7.employeeinfo.Employee"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+</qualifiedTypeNameHistroy>

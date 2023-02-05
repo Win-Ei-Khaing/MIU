@@ -1,0 +1,25 @@
+package lesson7.examples_returning_boolean;
+
+public class FindMinimum {
+
+	public static void main(String[] args) {
+		int[] ary= {1,2,3,4,5,6,-1};
+		System.out.println(findMin(ary));
+		System.out.println(findMinRecursively(ary));
+	}
+
+	static int findMin(int[] ary) {
+		if(ary==null || ary.length<1)
+			return 0;
+		int min=ary[0];
+		for(int i=1;i<ary.length;i++) {
+			if(min>ary[i])
+				min=ary[i];
+		}
+		return min;
+	}
+	
+	static int findMinRecursively(int[] ary) {
+		if()
+	}
+}

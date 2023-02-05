@@ -1,0 +1,38 @@
+package prog4;
+
+public final class Triangle {
+	private final double base;
+	private final double height;
+	
+	public Triangle(double base, double height) {
+		this.base=base;
+		this.height=height;
+	}
+	
+	public Triangle(double side1, double side2, double side3) {
+		double max=side1;
+		double min=0.0;
+		if(max<side2) {
+			max=side2;
+			min=max;
+		}
+		if(max<side3) {
+			max=side3;
+			min=max;
+		}
+		this.base=max;
+		this.height=min;
+	}
+	
+	public double getBase() {
+		return base;
+	}
+	
+	public double getHeight() {
+		return height;
+	}
+	
+	public double computeArea() {
+		return (1/2)*base*height;
+	}
+}

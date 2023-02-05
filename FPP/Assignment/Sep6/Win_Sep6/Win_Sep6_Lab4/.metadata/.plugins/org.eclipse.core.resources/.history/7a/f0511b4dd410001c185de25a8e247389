@@ -1,0 +1,26 @@
+package prog4_3.employeeinfo;
+
+public class RetirementAccount extends Account {
+	
+	public RetirementAccount(Employee emp, double balance) {
+		super(emp, balance);
+	}
+
+	public RetirementAccount(Employee emp) {
+		super(emp);
+	}
+
+	public AccountType getAcctType() {
+        return AccountType.RETIREMENT;
+	}
+	
+	public boolean makeWithdrawal(double amount) {
+		double existingAmt=super.getBalance();
+		double penalty=(2/100)*existingAmt;
+		if(amount <= existingAmt+penalty) {
+			this.makeWithdrawal(existingAmt+penalty);
+			return true;
+		}
+		return false;
+	}
+}

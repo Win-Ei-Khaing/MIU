@@ -1,0 +1,17 @@
+class test {
+	test(){
+		TheSubclass sub = new TheSubclass();
+		System.out.println("The Class constructor");
+	}
+	
+	public static void main(String[] args){
+		new TheSubclass();
+	}
+	}
+
+
+	class TheSubclass extends test {
+	TheSubclass() {
+		System.out.println("The Subclass constructor");
+	}
+}

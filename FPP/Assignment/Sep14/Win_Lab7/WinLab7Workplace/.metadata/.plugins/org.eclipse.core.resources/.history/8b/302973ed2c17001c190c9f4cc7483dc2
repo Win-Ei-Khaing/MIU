@@ -1,0 +1,47 @@
+package prog7_2;
+
+public class MinSort2 {
+	static String temp="";
+	static String answer ="";
+	static int i=0;
+	public static String sort(String s)
+	{
+		StringBuilder sb=new StringBuilder();
+		if(s.length()==0 || s.length()==1) {
+			return s;
+		}
+
+		//int len=s.length();//original string length
+		//for(int i=0;i<len;i++){
+			char k=chmin(s); //min char
+			int x=s.indexOf(k);//location of min char
+			//adding min char to result
+			sb.append(k);
+
+			StringBuilder tempStringBuilder=new StringBuilder(s);
+			char temp=s.charAt(0);
+			tempStringBuilder.setCharAt(0, k);
+			tempStringBuilder.setCharAt(x, temp);
+
+			s=tempStringBuilder.toString().substring(1);
+		//}
+			
+		return sb.toString()+sort(s);
+	}
+	public static Character chmin(String str) {
+		if(str==null) {
+			return null;
+		}
+		char ch=str.charAt(0);
+		if(str.length()==1) {
+			return ch;
+		}
+		char c=chmin(str.substring(1));
+		return (ch<c)?ch:c;
+	}
+	public static void main(String[] args) {
+		MinSort2 mn=new MinSort2();
+		String result=mn.sort("zwxuabfkafutbbbb");
+		System.out.println(result);
+	}
+}

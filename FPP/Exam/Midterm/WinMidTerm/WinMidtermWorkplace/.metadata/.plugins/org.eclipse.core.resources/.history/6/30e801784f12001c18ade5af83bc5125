@@ -1,0 +1,19 @@
+package edu.miu.cs.cs390fpp.mid.pdmapp;
+
+import edu.miu.cs.cs390fpp.mid.pdmapp.model.Product;
+
+public class ProductDataMgmtApp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	static void printProducts(Product[] productAry) {
+		String displayText="";
+		for(Product p : productAry) {
+			displayText+=p.toString()+"\n";
+		}
+		System.out.println(displayText);
+	}
+}

@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+/Users/wineikhaing/Desktop/MIU/FPP/Assignment/Sep6/Win_Sep6_Lesson3Practice/Win_Sep6_Practice/.metadata/.plugins/org.eclipse.jdt.core
+3787740244.index
+1592919258.index
+2238664193.index

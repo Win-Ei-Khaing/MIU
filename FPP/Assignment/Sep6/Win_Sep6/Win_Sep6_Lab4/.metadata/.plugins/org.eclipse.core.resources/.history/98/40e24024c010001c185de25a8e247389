@@ -1,0 +1,56 @@
+package prog3_2.employeeinfo;
+
+class Account {
+	private final static double DEFAULT_BALANCE = 0.0;
+	private double balance;
+	private Employee employee;
+
+	Account(Employee emp, double balance) {
+		employee = emp;
+		this.balance = balance;
+	}
+
+	Account(Employee emp) {
+		this(emp, DEFAULT_BALANCE);
+	}
+
+	public String toString() {
+		return "Account type: "+this.getClass().getSimpleName()+" && Current bal: "+balance;
+	}
+	
+	public void deposit(AccountType acctType, double amt){
+		switch(acctType){
+			case CHECKING:
+				checkingAcct.makeDeposit(amt);
+				break;
+			case SAVINGS:
+				savingsAcct.makeDeposit(amt);
+				break;
+			case RETIREMENT:
+				retirementAcct.makeDeposit(amt);
+				break;
+			default:				
+		}
+	}
+	public boolean withdraw(AccountType acctType, double amt){
+		switch(acctType){
+		case CHECKING:
+			return checkingAcct.makeWithdrawal(amt);
+			
+		case SAVINGS:
+			return savingsAcct.makeWithdrawal(amt);
+			
+		case RETIREMENT:
+			return retirementAcct.makeWithdrawal(amt);
+			
+		default:
+			return false;
+		
+			
+		}
+	}
+	
+	public double getBalance() {
+		return balance;
+	}
+}

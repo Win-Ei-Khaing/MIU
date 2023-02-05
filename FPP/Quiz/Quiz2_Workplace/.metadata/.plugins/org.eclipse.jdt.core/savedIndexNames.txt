@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/Users/wineikhaing/Desktop/MIU/FPP/Quiz/Quiz2_Workplace/.metadata/.plugins/org.eclipse.jdt.core
+3787740244.index
+3420537497.index

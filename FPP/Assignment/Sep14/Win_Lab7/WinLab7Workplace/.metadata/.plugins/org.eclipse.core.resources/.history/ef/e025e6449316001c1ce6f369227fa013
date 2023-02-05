@@ -1,0 +1,17 @@
+package prog7_3;
+
+public class BinarySearch {
+
+	public static void main(String[] args) {
+		System.out.println(search("Hello",'e'));
+	}
+
+	static Boolean search(String s, char c) {
+		int midIndex=s.length()/2;
+		char ch=s.charAt(midIndex);
+		if(ch==c) return true;
+		if(c<ch) search(s.substring(0,midIndex-1), c);
+		if(c<ch) search(s.substring(midIndex+1), c);
+		return false;
+	}
+}
