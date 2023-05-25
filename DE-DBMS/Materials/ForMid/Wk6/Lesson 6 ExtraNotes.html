@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0074)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson6_ExtraNotes.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 6</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 6 Extra Notes - Entity-Relationship Modeling</span></span></b></p>
+
+
+
+<h4>Reasons to learn ER</h4>
+
+<ul style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">
+
+<li>Napkin sketches.</li><li>Learning what a model is.</li><li>You will encounter them in the field.</li>
+</ul>
+
+<p style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+The following notes are from The Data Model Resource Book</p>
+
+<h4>Concepts of the Entity-Relationship Model</h4>
+
+<ul style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">
+
+<li>Entity type, which contains entities</li><li>Relationship types, which contains relationships</li><li>Attributes&nbsp;<br>
+</li>
+</ul>
+
+<p>
+The terms "entity" and "relationship" are commonly used when "entity type" and "relationship type" are meant.</p>
+
+<p>Entities (like variables) have state, not behavior<br>Objects have state and behavior<br>Methods have behavior, not state</p>
+
+<p>
+<span style="font-weight: bold;">Examples:</span><br>Baseball: Player (n) ---
+<span class="Apple-converted-space">&nbsp;</span><is on="">--- (1) Team<br>
+Company: Staff (n) ---<span class="Apple-converted-space">&nbsp;</span><works at="">--- (1) Branch<br>
+Bank:<br>&nbsp;&nbsp;&nbsp;Loan (n) ---<span class="Apple-converted-space">&nbsp;</span>
+<made to="">--- (1) Customer<br>&nbsp;&nbsp;&nbsp;Payment (n) ---
+<span class="Apple-converted-space">&nbsp;</span><is for="">--- (1) Loan<br><br>
+Marriage could be:<br></is></made></works></is></p>
+
+<li>an entity, for a registrar</li>
+
+<li>a relationship, for a population census</li>
+
+<li>an attribute, for payroll</li>
+
+<h4>Refinements in ERM:</h4>
+
+<ul>
+
+<li>Entity Type = ( strong | weak )</li><li>Relationship Type = ( strong | weak )</li>
+<li>Cardinality of Relationship Type = ( 1:1 | 1:N | M:N )</li><li>Participation in Relationship Type = ( partial | full )</li>
+</ul>
+
+<h4>&nbsp;Representation by Relations (Tables)</h4>
+
+<ul>
+
+<li>An entity is represented by a relation</li><li>A 1:N relationship generally implies a foreign key in the relation representing the N entity</li>
+<li>A weak entity generally imports its key from the strong entity indicated by the weak relationship</li>
+</ul>
+
+<h4>&nbsp;The Enhanced Entity-Relationship Model</h4>
+
+<ul>
+
+<li>Basic concepts of ER modeling are not sufficient to represent the requirements of the newer, more complex applications</li>
+<li>Response is development of additional 'semantic' modeling concepts</li>
+</ul>
+
+<h4>&nbsp;Additional concepts of EER model include</h4>
+
+<ul>
+
+<li>Specialization / generalization (two approaches to the same ER diagram)</li>
+<li>Baseball: Pitchers and Hitters are both Players</li>
+<li>Specialization: Players gives rise to Pitchers and Hitters</li>
+<li>Generalization: Pitchers and Hitters gives rise to Players</li>
+<li>Players = superclass, Pitchers/Hitters = subclasses</li>
+<li>Attributes of Players inherited by Pitchers and Hitters</li>
+<li>Subclasses may be disjoint or overlapping (can Pitchers be Hitters?)</li>
+<li>A subclass represents a subset of its superclass (entities in a subclass always describe entities in the superclass)</li>
+<li>Structure entities</li><li>Person: people are related to each other</li><li>PeopleStructure(PersonID, PersonID2, relationship)</li>
+</ul>
+
+<p>&nbsp;<br>
+</p><h4>Refine ER Diagram</h4>
+
+<ul>
+
+<li>If an attribute is multi-valued, replace it with an entity and a relation.</li>
+<li>If a relation has cardinality M:N, replace it with an entity and two relations.</li>
+<li>If a relation has attributes, replace it with an entity and two relations.</li>
+<li>If a relation connects K&gt;2 relations, replace it by an entity and K binary relations.</li>
+<li>If two entities are connected
+by a 1-1 relationship, (a) if participation is required on both sides,
+consider merging the entities, otherwise (b)
+consider introducing hierarchies.</li>
+<li>Eliminate unnecessary subtypes by analyzing their attributes and relationships.</li>
+</ul>
+
+<p>&nbsp;Refinement of an ER diagram removes all obstructions to mapping into a relational
+model. After refinement, the ER diagram is effectively a logical data model.</p>
+
+<h3>Terminology for the Entity-Relationship Model</h3>
+
+<table style="font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px;" border="1" cellpadding="1" cellspacing="2">
+
+<tbody><tr>
+<td>Entity Type</td>
+<td>An object or concept that is identified by the enterprise as having an independent existence.</td>
+</tr>
+<tr>
+<td>Weak Entity Type</td><td>An entity type that is existence-dependent on some other entity type.</td>
+</tr>
+<tr>
+<td>Strong Entity Type</td>
+<td>An entity type that is not existence-dependent on some other entity type.</td>
+</tr>
+<tr>
+<td>Entity</td><td>An instance of an entity type that is uniquely identifiable.</td>
+</tr>
+<tr><td>Attribute</td><td>A property of an entity or a relationship type.</td></tr>
+<tr><td>Attribute Domain</td><td>A set of values that may be assigned to a single-valued attribute.</td></tr>
+<tr><td>Simple Attribute</td><td>An attribute composed of a single component with an independent existence.</td></tr>
+<tr><td>Composite Attribute</td><td>An attribute composed of multiple components each with an independent existence.</td></tr>
+<tr><td>Single-valued Attribute</td><td>An attribute that holds a single-value for a single entity.</td></tr>
+<tr><td>Multi-valued Attribute</td><td>An attribute that holds multiple values for a single entity.</td></tr>
+<tr><td>Derived Attribute</td><td>An attribute that represents a value that is derivable from the value of a
+related attribute or set of attributes, not necessarily in the same
+entity.</td></tr>
+<tr><td>Relationship Type</td><td>A meaningful association among entity types.</td></tr>
+<tr><td>Relationship Type Degree</td><td>The number of participating entities in a relationship.</td></tr>
+<tr><td>Recursive Relationship Type</td><td>A relationship where the same entity participates more than once in a different roles.</td>
+</tr><tr><td>Relationship Type Cardinality Constraints</td><td>Determines the number of possible relationships for each participating entity.
+Most common degree for relationships is binary with cardinality ratios
+of one-to-one (1:1), one-to-many (1:M) or many-to-many (M:N).</td></tr>
+<tr><td>Relationship Type Participation Constraints</td>
+<td>Determines whether the existence of an entity depends on its being related to another entity through the relationship.</td>
+</tr><tr><td>Relationship</td>
+<td>An association of entities where the association includes one entity from each participating entity type.</td></tr>
+</tbody>
+</table>
+
+<p><span style="font-weight: bold;">Example</span>
+<br>Entity-Relation Diagram:<br>Faculty (1) ---<span class="Apple-converted-space">&nbsp;</span>
+<advises>--- (n) Student</advises></p>
+
+<h4>Faculty</h4>
+
+<table class="MsoNormalTable" style="border: medium none ; font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 36.9pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr>
+<td style="border: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt; background-color: rgb(230, 230, 230);" valign="top" width="54">
+<p class="MsoNormal">FID</p></td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt; background-color: rgb(230, 230, 230);" valign="top" width="78">
+<p class="MsoNormal">Name</p></td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt; background-color: rgb(230, 230, 230);" valign="top" width="90">
+<p class="MsoNormal">Office</p></td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt; background-color: rgb(230, 230, 230);" valign="top" width="108">
+<p class="MsoNormal">Availability</p></td></tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">1</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78">
+<p class="MsoNormal">Bill</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal">YC</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt;" valign="top" width="108">
+<p class="MsoNormal">Thurs 2-3</p></td>
+</tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">2</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78">
+<p class="MsoNormal">Bob</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal">Howard</p>
+</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt;" valign="top" width="108">
+<p class="MsoNormal">Wed 9-10</p></td></tr></tbody>
+</table>
+
+<p style="font-weight: bold;">Student</p>
+
+<table class="MsoNormalTable" style="border: medium none ; font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 36.9pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt; background-color: rgb(230, 230, 230);" valign="top" width="54"><p class="MsoNormal">SID</p>
+</td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt; background-color: rgb(230, 230, 230);" valign="top" width="78">
+<p class="MsoNormal">Name</p></td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt; background-color: rgb(230, 230, 230);" valign="top" width="90">
+<p class="MsoNormal">Major</p></td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt; background-color: rgb(230, 230, 230);" valign="top" width="108">
+<p class="MsoNormal">Advisor</p></td></tr><tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54"><p class="MsoNormal">1</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78"><p class="MsoNormal">Joan</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal">Comp</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt;" valign="top" width="108"><p class="MsoNormal">1</p></td></tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54"><p class="MsoNormal">2</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78"><p class="MsoNormal">Jack</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal">Eng</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt;" valign="top" width="108"><p class="MsoNormal">2</p></td></tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">3</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78"><p class="MsoNormal">Jill</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal">Comp</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 81pt;" valign="top" width="108"><p class="MsoNormal">1</p></td></tr></tbody>
+</table>
+
+<p style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Add to entity-relation diagram:<br>Faculty (n) ---<span class="Apple-converted-space">&nbsp;</span><isteaching>--- (m) Course<br>Student (n) ---
+<span class="Apple-converted-space">&nbsp;</span><istaking>--- (1) Course<br></istaking></isteaching></p>
+
+<h4 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Course</h4>
+
+<table class="MsoNormalTable" style="border: medium none ; font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 36.9pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt; background-color: rgb(230, 230, 230);" valign="top" width="54">
+<p class="MsoNormal">CID</p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt; background-color: rgb(230, 230, 230);" valign="top" width="78">
+<p class="MsoNormal">Name</p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt; background-color: rgb(230, 230, 230);" valign="top" width="90">
+<p class="MsoNormal">Credits</p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54"><p class="MsoNormal">CS1</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78"><p class="MsoNormal">DB</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">4</p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54"><p class="MsoNormal">CS2</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78"><p class="MsoNormal">OS</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">4</p></td></tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54"><p class="MsoNormal">CS3</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.5pt;" valign="top" width="78">
+<p class="MsoNormal">DCOMP</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal">5</p></td></tr></tbody>
+</table>
+
+<br>
+
+<span style="font-weight: bold;"><br>
+IsTeaching<br>
+<br>
+</span>
+<table class="MsoNormalTable" style="border: medium none ; font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 36.9pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr>
+<td style="border: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt; background-color: rgb(230, 230, 230);" valign="top" width="54">
+<p class="MsoNormal">FID</p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt; background-color: rgb(230, 230, 230);" valign="top" width="78">
+<p class="MsoNormal">CID</p></td></tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt;" valign="top" width="54">
+<p class="MsoNormal">1</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt;" valign="top" width="78">
+<p class="MsoNormal">CS1</p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt;" valign="top" width="54">
+<p class="MsoNormal">2</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt;" valign="top" width="78"><p class="MsoNormal">CS1</p></td>
+</tr>
+<tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt;" valign="top" width="54">
+<p class="MsoNormal">1</p></td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt;" valign="top" width="78"><p class="MsoNormal">CS2</p></td></tr></tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h4 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">IsTaking</h4>
+
+<table class="MsoNormalTable" style="border: medium none ; font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 36.9pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt; background-color: rgb(230, 230, 230);" valign="top" width="54"><p class="MsoNormal">SID</p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt; background-color: rgb(230, 230, 230);" valign="top" width="78"><p class="MsoNormal">CID</p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt;" valign="top" width="54"><p class="MsoNormal">1</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt;" valign="top" width="78"><p class="MsoNormal">CS2</p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt;" valign="top" width="54"><p class="MsoNormal">2</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt;" valign="top" width="78"><p class="MsoNormal">CS1</p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 40.8pt;" valign="top" width="54"><p class="MsoNormal">3</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 58.2pt;" valign="top" width="78"><p class="MsoNormal">CS1</p></td></tr></tbody>
+</table>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h1 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">ER Diagrams Dos and Donts</h1>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A high-quality data model gives an impression of the business it represents.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+<b>Five perspectives to check</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Conceptual correctness - does it represent the business concepts of the enterprise?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Conceptual completeness - does it describe the full scope of the enterprise?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Syntactic correctness - are the symbols used according to their definitions?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Syntactic completeness - is the diagram fully developed in all its details?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Enterprise awareness - is the model natural to the enterprise, stable and scalable?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Name</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">desirable features</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">singular noun possibly with qualifier</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">descriptive of the business entity being modeled</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">reflective of the logical (not physical) nature of the entity</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">undesirable features</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">prepositions, conjunctions, verbs, and definite/indefinite articles</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">abbreviations and acronyms</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">references to individual real-world entities</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">ambiguity (through homonyms and synonyms)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Entity Checklist</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">Entities should model logical objects rather than physical objects</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Name</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><i>Description</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><i>Category, one of</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;"><i>fundamental</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;"><i>associative (relations between other entities)</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;"><i>attributive (used to classify other entities)</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;"><i>subtype</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Primary key, five characteristics</p>
+
+<ul>
+
+<li>stable (unchanging)</li>
+</ul>
+
+<ul>
+
+<li>minimal (no unnecessary attributes)</li>
+</ul>
+
+<ul>
+
+<li>factless (no meta-information)</li>
+</ul>
+
+<ul>
+
+<li>definitive (a value exists when the entity is created)</li>
+</ul>
+
+<ul>
+
+<li>accessible (can be used in queries)</li>
+</ul>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Foreign keys - no optional foreign keys</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Attributes - no optional attributes</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Relationships to other entities</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Current number of occurrences</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Expected rate of change</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Traceability (reference to business or planning document)</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Authority, two levels</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>steward has authority over metadata</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>custodian has authority over data</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Attribute Checklist</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Name</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Description</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Atomicity (represents a single business fact)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Type (primary key | foreign key | non-key)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Source (derived | primitive)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Edit Rule (add now | add later), (modify allowed | modify not allowed)</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Domain</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>never assign default values</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Traceability (reference to business or planning document)</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Authority</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Relationship Checklist</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Name</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Description</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Key(s)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Type (weak | strong)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Cardinality</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Participation (full | partial) or (mandatory | optional)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Deletion Integrity Rule (cascade | disassociate | disallow)</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><i>Relationship Quantity Statistics</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">The terms parent and child refer to entities in a relationship</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">parent (1) --- &lt;&gt; --- (N) child</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Generalization Structure Checklist</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Create a<span class="Apple-converted-space">&nbsp;</span><b>supertype</b><span class="Apple-converted-space">&nbsp;</span>for a group of entity types</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">of the same type</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">with some attributes in common</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">Create a<span class="Apple-converted-space">&nbsp;</span><b>subtype</b><span class="Apple-converted-space">&nbsp;</span>of an entity type when some entities have either</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">a characteristic non-key attribute, or</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">a required relationship with another entity type</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">A subtype must have the same primary key as its supertype</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">an entity can only be a subtype of one supertype</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Every supertype must contain or relate to either</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">a<span class="Apple-converted-space">&nbsp;</span><b>subtype discriminator</b>, for disjoint subtypes, or</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">a<span class="Apple-converted-space">&nbsp;</span><b>role entity</b>, for overlapping subtypes</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A subtype discriminator or role entity controls exactly one generalization structure</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A subtype can be a supertype (tree structure,<span class="Apple-converted-space">&nbsp;</span><b>generalization hierarchy</b>)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">An entity can be a supertype for more than one generalization structure</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Structure Entity</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">Aggregation hierarchy</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">e.g., from (Product, Part, Component) to (Item, ItemStructure)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">Recursive relationships</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">e.g., from (Person supervises Person) to (Person, PersonStructure)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>ER Model Checklist</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">1-1 relationships</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">eliminate by merging or by introducing a generalization</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">1-N relationships with partial participation of the child</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">eliminate by defining subtypes</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">M-N relationships</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">eliminate by introducing an associative entity</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">Circular references (where entities are their own ancestors)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">check business rules and cardinalities and modify design</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">Any pair of entities related by more than one dependency path</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">check business rules and drop redundant path</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">Any pair of entities connected by more than one relationship</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">check business rules and modify design</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Primary keys</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">each primary key has migrated in its entirety from the parent to each child</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">no two entities have the same primary key (except subtypes and supertype)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Normalization</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">All levels of relational normalization apply to ER modeling</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1NF: move repeating attribute to a separate entity</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">2NF: move attributes in 2NF-violating FD to a separate entity</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">3NF: move attributes in 3NF-violating FD to a separate entity</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">BCNF: to preserve FDs, modify choice of attributes</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">4NF: factorize entity into two entities</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">5NF: factorize entity into more than two entities</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Notes</b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Points in italics in the entity, attribute, and relationship checklists will not concern us in this course.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">Instead of entity category as defined above, the we will follow the course text and use</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Type = (weak | strong)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">An artificial key for an entity is permissible when</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in; text-indent: 0.25in;">the entity is fundamental</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in; text-indent: 0.25in;">the attributes of this or other entities are sufficient for data access</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">and either</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">no attribute possesses all the characteristics of a primary key, or</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">all candidate keys are large and complex, or</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">the entity is part of a generalization hierarchy</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Attribute
+aliases are only permitted when an attribute is inherited more than
+once. For example, attributes in a foreign key should have the same
+names as the attributes in the originating entity.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-style: italic;">Points extracted from:</p>
+
+<p style="font-style: italic;">The Data Modeling Handbook</p>
+
+<p style="font-style: italic;">A best-practice guide to building quality data models</p>
+
+<p style="font-style: italic;">M.C. Reingruber, W.W. Gregory</p>
+
+<p style="font-style: italic;">Wiley-QED (1994)</p>
+
+</body></html>

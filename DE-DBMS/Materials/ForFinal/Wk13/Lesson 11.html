@@ -1,0 +1,875 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0064)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson11.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 11</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 11 - Query Processing</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 14pt;"><span style="color: rgb(0, 0, 153);"></span></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose </span></u><span style="font-size: 12pt;">: -</span><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;">&nbsp;</span><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;">Skill in using relational algebra and query costing to find optimal query plans.</span></p>
+
+<br>
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">History</h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">In
+network and hierarchical DBMSs, low-level procedural query language is
+generally embedded in high-level programming language. It is then the
+programmer's responsibility to select most appropriate execution
+strategy.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;With
+declarative languages such as SQL, user specifies what data is required
+rather than how it is to be retrieved. This gives the DBMS more control
+over system performance. It was the success of query optimization in
+the relational model that made the model popular.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Query Optimization</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Query optimization tries to minimize the cost of a query.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Two common definitions of query cost: system time and response time.&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Minimizing
+response time generally means maximizing parallelism. This is a
+computationally intractable task, so a near-optimal solution must be
+accepted.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+For a centralized DBMS, the dominant cost in query processing tends to be disk access.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Cost estimation uses system-generated statistics on relations, attributes, and indexes.<br>
+</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Two main components in query optimization:<br>
+</p>
+
+<ul>
+
+<li>heuristic rules that order operations in a query - always good.<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>compare
+different strategies based on relative costs, and select one that
+minimizes resource usage - expensive, so use sparingly.</li>
+</ul>
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</h3>
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Example of query cost</h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Three possible execution plans for one query</p>
+
+<ul style="color: rgb(51, 51, 255);">
+
+<li>Find all Managers that work at a London branch.</li>
+</ul>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(51, 51, 255);">SELECT *<br>
+FROM staff s, branch b<br>
+WHERE s.bno = b.bno AND<br>
+s.position = 'Manager' AND<br>
+b.city = 'London'</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Assume:</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">1000 tuples in Staff<br>
+50 tuples in Branch<br>
+50 Managers<br>
+5 London branches<br>
+No indexes or sort keys<br>
+Results of any intermediate operations stored on disk<br>
+Cost of the final write is ignored<br>
+Tuples are accessed one at a time</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<table class="MsoNormalTable" style="border: medium none ; font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 23.4pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><b>Operation</b></p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right"><b>Reads</b></p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><b>Writes</b></p></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><b>Total</b></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><i>Query Plan 1</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Cartesian product Staff x Branch</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">1,000+50</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">1,000*50</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Select tuples that satisfy WHERE clause</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">1,000*50</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">-</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><i>Total</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right"><i>51,050</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>50,000</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>101,050</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><i>Query Plan 2</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Join(Staff, Branch; bno)</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">1,000+50</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">1,000</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Select on position and city</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">1,000</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">-</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><i>Total</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right"><i>2,050</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>1,000</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>3,050</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><i>Query Plan 3</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">&nbsp;</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Get Manager tuples from Staff</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">1,000</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">50</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Get London tuples from Branch</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">50</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">5</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal">Join Manager and London</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right">50+5</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right">-</p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>&nbsp;</i></p></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 211.5pt;" valign="top" width="282"><p class="MsoNormal"><i>Total</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 63pt;" valign="top" width="84"><p class="MsoNormal" style="text-align: right;" align="right"><i>1,105</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>55</i></p></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90"><p class="MsoNormal" style="text-align: right;" align="right"><i>1,160</i></p></td></tr></tbody>
+</table>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Query Processing</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Four main phases in query processing (processes in italics and blue)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">SQL</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in; color: rgb(51, 51, 255);"><i>Query decomposition - using system catalogue</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Relational algebra expression</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in; color: rgb(51, 51, 255);"><i>Query optimization - using database statistics</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Execution plan</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in; color: rgb(51, 51, 255);"><i>Code generation</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Optimized code</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in; color: rgb(51, 51, 255);"><i>Runtime query execution</i></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Result set</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Query Decomposition - convert SQL to Relational Algebra Tree</p>
+
+<p class="Bullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Represent each base relation by a leaf node</p>
+
+<p class="Bullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">2.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Represent each relational algebra operation by an internal node</p>
+
+<p class="Bullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">3.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>The sequence of operations goes from leaves to root</p>
+
+<p class="Bullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">4.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>The root represents the result of the query</p>
+
+<b style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-size: 12pt; font-family: &#39;Times New Roman&#39;;"></span></b><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;"></span><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-size: 14pt;"></span><br style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Heuristic Processing Strategies</h2>
+
+<ol start="1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">Perform selection operations as early as possible.</li><li class="MsoNormal">Keep selection predicates on same relation together.</li><li class="MsoNormal">Perform projection as early as possible.</li><li class="MsoNormal">Keep projection attributes on same relation together.</li><li class="MsoNormal">Combine a Cartesian product and subsequent selection whose predicate represents a join condition into a join operation.</li><li class="MsoNormal">Use
+associativity of binary operations to rearrange leaf nodes so leaf
+nodes with most restrictive selection operations executed first. (E.g.,
+three way join)</li><li class="MsoNormal">Compute common expressions once.</li>
+</ol>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Implement these strategies using transformational rules for relational algebra operations, for example:</p>
+
+<ul>
+
+<li><span style="font-family: Symbol;"></span>P.b(P.c(R)) = P(b.c)(R)<br>
+</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span>S(p.q)(R) = S.p(S.q(R))<br>
+</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span>S.p(S.q(R)) = S.q(S.p(R)) (follows from previous)<br>
+</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span>P.b(S.p(R)) = S.p(P.b(R)) when p is a proposition on attributes b<br>
+</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span>S.p(J(R,S,q) = J(S.p(R),S,q) when p is a proposition on attributes of R<br>
+</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span>P(b+c)J(R,S,p) = J(P.b(R),P.c(S),p) when b an c are attributes of R and S respectively, and p only involves attributes in b+c</li>
+</ul>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">where</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">p and q are propositions</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">p.q = p and q</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">p+q = p or q</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">b and c are sets of attributes</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">b.c = b intersect c</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">b+c = b union c</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Cost Estimation</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">There
+are many different ways of implementing relational algebra operations,
+particularly if there are primary and secondary indices. A DBMS can use
+formulae to estimate costs for a number of options, and select one with
+lowest cost. Since the dominant cost of query processing is generally
+disk accesses, the cost of a query plan can be estimated by counting
+disk accesses.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;&nbsp;</p>
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Database Statistics for Cost Estimation</h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Success
+of estimation depends on amount and currency of statistical information
+DBMS holds. Keeping statistics current can be problematic. If
+statistics updated every time tuple is changed, this would impact
+performance. The DBMS could update statistics on a periodic basis, for
+example nightly, or whenever the system is idle.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Typical Statistics for Relation R</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">ntuples(R) = number of tuples in R</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">bfactor(R) = blocking factor of R (#tuples per block)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Derive number of blocks required to store R:</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nblocks(R) = ntuples(R) / bfactor(R)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Typical Statistics for Fully-Qualified Attribute A of Relation R</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">ndistinct(A) = number of distinct values that appear for attribute A</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">min(A), max(A) = minimum, maximum possible values for attribute A</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Derive<span class="Apple-converted-space">&nbsp;</span><i>selection cardinalities</i><span class="Apple-converted-space">&nbsp;</span>of fully-qualified attribute A in relation R</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">For an equality condition:</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A) = 1 if A is a key attribute of R</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= ntuples(R) / ndistinct(A) otherwise</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">For a numerical inequality condition, e.g.:</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A&gt;c) = ntuples(R) * ((max(A) - c) / ( max(A) - min(A)))</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Statistics for Multilevel Index I on Attribute A</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nlevels(I) = number of levels in I</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nlfblocks(I) = number of leaf blocks in I</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">We have modified the notation in the book to make it more compact and precise.</p>
+
+<p class="Bullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0in; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0in;">&nbsp;</p>
+
+<h3><a href="http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson11%20-%20Examples1.htm">Query Optimization Exercises</a></h3><br>
+<br>
+<br>
+<h1 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Query Costs</h1>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Index Types</b><span class="Apple-converted-space">&nbsp;</span>(p991) (Definitions may not be universal. Use these in this course.)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">primary index = indexed field is a candidate key, file is sorted on that field</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">clustering index = indexed field is not a candidate key, file is sorted on that field</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">secondary index = file not sorted on indexed field</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">dense index = one index entry for each key</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">sparse index = one index entry for a set of keys</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">there is at most one primary index on a relation</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">a primary index can be dense or sparse</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">a clustering index can be dense or sparse</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">a secondary index is dense</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b><span style="font-size: 14pt;">&nbsp;</span></b></p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Statistics</b></p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Typical Statistics for Relation R</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><b>ntuples</b>(R) = number of tuples in R</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><b>bfactor</b>(R) = blocking factor of R (#tuples per block)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Derive number of blocks required to store R:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nblocks(R) = ntuples(R) / bfactor(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Typical Statistics for Fully-Qualified Attribute A of Relation R</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;"><b>ndistinct</b>(A) = number of distinct values that appear for attribute A</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;"><b>min</b>(A),<span class="Apple-converted-space">&nbsp;</span><b>max</b>(A) = minimum, maximum possible values for attribute A</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Derive<span class="Apple-converted-space">&nbsp;</span><i>selection cardinalities</i><span class="Apple-converted-space">&nbsp;</span>of attribute A (average numbers of tuples)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">For an equality condition, assuming at least one match:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A) = 1 if A is a key attribute of R</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= ntuples(R) / ndistinct(A) otherwise</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">For a not-equal condition:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A&lt;&gt;c) = ntuples(R) - sc(A)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">For a numerical inequality condition, e.g.:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A&gt;c) = ntuples(R) * ((max(A) - c) / ( max(A) – min(A)))</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= ntuples(R) / 2, on average over c</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">For a compound condition, e.g. equality on R.A and/or equality on R.B:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A &amp; B) = sc(A)*sc(B) / ntuples(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A or B) = sc(A) + sc(B) - sc(A)*sc(B) / ntuples(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Statistics for Multilevel Index I on Attribute A</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><b>nlevels</b>(I) = number of levels in I</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><b>nlfblocks</b>(I) = number of leaf blocks in I</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Formulas</b></p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">The number of blocks containing tuples with A=c when R is sorted on A is</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">sc(A) / bfactor(R) = ntuples(R) / [ndistinct(A)*bfactor(R)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= nblocks(R) / ndistinct(A)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">The number of tuples in R satisfying A=a and B=b is</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">[sc(A) / ntuples(R)] * [sc(B) / ntuples(R)] * ntuples(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= sc(A)*sc(B) / ntuples(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-right: -0.5in;">= [ntuples(R) / ndistinct(A)] * [ntuples(R) / ndistinct(B)] / ntuples(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= ntuples(R) / [ndistinct(A)*ndistinct(B)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">If we write out the tuples in R which satisfy A=a and B=b, the number of blocks written is</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">ntuples(R) / [ndistinct(A)*ndistinct(B)* bfactor(R)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= nblocks(R) / [ndistinct(A)*ndistinct(B)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Size of Joins</h3>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Since
+a join is not generally the last operation in a query plan, we may need
+to write the join to disk. We need an estimate for the number of blocks
+to write. A universal upper bound for the number of tuples in the join
+is:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">ntuples(Join(R ,S ,equality)) &lt;= ntuples(R)*ntuples(S)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A better estimate will generally be:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">ntuples(Join(R ,S , R.A = S.A))</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">= ntuples(R)*ntuples(S)*mindistinct(A) / [ndistinct(R.A)*ndistinct(S.A)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">= ntuples(R)*ntuples(S) / maxdistinct(A)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">where mindistinct(A) and maxdistinct(A) are respectively the minimum and maximum of ndistinct(R.A) and ndistinct(S.A).</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">To
+get an estimate for the number of blocks, we need an estimate for the
+blocking factor of the join. Assuming that there is no projection
+associated with the join, we have:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1 tuple of R takes up 1/ bfactor(R) blocks</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1 tuple of S takes up 1/ bfactor(S) blocks</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">so</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1 tuple of Join(R, S, relation) takes up 1/ bfactor(R) + 1/ bfactor(S) blocks</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Consequently:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">bfactor(Join(R, S, relation) = 1/ [1/ bfactor(R) + 1/ bfactor(S)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">= bfactor(R) * bfactor(S) / [bfactor(R) + bfactor(S)]</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Size of Projections</h3>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">When
+the number of bytes allocated for each attribute A is fixed, we can
+compute bfactor(R.A) for the attribute (the number of values of this
+attribute that can be written in a block). Then the blocking factor for
+a set of attributes is obtained as follows:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1/bfactor(AB) = 1/bfactor(A) + 1/bfactor(B)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1/bfactor(ABC) = 1/bfactor(A) + 1/bfactor(B) + 1/bfactor(C)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">and so on. The number of blocks used by a projection of a relation R onto a set of attributes S can be estimated by:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">ntuples(R)/bfactor(S)<br style="page-break-before: always;" clear="all">Costs</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">For
+comparison of costs for a given query, the cost of final output can be
+omitted. Costs below do not include the cost of final output.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Cost of Basic Operations</h3>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Sorting</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nblocks(R), if R will fit in memory</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">2*nblocks(R)*lg(nblocks(R)) - nblocks(R), if R will not fit in memory</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">for
+a 2-way merge sort, where the factor of 2 represents a read and a write
+of every block in every pass and the last subtraction removes the cost
+of the final output. (lg = log<sub>2</sub>)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">DISTINCT - elimination of duplicate tuples</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">for sorting method,</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nblocks(R), if R will fit in memory</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">2*nblocks(R)*lg(nblocks(R)) - nblocks(R), if R will not fit in memory</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">for hashing method,</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">3*nblocks(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">where
+nblocks(R) covers the reading of the original file, a second nblocks(R)
+covers the writing of R into blocks grouped into partitions according
+to values of a hash function, and the third nblocks(R) accounts for
+reading each partition for duplicate elimination.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Projection - with duplicate tuples in output</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Union - with duplicate tuples in output</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nblocks(R) + nblocks(S)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Difference</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">if we eliminate tuples by sorting R and S then merging the sorted relations</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">2*nblocks(R)*lg(nblocks(R)) + 2*nblocks(S)*lg(nblocks(S))</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Aggregation</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">for projection followed by aggregation by sorting,</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">2*nblocks(R), if R will fit in memory</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">2*nblocks(R)*lg(nblocks(R)), if R will not fit in memory</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">for projection followed by aggregation by hashing</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">4*nblocks(R)</p>
+
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br style="page-break-before: always;" clear="all">
+</p>
+<b style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-size: 12pt; font-family: &#39;Times New Roman&#39;;"></span></b><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;"></span>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>Costs of Selections</b><br>
+&nbsp;</p>
+
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Assume all indices are B+-trees.<br>
+&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Linear Search (Unordered file, no index)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nblock(R)/2, for equality condition on key attribute</p>
+
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nblocks(R), otherwise</p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Binary Search (Ordered file, no index)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Read block locations from FAT into array. Assume array can be stored in memory.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">log<sub>2</sub>(nblocks(R))</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Find
+latest block containing a tuple which satisfies the equality, check for
+inequalities in this block and scan forwards through remaining blocks
+(sc/bf - 1).</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">log<sub>2</sub>(nblocks(R)) + sc(A&gt;c) / bfactor(R) - 1</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Equality condition using a primary index</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Primary index implies one tuple (at most) satisfies equality condition.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Find block pointer in nlevels(I) block accesses, then access data block.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nlevels(I) + 1</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Inequality condition using a primary index</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Find
+block pointer for key which satisfies equality, access this block (+1)
+and scan forwards through remaining blocks (sc/bf
+– 1).</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nlevels(I) + sc(A&gt;c) / bfactor(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Equality condition using a clustering index</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Find
+block pointer for first key which satisfies equality, access this block
+(+1) and scan forwards through the remaining blocks with tuples whose
+keys satisfy equality (sc/bf – 1).</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nlevels(I) + sc(A) / bfactor(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Inequality condition using a clustering index</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nlevels(I) + sc(A&gt;c) / bfactor(R)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Equality condition using a secondary index</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Find
+bucket-block pointer for key which satisfies equality, access bucket of
+data-block pointers (+1, perhaps more) and access data blocks for all
+these.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nlevels(I) + 1 + sc(A)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Inequality condition on a candidate key using a secondary index</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Find
+bucket pointer for equality, move forwards through index leaves (nlf/2)
+accessing data blocks (ntuples/2 on average because the file is not
+sorted on this key). (Could store and sort data-block pointers to avoid
+accessing the same data block more than once?)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.5in;">nlevels(I) + nlfblocks(I) / 2 + ntuples(R) / 2</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Cost of Joins</h3>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Block nested loop-any join</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">For
+each bufferfull of R, for each block of S, loop through buffers looking
+for joinable tuples. Here, nbuffer is the number of blocks that can fit
+into the buffer allocated to R. Each block in R is read once, and each
+block in S is read nblocks(R) / nbuffer times.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R) + nblocks(R)*nblocks(S) / nbuffer</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">We will take nbuffer=1, and use the simplified formula:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R) + nblocks(R)*nblocks(S)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Indexed nested loop-equi-join</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">If the join is on a key of a<i><span class="Apple-converted-space">&nbsp;</span>primary index</i>, then for each tuple in R, use the index to find the tuple in S.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R) + ntuples(R)*(nlevels(I)+1)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">If the join is on a key of a<span class="Apple-converted-space">&nbsp;</span><i>clustering index</i><span class="Apple-converted-space">&nbsp;</span>I of S, then for each tuple in R, use the index to find all the corresponding tuples in S.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R) + ntuples(R)*(nlevels(I) + sc(B)/bfactor(S))</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Sort-merge-equi-join</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">First, we sort any relation that is not sorted on the join attribute(s).</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">2*nblocks (R)*(1 + lg(nblocks (R)/nbuffer) - to sort R</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">We will assume nbuffer=2 and use the simplified formula:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">2*nblocks (R)*lg(nblocks (R) - to sort R (similar formala for S)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;">Then we use a merge strategy to join the sorted relations:</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R) + nblocks(S) - for merge of R and S</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">The
+estimate for sorting comes from the number of block reads and writes
+required and assumes that the sorted relation is written to disk. The
+estimate for merging assumes that any set of R and S tuples with a
+given value of the join attribute will fit into memory.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Hash—equi-join</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;">nblocks(R) + nblocks(S) + 2*(nblocks(R) + nblocks(S) + 2*max_partitions)</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Choose
+a hash function f on values of the join attribute, A. The number of
+distinct values f can take is max_partitions. Distribute the tuples of
+R into partitions R1, ..., Rm, determined by the value of f(A).
+Distribute S similarly into partitions S1, ..., Sn. Build the join out
+of pairs Ri, Sj with the same value of f.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">We
+read nblocks(R) + nblocks(S) blocks in order to create the partitions,
+then we have to write the partitions to disk (how do we do this
+efficiently?), writing at most</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">nblocks(R) + nblocks(S) + 2*max_partitions</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">blocks, finally we read this many blocks in order to do the joins.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">(If
+some values of A are spread across several blocks, and if we cannot fit
+all these blocks into memory, then the same block might have to be read
+more than once in the join phase.)</p>
+
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</h3>
+<h3><a href="http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson11%20-%20Examples2.htm">Query Costing Exercises</a></h3>
+
+
+</body></html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson9.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 9</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 9 - Transaction Management</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 14pt;"><span style="color: rgb(0, 0, 153);"></span></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose </span></u><span style="font-size: 12pt;">: - </span><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;">To
+understand the need for concurrency control, the concept of
+serializability, deadlock, and the concurrency control techniques of locking,
+timestamping, and optimistic concurrency control.</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><big><big><b>Transaction</b></big></big>:
+An action or series of actions, carried out by a single user or
+application program, which accesses or changes the contents of the
+database.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A
+transaction can have one of two outcomes. If it completes successfully,
+it commits and the database reaches a new consistent state. If it
+doesn't execute successfully, it aborts and the database is restored to
+the consistent state it was in before the transaction began execution.</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><br>
+Properties of Transactions</h2>
+
+&nbsp;Four basic (ACID) properties of a transaction are:
+<ul>
+
+<li><span style="font-weight: bold;">Atomicity</span>: 'All or nothing' property.</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span><span style="font-weight: bold;">Consistency</span>:
+Must transform database from one consistent state to another. (Ensuring
+consistency for an individual transaction is the responsibility of the
+application programmer who codes the transaction. This task may be
+facilitated by automatic testing of integrity constraints.)<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"></span></span></li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space">&nbsp;</span></span></span><span style="font-weight: bold;">Isolation</span>: Partial effects of incomplete transactions should not be visible to other transactions.<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"></span></span></li>
+<li><span style="font-weight: bold;">Durability</span>: Effects of a committed transaction are permanent and must not be lost because of later failure.</li>
+</ul>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h2>Concurrency Control</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A
+transaction is modeled by a sequence of read and write operations. A
+transaction takes a period of time from its first operation to its
+final commit. The purpose of concurrency control is to permit many
+transactions to overlap in time without creating inconsistencies.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+<span style="font-weight: bold;">Notation</span>:</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;"><span style="font-weight: bold;">R(x, v)</span> = read the value at location x and store it in local variable v</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in;"><span style="font-weight: bold;">W(v, x)</span> = write the value of local variable v to location x</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+<span style="font-weight: bold;">Abbreviated notation:</span> R(x), W(x). We will write W(x+10) as a shorthand for R(x, v) followed by W(v+10, x).</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+</p>
+
+<h3>Three examples of potential problems caused by concurrency:</h3>
+
+<h4 style="color: rgb(51, 102, 255);"><big>Lost update problem</big></h4>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1 = (R(x), W(x+100))</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2 = (R(x), W(x-10))</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T3 = (R(x), W(10*x))</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;<br>
+(T1, T2) = (T2, T1) but one can overwrite the other</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">(T1, T3) != (T3, T1) either outcome is acceptable, but may get neither</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h4 style="color: rgb(51, 102, 255);"><big>Uncommitted dependency problem</big></h4>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">T1 = (R(x), W(x+10), Rollback)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">T2 = (R(x), W(10*x), Commit)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Could have dirty read<br>
+&nbsp;</p>
+
+<h4 style="color: rgb(51, 102, 255);"><big>Inconsistent analysis problem</big></h4>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">T1 = (R(x), W(x-10), R(z), W(10*z), Commit)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">T2 = (S=0, S=S+R(x), S=S+R(y), S=S+R(z), Commit)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Reported value of S may not match a committed state of the database</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Serializability</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Theoretical
+basis for concurrency control. Serializability identifies schedules
+that maintain database consistency, assuming no transaction fails.
+Commit and Rollback are not included in the analysis of serializability.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<table class="MsoNormalTable" style="font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; width: 5.95in; margin-left: 23.4pt; border-collapse: collapse; background-color: rgb(255, 255, 204);" border="0" cellpadding="1" cellspacing="1" width="571">
+
+<tbody><tr><td style="padding: 0in 5.4pt; width: 117pt; font-weight: bold; background-color: rgb(255, 255, 223);" valign="top" width="156"><p class="MsoNormal">Schedule</p></td><td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415"><p class="MsoNormal">Sequence of reads/writes by set of concurrent transactions</p></td></tr><tr><td style="padding: 0in 5.4pt; width: 117pt; background-color: rgb(255, 255, 223);" valign="top" width="156"><p class="MsoNormal">&nbsp;</p></td><td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415"><p class="MsoNormal">&nbsp;</p></td></tr><tr><td style="padding: 0in 5.4pt; width: 117pt; font-weight: bold; background-color: rgb(255, 255, 223);" valign="top" width="156"><p class="MsoNormal">Serial Schedule</p></td><td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415"><p class="MsoNormal">Schedule
+where operations of each transaction are executed consecutively without
+any interleaved operations from other transactions.</p>
+</td></tr>
+<tr><td style="padding: 0in 5.4pt; width: 117pt; background-color: rgb(255, 255, 223);" valign="top" width="156">
+</td><td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415">
+<p class="MsoNormal">The results of different serial executions of a given set of transactions may be different.</p></td></tr>
+<tr><td style="padding: 0in 5.4pt; width: 117pt; background-color: rgb(255, 255, 223);" valign="top" width="156">
+</td><td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415">
+</td></tr><tr><td style="padding: 0in 5.4pt; width: 117pt; font-weight: bold; background-color: rgb(255, 255, 223);" valign="top" width="156">
+<p class="MsoNormal">Nonserial Schedule</p></td>
+<td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415">
+<p class="MsoNormal">Schedule where operations from set of concurrent transactions are interleaved.</p></td></tr>
+<tr><td style="padding: 0in 5.4pt; width: 117pt; background-color: rgb(255, 255, 223);" valign="top" width="156">
+</td><td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415">
+</td></tr><tr><td style="padding: 0in 5.4pt; width: 117pt; font-weight: bold; background-color: rgb(255, 255, 223);" valign="top" width="156">
+<p class="MsoNormal">Serializable Schedule</p></td>
+<td style="padding: 0in 5.4pt; width: 311.4pt; background-color: rgb(255, 255, 223);" valign="top" width="415">
+<p class="MsoNormal">A schedule which produces the same result as some serial schedule of the same transactions.</p>
+<p class="MsoNormal">Serializability
+depends on the details of the operations in the transactions, not just
+on their general structure. It is hard to detect. A more useful concept
+follows.</p></td></tr></tbody>
+</table>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-weight: normal;">A serializable schedule will be free from lost updates and inconsistent analysis problems.</span></h3>
+
+<h3>Conflict Serializability</h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<table class="MsoNormalTable" style="font-family: &#39;Times New Roman&#39;; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 27.9pt; border-collapse: collapse;" border="0" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="padding: 0in 5.4pt; width: 148.5pt; background-color: rgb(255, 255, 223); font-weight: bold;" valign="top" width="198"><p class="MsoNormal">Commuting operations</p></td><td style="padding: 0in 5.4pt; width: 3.7in; background-color: rgb(255, 255, 223);" valign="top" width="355"><p class="MsoNormal">The result of a schedule will not be changed if we swap adjacent:</p><p class="MsoNormal" style="text-indent: 12.6pt;">- Reads</p><p class="MsoNormal" style="text-indent: 12.6pt;">- Read and Write of different data item</p><p class="MsoNormal" style="text-indent: 12.6pt;">- Writes of different data items</p></td></tr><tr><td style="padding: 0in 5.4pt; width: 148.5pt; background-color: rgb(255, 255, 223);" valign="top" width="198"><p class="MsoNormal">&nbsp;</p></td><td style="padding: 0in 5.4pt; width: 3.7in; background-color: rgb(255, 255, 223);" valign="top" width="355"><p class="MsoNormal">&nbsp;</p></td></tr><tr><td style="padding: 0in 5.4pt; width: 148.5pt; background-color: rgb(255, 255, 223); font-weight: bold;" valign="top" width="198"><p class="MsoNormal">Non-commuting operations</p></td><td style="padding: 0in 5.4pt; width: 3.7in; background-color: rgb(255, 255, 223);" valign="top" width="355"><p class="MsoNormal">The result of a schedule might be changed by swapping adjacent:</p><p class="MsoNormal" style="text-indent: 12.6pt;">- Read and Write of the same data item</p><p class="MsoNormal" style="text-indent: 12.6pt;">- Writes of the same data item</p></td></tr></tbody>
+</table>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Two schedules S and S' are<span class="Apple-converted-space">&nbsp;</span><i style="font-weight: bold;">conflict equivalent</i><span class="Apple-converted-space">&nbsp;</span>if S can be transformed into S' by swapping commuting operations.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+<big><span style="color: rgb(51, 102, 255);">A conflict serializable schedule orders any non-commuting operations in the same way as some serial schedule.</span></big></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h3><b>Precedence Graph</b></h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">A node for each transaction</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">A directed edge (T1, T2) if T1 writes a value before T2 reads/writes it</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">A directed edge (T1, T2) if T1 reads a value before T2 writes it</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; color: rgb(51, 102, 255);"><big>If the precedence graph contains a cycle, then the
+schedule is <span style="font-weight: bold;">not conflict serializable</span>.</big></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Locks</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Practical
+approach to concurrency control. DBMS uses locks to force
+serializability. This saves the DBMS from having to know the whole
+structure of a transaction before scheduling operations.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+<span style="font-weight: bold;">Granularity</span> - How big a thing is locked?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Entire database, file, page, record, field value of a record?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Automatic adjustment of granularity level?</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h3 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Basic Rules of Locking</h3>
+
+<ul>
+
+<li>Transactions request and release read locks and write locks on items<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>If a transaction has a read lock on an item, then</li>
+<ul>
+<li>all transactions can obtain read locks on the item<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>no transaction can obtain a write lock on it<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+</ul>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>If a transaction has a write lock on an item, then<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+<ul>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>no other transaction can obtain either a read or write lock on it<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+</ul>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>A transaction can only<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+<ul>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>read items on which it has a read or write lock<span style="font-family: &#39;Times New Roman&#39;;"></span></li>
+<li><span style="font-family: &#39;Times New Roman&#39;;"></span>write items on which it has a write lock</li>
+</ul>
+</ul>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-weight: bold;"></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-weight: bold;">Basic locking does not enforce serializability</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.WriteLock(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Read(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Write(x+100)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Unlock(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.WriteLock(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.Read(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.Write(x*1.1)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.Unlock(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.WriteLock(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.Read(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.Write(y*1.1)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.Unlock(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.WriteLock(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Read(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Write(y-100)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Unlock(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Could
+map T1 onto the x-axis, T2 onto the y-axis, then shade the excluded
+regions. A monotonic path from (0,0) to (inf,inf) defines a schedule.
+The excluded regions separate the paths into equivalence classes.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h3><b>Two-Phase Locking (2PL)</b></h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A transaction follows 2PL protocol if all locking operations precede the first unlock operation in the transaction.</p>
+
+<h4>&nbsp;Two phases for transaction</h4>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-weight: bold;">Growing phase</span> - acquires all locks but cannot release any locks.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-weight: bold;">Shrinking phase</span> - releases locks but cannot acquire any new locks.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+The rules include: <br>-
+A transaction must acquire a lock on an item before operating on the
+item. The lock may be read or write, depending on the type of
+access needed.<br>
+- Once the transaction releases a lock, it can never acquire any new locks.
+<br></p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-weight: bold;">
+Cascading rollback</span>
+is a situation in which a single transaction leads to a series of
+rollbacks. It is a undesirable because it leads to the undoing of a
+significant amount of work.&nbsp;</p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">There are two variants of two phase locking protocol to prevent this. <br>
+
+1. <span style="font-weight: bold;">Rigorous 2PL</span>:- It avoids cascading locks by leaving the release of all locks until the end of the transaction.<br>
+
+2. <span style="font-weight: bold;">Strict 2PL</span>:- avoids cascading by holding only exclusive locks until the end of the transaction.<br></p>
+<br>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; color: rgb(51, 102, 255);"><big>2PL forces conflict serializability</big></p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>all lock regions for a given transaction must intersect</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>all
+lock regions for another transaction which do not commute with at least
+one lock region for the first transaction must be on one or other side
+of this intersection</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; color: rgb(51, 102, 255);"><big>2PL can cause deadlocks.</big></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+
+</p>
+<h2>Deadlock</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">An
+impasse that may result when two (or more) transactions are each
+waiting for locks held by the other to be released.&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-weight: bold;">Example</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.WriteLock(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.WriteLock(y)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Read(x)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.Write(x+100)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T2.WriteLock(x) WAIT</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">T1.WriteLock(y) WAIT deadlock!</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Only one way to break deadlock: abort one or more of the transactions.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Deadlock should be transparent to user, so DBMS should restart transaction(s).</p>
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Three general techniques for handling deadlock:<br>
+&nbsp;</p>
+
+<ol start="1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal"><b>Timeout</b> : Any transaction that is waiting
+for a resource for more than a set timeout period is rolled back and
+restarted. Naturally, if deadlock occurs, it cannot last!&nbsp;</li>
+</ol>
+
+
+<ol start="2" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal"><b>Prevent</b> : One might consider checking every
+request to see whether it would lead to deadlock, but this is too
+inefficient. Instead, an effective prevention policy places a
+constraint on waiting: either (a) an older transaction can wait for a
+younger, or (b) a younger can wait for an older. For either policy, we<span class="Apple-converted-space">&nbsp;</span><i>timestamp</i><span class="Apple-converted-space">&nbsp;</span>each transaction and do not change the timestamp even if we roll the transaction back and restart it. More fully:&nbsp;<br>
+</li>
+</ol>
+
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">If one transaction T1 requests a lock that is held by another transaction T2, then:</p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.75in; font-weight: bold;">&nbsp;under policy (a) (older waits):</p>
+
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.75in;">if T1 is older than T2 : T1 waits, T2 is rolled back and restarted with the same timestamp<br>
+&nbsp;<br>
+<span style="font-weight: bold;">under policy (b) (younger waits):</span></p>
+
+
+
+
+
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.75in;">if
+T1 is younger than T2, T1 waits but if T2 requests for a lock held by
+T1, then T2 is aborted and restarted with the same timestamp.<br>
+<br>
+</p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.5in;">With
+either policy, it always the younger transaction that is rolled back,
+if a rollback is done. In both cases, the oldest transaction is never
+rolled back. Both policies can cause unnecessary rollbacks.<br>
+&nbsp;<br>
+Under
+the younger-waits policy, a young transaction may restart several
+times. Under the older-waits policy, an aging transaction may wait
+longer and longer for resources.&nbsp;</p>
+
+<ol start="3" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal"><b>Detect and Recover </b>: Do not worry about
+deadlock until it happens, then break it by rolling back enough
+processes to break every loop in the wait-for graph. To apply this
+policy, the DBMS must make frequent checks on current transactions to
+see if there is a deadlock condition (loop in wait-for graph). There
+would also have to be a policy to guide selection of transactions for
+rollback.&nbsp;</li>
+</ol>
+
+
+<h3><br>
+</h3>
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Timestamps</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Second
+practical approach to concurrency control other than locking. A timestamp is a unique
+identifier created by the DBMS that indicates the relative starting
+time of a transaction.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;Each
+location x carries read and write timestamps, t(R, x) and t(W, x), set
+to the maximum timestamps of all transactions that read from x and
+wrote to x respectively.</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+When a transaction T1 with timestamp t1 attempts to read from a data location x,</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>if t(W, x) &lt;= t1, then the operation is permitted and t(R, x) is set to the maximum of t(R, x) and t1</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>if t1 &lt;= t(W, x), then the requesting transaction is rolled back and restarted with a new timestamp</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+When a transaction T1 attempts to write to a data location x,</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>if t(R, x) &lt;= t1 and t(W, x) &lt;= t1, then the operation is permitted and t(W, x) is set to t1</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>if t(R, x) &lt;= t1 and t1 &lt; t(W, x), then T1.W(x) is ignored (Thomas write rule T1s write is out of date)</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>if t1 &lt;= t(R, x) then the requesting transaction is rolled back and restarted with a new timestamp</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; color: rgb(51, 102, 255);"><big>This protocol forces conflict serializability. No locks are involved so there can be no deadlock.</big></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;</p>
+
+<h2 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Optimistic Concurrency Techniques</h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Third practical approach to concurrency control. Assume conflicts don't happen very often. Then:</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span><span style="font-weight: bold;">Read
+Phase</span>:- The transaction reads all the data items it needs into local
+variables and updates are applied to a local copy of the database</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;" class="Apple-converted-space">&nbsp;</span></span></span><span style="font-weight: bold;">Validation
+Phase:- </span>If the updates are serializable with respect to other activity on
+the database, move to write phase, otherwise restart the transaction</p>
+
+<p class="bBullet1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span><span style="font-weight: bold;">Write Phase:-</span> Validation is successful, write the changes to the database</p>
+
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;<br>
+Validation uses timestamps.</p>
+
+<br style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; page-break-before: always;" clear="all">
+<h4>To clear some of the above concepts, especially conflict serializability, please read this <a href="http://www.iai.uni-bonn.de/III//lehre/vorlesungen/Informationssysteme/SS01/18_vorlesung.pdf">pdf</a> . Note that we are not going to cover view serializability.</h4>
+<br>
+<h3><a href="http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson9_Examples.htm">Concurrency Control Excercises</a></h3>
+
+</body></html>

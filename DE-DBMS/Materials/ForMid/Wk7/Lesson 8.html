@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson7.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 8</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 7 - Transact-SQL</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 14pt;"><span style="color: rgb(0, 0, 153);"></span></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose </span></u><span style="font-size: 12pt;">: -&nbsp; To understand some more features of T-SQL and learn to write and execute stored procedures.</span></p>
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;">In
+this week, you are required to go a little bit deeper into T-SQL and
+following are some of the references which will help you in
+understanding the syntax of various T-SQL commands.<span style="font-size: 12pt;"></span></p>
+
+
+<p style="font-weight: bold;" class="MsoNormal">T-SQL Reference</p>
+
+
+<p class="MsoNormal"><a href="http://msdn.microsoft.com/en-us/library/bb510741.aspx">http://msdn.microsoft.com/en-us/library/bb510741.aspx</a></p>
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p><br>
+<span style="font-weight: bold;">Data Manipulation Language (DML) Statements (Transact-SQL)</span></p>
+
+
+<p class="MsoNormal"><a href="http://msdn.microsoft.com/en-us/library/ff848766.aspx">http://msdn.microsoft.com/en-us/library/ff848766.aspx</a></p>
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p><br>
+<span style="font-weight: bold;">SELECT (Transact-SQL)</span></p>
+
+
+<p class="MsoNormal"><a href="http://msdn.microsoft.com/en-us/library/ms189499.aspx">http://msdn.microsoft.com/en-us/library/ms189499.aspx</a></p>
+
+
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p><br>
+<span style="font-weight: bold;">Date functions</span> </p>
+
+
+<p class="MsoNormal"><a href="http://technet.microsoft.com/en-us/library/aa258863%28v=SQL.80%29.aspx">http://technet.microsoft.com/en-us/library/aa258863(v=SQL.80).aspx</a></p>
+
+
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p><br>
+In<span style="">&nbsp; </span><a href="http://technet.microsoft.com/en-us/library/aa258269%28v=sql.80%29.aspx">http://technet.microsoft.com/en-us/library/aa258269(v=sql.80).aspx</a></p>
+
+
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p>we have :<o:p>&nbsp;</o:p></p>
+
+
+
+
+
+
+
+
+<p class="MsoNormal">This example determines the difference in days (can be more
+than 31 : JL, Feb, 2014) between the current date and the publication date for titles in the pubs database.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="font-family: Courier;" class="MsoNormal"><small>USE pubs<br>
+GO<br>
+SELECT DATEDIFF(day, pubdate, getdate()) AS no_of_days<br>
+FROM titles<br>
+GO</small></p>
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;---------------------------------------------------------------------------------------------------------------------------&nbsp;</o:p></p>
+
+
+<p style="font-weight: bold;" class="MsoNormal">Beginers tutorial for Stored procedures</p>
+
+
+<p class="MsoNormal"><a href="https://www.youtube.com/watch?v=Qu3E-oncF3g">https://www.youtube.com/watch?v=Qu3E-oncF3g</a></p>
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p><br>
+<span style="font-weight: bold;">Basics of creating a stored procedure and executing it.</span></p>
+
+
+<p class="MsoNormal"><a href="https://www.youtube.com/watch?v=fOBDISV8cvY">https://www.youtube.com/watch?v=fOBDISV8cvY</a></p>
+
+
+
+
+
+
+<p class="MsoNormal"><o:p>&nbsp;<br>
+<span style="font-weight: bold;">&nbsp;</span></o:p><span style="font-weight: bold;">Using parameters in stored procedure</span></p>
+
+
+
+
+
+
+
+
+<p class="MsoNormal"><a href="https://www.youtube.com/watch?v=Vs-atxMs4mw">https://www.youtube.com/watch?v=Vs-atxMs4mw</a></p><br>
+On thing to note is that you cannot use the keyword "GO" in the stored
+procedure.&nbsp; Once the SQL Server compiler sees "GO" it assumes it
+is the end of the batch.<span style="font-family: Verdana,Arial,Helvetica,sans-serif;"><br>
+</span>Also, you can not change database context within the stored
+procedure such as using "USE dbName" the reason for this is because
+this would be a separate batch and a stored procedure is a collection
+of only one batch of statements.<br>
+<br>
+<span style="font-weight: bold;">Reducing amount of network data for SQL Server stored procedures</span><br>
+There are many tricks that can be used when you write T-SQL code. One
+of these is to reduce the amount of network data for each statement
+that occurs within your stored procedures. Every time a SQL statement
+is executed it returns the number of rows that were affected. <br>
+By using "SET NOCOUNT ON" within your stored procedure you can shut off these messages and reduce some of the traffic.<br>
+You can still use&nbsp;@ROWCOUNT to get the number of rows impacted by
+a SQL statement, so turning SET NOCOUNT ON will not change that
+behavior.
+<p class="MsoNormal"><o:p></o:p></p>
+
+
+
+
+</body></html>

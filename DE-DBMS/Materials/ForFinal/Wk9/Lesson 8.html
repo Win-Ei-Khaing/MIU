@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson8.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 8</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 8 - Logical Database Design</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 14pt;"><span style="color: rgb(0, 0, 153);"></span></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose </span></u><span style="font-size: 12pt;">: -&nbsp; </span>Ability
+to derive a logical model from a conceptual model by (1) refining an ER
+diagram, and (2) deriving a relational model from the refined ER
+diagram.</p>
+
+<h3>Design Methodology</h3>
+
+<p class="MsoNormal"> A
+structured approach that uses procedures, techniques, tools, and
+documentation aids to support and facilitate the process of design.</p>
+
+<p class="MsoNormal">	&nbsp;<br>
+</p>
+
+<h3>Three stages of design<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;"></span></span></h3>
+
+<ol>
+
+<li><span style="font-weight: bold; font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;</span></span><span style="font-weight: bold;">Conceptual Database Design</span></li>
+</ol>
+
+The process of constructing a model of the information used in an
+enterprise, independent of all physical considerations. At
+this stage you haven’t yet decided on data
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; model yet. You are on conceptual
+level only.&nbsp; You’ve only created an ER
+model at this stage.<br>
+
+<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;"></span></span>
+<ol start="2">
+
+<li>
+<p><span style="font-weight: bold;">Logical Database Design</span></p>
+</li>
+</ol>
+
+<p>The process of constructing a
+model of the information used in an enterprise based on a specific data
+model (e.g. relational), but independent of a particular DBMS and other
+physical considerations.<br>
+</p>
+
+<p class="MsoNormal">Data model is decided at this stage.<span style="">&nbsp;
+</span>Data model means how data is represented in your mind.<span style="">&nbsp; </span>E.g when we say that relational data model
+will be used, we are saying that data will be kept in the form of tables.<span style="">&nbsp; </span>So at this stage, relations are decided and created.<br>
+</p>
+
+<ol start="3">
+
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;"></span></span><span style="font-weight: bold;">Physical Database Design</span></li>
+</ol>
+
+The process of producing a description of the implementation of the
+database on secondary storage; it describes the storage structures and
+access methods used to achieve efficient access to the data.<br>
+
+<br>
+
+Basically at this stage we decide
+on s/w and h/w.&nbsp; Also on which platform
+it’ll be run, how much disk space will be needed etc.&nbsp; All kinds of such decisions are taken at this
+level.
+<p class="MsoNormal">	&nbsp;</p>
+
+<p style="font-weight: bold;" class="MsoNormal">First Stage - Conceptual Database Design</p>
+
+Build local conceptual data model for each user view
+<ol style="margin-top: 0in;" start="1" type="1">
+
+<li class="MsoNormal">Identify entity types</li>
+<li class="MsoNormal">Identify relationship types</li>
+<li class="MsoNormal">Identify and associate attributes with entity or relationship types</li>
+<li class="MsoNormal">Determine attribute domains</li>
+<li class="MsoNormal">Determine candidate and primary key attributes</li>
+<li class="MsoNormal">Specialize/generalize entity types (optional step)</li>
+<li class="MsoNormal">Check model for redundancy</li><li class="MsoNormal">Validate conceptual model against user transactions</li>
+<li class="MsoNormal">Review Local Conceptual Data Model with User</li>
+</ol>
+
+<p class="MsoNormal">	&nbsp;</p>
+
+<p style="font-weight: bold;" class="MsoNormal">Second Stage - Logical Database Design for the Relational Model</p>
+
+<ol style="margin-top: 0in;" start="1" type="1">
+
+<li class="MsoNormal">Map Local Conceptual Data Model to Local Logical Data Model</li>
+<li class="MsoNormal">Derive Relations from Local Logical Data Model</li>
+<li class="MsoNormal">Validate Model using Normalization</li>
+<li class="MsoNormal">Validate Model against User Transactions</li>
+<li class="MsoNormal">Draw Entity-Relationship Diagram</li>
+<li class="MsoNormal">Define Integrity Constraints</li>
+<li class="MsoNormal">Review Local Logical Data Model with User&nbsp;</li>
+</ol>
+
+<p class="MsoNormal">At some stage, the local models must be integrated into a global model. One can either:</p>
+
+
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>integrate the local conceptual models into a global conceptual model and then derive a global logical model from that, or<br>
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>derive local logical models and then integrate these into a global logical model.</p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;">
+
+In our case, as we are studying relational database, our
+logical model will be tables.<span style="">&nbsp; </span>There are
+various rules for creating tables from ERD.</p>
+<h3>Mapping from the ER model to the relational model</h3>
+<ul>
+  <li>		&nbsp;<span style="font-weight: bold;">Handle Entities</span></li>
+</ul>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>An entity usually becomes a table.</p>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>The primary key of a table corresponding to a strong entity is the same as the primary key for the entity.</p>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>When to use system generated key?</p>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>A weak entity will get some or all of its key attributes from the corresponding strong entity (or entities).</p>
+<p style="font-weight: bold;" class="MsoNormal"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-weight: normal;">All entities in a hierarchy have the same primary key.</span><br>
+&nbsp;</p>
+<ul style="font-weight: bold;">
+  <li>Handle relationships</li>
+</ul>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-weight: bold;">For&nbsp;1-N relationship</span>, add a foreign key on the N side referring to a primary key on the 1 side.</p>
+<p class="bBullet1">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold;">For 1-1 relationsihp</span> :</p>
+Mandatory participation on both sides of 1:1 relationship - Combine
+entities involved into one relation and choose one of the primary keys
+of original entities to be primary key of the new relation, while the
+other (if one exists) is used as an alternate key.
+<p class="bBullet1">Mandatory participation on one side of a 1:1
+relationship - Entity with optional participation in relationship is
+designated as parent entity, and entity with mandatory
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; participation is designated as child entity. A copy
+of primary key of the parent entity is placed in the relation
+representing the child entity. If the relationship has one or
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; more
+attributes, these attributes should follow the posting of the primary
+key to the child relation.<br>
+<span style="color: rgb(255, 0, 0);">Note that there's a mistake by
+Prof. Nair in the video (CS422-06-04) while identifying parent and
+child entities in the example of Employee and Project.&nbsp;</span></p>
+Optional participation on both sides of a 1:1 relationship - the
+designation of the parent and child entities is arbitrary unless we can
+find out more about the relationship that can help a decision to be
+made one way or the other. So there's no rule for this.<br>
+<br>
+<span style="font-weight: bold;">&nbsp;&nbsp; For 1-1 recursive relationship</span>, follow the rules for 1-1 relationship.<br>
+<br>
+&nbsp;&nbsp; <span style="font-weight: bold;">For Many-Many relationship</span>:
+It is not possible to implement M:M in relational database. There is a
+need to add a 3rd table. &nbsp;Then the PK of this new table (entity)
+will be made up of the PK's of the other 2 tables which are involved in
+the M:M relationship.&nbsp;
+<ul>
+  <li><span style="font-weight: bold;">Multivalued attributes - </span>Create
+a new relation to represent multi-valued attribute and include primary
+key of entity in new relation, to act as a foreignkey. </li>
+</ul>
+<ul style="font-weight: bold;">
+  <li>		Follow the steps of normalization for the relational model</li>
+</ul>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Determine all functional dependencies.</p>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Test for conformity to 2NF, 3NF, and BCNF, making lossless join decompositions as necessary.</p>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>4NF
+verify that insertion of a row in a table does require assigning
+arbitrary values to some columns to satisfy entity integrity.</p>
+<p class="MsoNormal"><span style="font-style: italic;"> &nbsp;If you
+find that your tables are not even in 2NF then you missed some of the
+M:M relationships in the ERD. If your tables are in 2NF but not in 3NF
+then you missed some of the 1:M relationships.</span><br>
+</p>
+<ul style="font-weight: bold;">
+  <li>		Validate against transactions</li>
+</ul>
+<p class="bBullet1"><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Create sample database and write all transactions to verify that all necessary "relationships" are represented in the database.</p>
+<h3><a href="http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson8_Examples.html">Some examples</a></h3>
+<p class="bBullet1"></p>
+
+<p class="MsoNormal"><br>
+</p>
+
+
+<br>
+
+</body></html>

@@ -1,0 +1,1220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson3.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 3</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 3 - SQL - Data Manipulation</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 11pt;"><span style="color: rgb(0, 0, 153);"></span></span></b><b style="color: rgb(0, 0, 153);"><span style="font-size: 11pt;"></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose</span></u><span style="font-size: 12pt;">: -&nbsp;</span>
+
+Read and write SQL queries, translate questions in English into SQL.</p>
+
+<h2><span style="font-size: 12pt; line-height: 115%; color: black;">Advantages of SQL</span><span style="font-size: 12pt; line-height: 115%; color: black;"></span></h2>
+
+
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Satisfies ideals for database language</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+(Relatively) Easy to learn</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Portability</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+SQL standard exists</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Both interactive and embedded access</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Can be used by specialist and non-specialist.</span></li>
+</ul>
+
+
+<h3><span style="font-size: 12pt; line-height: 115%; color: black;">Disadvantages of SQL</span></h3>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Impedance mismatch - mixing programming paradigms with embedded access</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Lack of orthogonality - many different ways to express some queries</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Language is becoming enormous (SQL-92 is 6 times larger than predecessor)</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Handling of nulls in aggregate functions</span></li>
+</ul>
+<ul>
+  <li><span style="font-size: 12pt; line-height: 115%; color: black;">
+Result tables are not strictly relational - can contain duplicate tuples, imposes an ordering on </span>both columns and rows.
+  </li>
+</ul>
+<span style="font-size: 12pt; line-height: 115%; color: black;"></span><span style="font-family: &#39;Times New Roman&#39;;"></span><h2 style="text-decoration: underline;"><small>SQL Commands for Data Manipulation (retrieving and updating data)</small></h2>
+
+<span style="font-family: Times New Roman;"><span style="font-weight: bold;">SELECT</span> - to query data in the database;<br>
+<span style="font-weight: bold;">INSERT</span> - to insert data into a table;<br>
+<span style="font-weight: bold;">UPDATE</span> - to update data in a table;<br>
+<span style="font-weight: bold;">DELETE</span> - to delete data from a table.<br>
+<br>
+</span>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">INSERT INTO &lt;TABLE NAME&gt; [(&lt;COLUMN LIST&gt;)]<br>
+VALUES (&lt;VALUE LIST&gt;)<br>
+&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">UPDATE &lt;TABLE NAME&gt;<br>
+SET &lt;COLUMN NAME&gt; = &lt;VALUE&gt;<br>
+[WHERE &lt;CONDITION&gt;]<br>
+&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">DELETE FROM &lt;TABLE NAME&gt;<br>
+WHERE &lt;CONDITION&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">SELECT [DISTINCT|ALL] &lt;LIST OF COLUMNS, FUNCTIONS, CONSTANTS, ETC.&gt;<br>
+FROM &lt;LIST OF TABLES OR VIEWS&gt;<br>
+[WHERE &lt;CONDITION(S)&gt;]<br>
+[GROUP BY &lt;GROUPING COLUMN(S)&gt;]<br>
+[HAVING &lt;CONDITION&gt;]<br>
+[ORDER BY &lt;ORDERING COLUMN(S)&gt; [ASC|DESC]]<br>
+&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">UNION</span><span style="font-size: 10pt;">, INTERSECT, EXCEPT&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">GRANT &lt;PRIVILEGE LIST&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">ON &lt;OBJECT LIST&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">TO { PUBLIC | &lt;USER LIST&gt; }&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">REVOKE &lt;PRIVILEGE LIST&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">ON &lt;OBJECT LIST&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">FROM { PUBLIC | &lt;USER LIST&gt; }&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">ROLLBACK</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">COMMIT</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;">These
+commands always have the potential to put the database into an
+inconsistent state. For example, if a row of a relation is deleted,
+what happens to rows in other relations that have foreign keys which
+referenced that row? If the foreign key is a primary key, then it will
+be necessary to trigger a<span class="Apple-converted-space">&nbsp;</span></span><i style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">cascading delete</i><span style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;">, otherwise it will be sufficient to nullify the foreign key.</span></p>
+
+<small><small><small><small><span style="font-weight: bold;"></span></small></small></small></small>
+<h3 style="text-decoration: underline;">The SELECT Statement</h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px;">The general structure of an SQL SELECT statement is:&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; text-indent: 0.25in; font-weight: bold; font-family: Cambria;">&nbsp;&nbsp;<span style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">SELECT [DISTINCT | ALL] &lt;column names, functions, aggregate functions&gt;</span><br style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">
+<span style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM &lt;table names&gt;</span><br style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">
+<span style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE &lt;conditions&gt;</span><br style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">
+<span style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; GROUP BY &lt;column names&gt;</span><br style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">
+<span style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; HAVING &lt;conditions on aggregated columns&gt;</span><br style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">
+<span style="color: rgb(0, 153, 0); font-family: Times New Roman,Times,serif;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ORDER BY &lt;subset of column names&gt; [ASC | DESC]</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;A SELECT statement returns a<span class="Apple-converted-space">&nbsp;</span><i>result set</i>,
+not a relation. In a result set, the rows and columns are ordered.
+Furthermore, a result set may contain duplicate rows. To obtain a
+result set without duplicate rows, an explicit DISTINCT qualifier must
+follow the SELECT. When modeling queries with relational calculus, the
+projection operator must be modified to permit duplicate tuples and a
+sort operator must be added.&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">A result set can be treated as a relation for most purposes. In particular, SELECT statements can be nested. More generally, a<span class="Apple-converted-space">&nbsp;</span><i>view</i><span class="Apple-converted-space">&nbsp;</span>is
+defined by a query. It is the result set obtained by running the query
+on a database instance. A view can be used in SQL where a relation is
+expected.</p>
+
+<h2 style="text-decoration: underline;"><small>Processing a Query</small></h2>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Conceptually, the sequence of operations that defines the result set is roughly as follows:</p>
+
+<ul>
+
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Form a Cartesian product of all the tables in the FROM clause</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Eliminate all rows that do not satisfy the WHERE clause</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Add columns for the simple functions</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Compute the simple functions</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Sort the remaining rows on the column names in the GROUP BY clause</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Add columns for any aggregate functions in the SELECT and HAVING clauses</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Compute the aggregate functions</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Eliminate the rows that do not satisfy the HAVING clause</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Project onto the requested columns and aggregate functions</li>
+<li><span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Sort as specified by the ORDER BY clause</li>
+</ul>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">&nbsp;This
+sequence of operations is far from optimal. It just helps us to
+visualize what the functional meaning of each clause of a query.<br>
+&nbsp;In a decent DBMS, query optimization is automatic, and rewriting SQL will not improve performance.</p>
+
+<h3 style="text-decoration: underline;">Aggregate Functions</h3>
+
+<span style="font-weight: bold;">MAX, MIN, SUM, AVG</span> apply to columns.<br>
+
+<p class="MsoNormal">
+<span style="font-weight: bold;">COUNT</span> applies to result sets.&nbsp;</p>
+
+<p class="MsoNormal">
+In</p>
+
+<p class="MsoNormal" style="text-indent: 0.25in;">
+SELECT * FROM ...</p>
+
+<p class="MsoNormal">
+the * stands for the whole result set. Thus, in</p>
+
+<p class="MsoNormal" style="text-indent: 0.25in;">
+SELECT COUNT(*) FROM ...</p>
+
+<p class="MsoNormal">
+the aggregate function COUNT counts all the rows in the result set indicated by *.</p>
+
+<h3 style="text-decoration: underline;">Expression Operators</h3>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+attribute <span style="font-weight: bold;">IN</span> result set</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+attribute &lt;<span style="font-weight: bold;"> </span>SOME column (same as ANY)</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+attribute &lt;<span style="font-weight: bold;"> </span>ALL column</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<span style="font-weight: bold;">EXISTS</span> result set</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+result set <span style="font-weight: bold;">UNION</span> result set</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+result set <span style="font-weight: bold;">INTERSECT</span> result set (not supported by Access)</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+result set <span style="font-weight: bold;">EXCEPT</span> result set (not supported by Access)</p>
+
+<h3>
+<span style="text-decoration: underline;">Subqueries</span></h3>
+
+<p class="Bullet1">
+<span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>A <i>scalar query </i>returns a result set with a single row and column</p>
+
+<p class="Bullet1">
+<span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>A <i>row query</i> returns a result set with a single row</p>
+
+<p class="Bullet1">
+<span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>A <i>column query</i> returns a result set with a single column</p>
+
+<p class="Bullet1">
+<span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>A <i>table query</i> returns a result set with multiple rows and at least one column</p>
+
+<p class="MsoNormal">
+&nbsp;Each type of query can be used as a subquery
+(nested select) in a WHERE or HAVING clause whenever the dimensions of
+the result set match the requirements of SQL syntax.</p>
+
+<h3 style="text-decoration: underline;">Sorting Results</h3>
+
+<p class="MsoNormal">
+Sorting on a set of columns is essentially defined by radix sort. For example,</p>
+
+<p class="MsoNormal" style="text-indent: 0.25in; font-weight: bold;">
+ORDER BY COL1, COL2</p>
+
+<p class="MsoNormal">
+proceeds by sorting on COL2, then COL1:<br>
+&nbsp;</p>
+
+<table class="MsoNormalTable" style="border: medium none ; width: 369pt; margin-left: 36.9pt; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0" width="492">
+
+<tbody>
+<tr>
+<td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">COL1</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">COL2</span></b></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">COL1</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">COL2</span></b></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">COL1</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">COL2</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">h</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">6</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">b</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">2</span></b></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">h</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">4</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">t</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">f</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">2</span></b></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">t</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">2</span></b></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">h</span></b></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">2</span></b></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">h</span></b></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">f</span></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">6</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">b</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal" style="text-align: center;" align="center">
+<span style="font-size: 10pt; font-family: Arial;">Goes to:</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">h</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal" style="text-align: center;" align="center">
+<span style="font-size: 10pt; font-family: Arial;">Goes to:</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">h</span></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">h</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">h</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">h</span></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">2</span></b></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">t</span></b></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">4</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">t</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">4</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">t</span></p>
+</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 5.4pt; width: 40.5pt;" valign="top" width="54">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">f</span></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 70.5pt;" valign="top" width="94">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">2</span></b></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<b><span style="font-size: 10pt; font-family: Arial;">t</span></b></p>
+</td>
+<td style="border-style: none solid none none; border-color: -moz-use-text-color windowtext -moz-use-text-color -moz-use-text-color; border-width: medium 1pt medium medium; padding: 0in 5.4pt; width: 67.5pt;" valign="top" width="90">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">&nbsp;</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 37.5pt;" valign="top" width="50">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">6</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 5.4pt; width: 39pt;" valign="top" width="52">
+<p class="MsoNormal">
+<span style="font-size: 10pt; font-family: Arial;">b</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p class="MsoNormal">
+&nbsp;<br>
+Notice that the sort on COL1 preserves the order
+of elements in COL2 which fall in the same COL1 group, such as (2,h)
+and (2,t).</p>
+
+<h2>-----------------------------------------------------------------------------------------------------------------------------</h2>
+
+<h2>Example Relations</h2>
+
+<table class="MsoNormalTable" style="border-collapse: collapse; width: 50%;" border="0" cellpadding="0" cellspacing="0">
+
+<tbody>
+<tr>
+<td style="padding: 0in 5.4pt; width: 50%;" width="50%">
+<table class="MsoNormalTable" style="border-collapse: collapse; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr><td style="vertical-align: top; padding-top: 0in; padding-bottom: 0in; width: 50%;">
+<p class="MsoNormal">	Part</p>
+<table class="MsoNormalTable" style="border: medium none ; border-collapse: collapse; margin-left: 6.75pt; margin-right: 6.75pt;" align="left" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr style="height: 13.5pt;">
+<td style="border: 1pt solid windowtext; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">PID</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">Name</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.3pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">Cost</span></b></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">1</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">Cog</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.3pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">20</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">Wheel</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.3pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">30</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">Belt</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.3pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">10</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">4</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">Converter</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.3pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">100</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="MsoNormal">
+&nbsp;&nbsp;</p>
+</td></tr></tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style="padding: 0in 5.4pt; width: 50%;" width="50%">
+<p class="MsoNormal">	Warehouse</p>
+<table class="MsoNormalTable" style="border: medium none ; border-collapse: collapse; margin-left: 6.75pt; margin-right: 6.75pt;" align="left" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr style="height: 13.5pt;">
+<td style="border: 1pt solid black; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">WID</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: black black black -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">Address</span></b></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color black black; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">1</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color black black -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">LA</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color black black; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color black black -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">NY</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color black black; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color black black -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt;">
+<span style="font-size: 10pt; font-family: Arial; color: black;">SF</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="MsoNormal">
+&nbsp;</p>
+</td>
+<td style="padding: 0in 5.4pt; width: 50%;" width="50%">
+<p class="MsoNormal">
+WP</p>
+<table class="MsoNormalTable" style="border: medium none ; border-collapse: collapse; margin-left: 6.75pt; margin-right: 6.75pt;" align="left" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr style="height: 13.5pt;">
+<td style="border: 1pt solid windowtext; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">WID</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">PID</span></b></p>
+</td>
+<td style="border-style: solid solid solid none; border-color: windowtext windowtext windowtext -moz-use-text-color; border-width: 1pt 1pt 1pt medium; padding: 0in 2pt; background: silver none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: center;" align="center">
+<b><span style="font-size: 10pt; font-family: Arial; color: black;">Quantity</span></b></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">1</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">1</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">10</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">1</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">15</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">1</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">100</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">75</span></p>
+</td>
+</tr>
+<tr style="height: 13.5pt;">
+<td style="border-style: none solid solid; border-color: -moz-use-text-color windowtext windowtext; border-width: medium 1pt 1pt; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 0.5in; height: 13.5pt;" valign="top" width="48">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">3</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">2</span></p>
+</td>
+<td style="border-style: none solid solid none; border-color: -moz-use-text-color windowtext windowtext -moz-use-text-color; border-width: medium 1pt 1pt medium; padding: 0in 2pt; background: white none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; width: 58.5pt; height: 13.5pt;" valign="top" width="78">
+<p class="MsoNormal" style="margin: 2pt 0in 1pt; text-align: right;" align="right">
+<span style="font-size: 10pt; font-family: Arial; color: black;">80</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="MsoNormal">
+&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+&nbsp;Examples of SELECT Statements</h3>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>What is in the Part table?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+Select *<br>
+FROM Part</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>How much does a Cog cost?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT Cost<br>
+FROM Part<br>
+<b>WHERE</b> Name = 'Cog'</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Does any part not have a name?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT PID<br>
+FROM Part<br>
+WHERE Name <b>IS NULL</b></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>List
+by PID and WID the quantity of each part for which the quantity is at
+least 25. Order the result with quantity in descending order.</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using <b>ORDER BY</b> to sort results</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT PID, WID, Quantity<br>
+FROM WP<br>
+WHERE Quantity &gt;= 25<br>
+<b>ORDER BY</b> Quantity DESC</p>
+
+<br style="page-break-before: always;" clear="all">
+
+<h3>
+Joins</h3>
+
+&nbsp;5.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>List by WID the quantities of part PID=1 in LA warehouses.<i><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Using <b>Cartesian product</b> to compute a join<br>
+</i><br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">SELECT WID, Quantity</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM Warehouse, WP</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE</span><br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <span style="color: rgb(0, 153, 0); font-weight: bold;">&nbsp;Warehouse.WID = WP.WID AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.PID = 1 AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Warehouse.Address LIKE 'LA'</span> (LIKE '%LA%', or '*LA*' in Access)<br>
+
+<br>
+
+&nbsp;6.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>List by WID the quantities of part PID=1 in LA warehouses.<i><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Using <b>column subqueries </b>and<b> IN</b> to do a join </i><br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">SELECT WID, Quantity</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM WP</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; PID = 1 AND</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WID </span><b style="color: rgb(0, 153, 0);">IN</b><span style="color: rgb(0, 153, 0);"> (</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Select WID FROM Warehouse WHERE Address
+LIKE '%LA%'</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; )</span><br>
+
+<br>
+
+7.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>What parts are in no warehouse?<br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">SELECT PID, Name</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM Part</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; PID NOT </span><b style="color: rgb(0, 153, 0);">IN</b><span style="color: rgb(0, 153, 0);"> (</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; SELECT PID</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; FROM WP</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; WHERE Quantity &gt; 0</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; )</span>&nbsp;<span style="color: rgb(0, 153, 0);"></span><br>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+8.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Which parts do we have in LA warehouses?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using a<b> table subquery </b>and<b> EXISTS</b> to do a join</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT <b>DISTINCT</b> PID<br>
+FROM WP<br>
+WHERE <b>EXISTS</b> (<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; SELECT * <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM
+Warehouse AS W<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; W.WID = WID AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Address LIKE '%LA%'<br>
+&nbsp;)</p>
+
+Try to modify the above query to display the part name as well.<br>
+
+<p class="MsoNormal">
+&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: rgb(99, 142, 99);">&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">SELECT DISTINCT p.PID, p.Name</span></span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM&nbsp;WP,&nbsp;Part as p</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE </span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.PID=p.PID and EXISTS (</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; SELECT * </span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+FROM&nbsp;Warehouse AS W</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WHERE </span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; W.WID =
+WID AND</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Address
+LIKE '%LA%'</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; )</span></p>
+
+9.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>[Optional] Create a view that doesn't show quantity for PID=1
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using <b>UNION</b> on result sets</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>&nbsp;</i><span style="color: rgb(0, 153, 0);">CREATE VIEW &nbsp;WPView
+&nbsp;AS</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; SELECT WID, PID, NULL AS Quantity&nbsp;</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; FROM WP
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp; &nbsp;WHERE PID = 1
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><b style="color: rgb(0, 153, 0);">UNION</b><span style="color: rgb(0, 153, 0);">
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; SELECT WID, PID, Quantity
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;FROM WP
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;WHERE PID &lt;&gt; 1</span></p>
+
+<p class="MsoNormal">&nbsp;10<span style="font-family: &quot;Times New Roman&quot;;">. [Optional]&nbsp;</span><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"> </span>ExperimentWhat does GROUP BY do with <b>NULL</b>?
+</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>NULLs really should not be grouped, but ACCESS will group them</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="color: rgb(0, 153, 0);">
+SELECT Quantity, count(*)
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">FROM WPView
+</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">GROUP BY Quantity</span>
+&nbsp;</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;"></p>
+
+<h3>
+<b>Aggregate functions</b></h3>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+<b>&nbsp;</b>11.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>What is the maximum quantity of any part in any warehouse?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT <b>MAX</b>(Quantity)<br>
+FROM WP</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;12.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>Which are the PID(s) with maximum quantity in some warehouse?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using a <b>scalar subquery</b>&nbsp;</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT PID<br>
+FROM WP<br>WHERE <br>
+&nbsp;&nbsp;&nbsp; Quantity = (
+<b>SELECT MAX(Quantity) FROM WP</b>
+)</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;13.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>What is the total quantity for each part across all warehouses?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using <b>GROUP BY</b> to guide aggregation</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT PID, SUM(Quantity) AS [Total Quantity]<br>
+FROM WP<br>
+<b>GROUP BY</b> PID</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;14.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>What is the total quantity for each part across all warehouses with total quantity &gt; 100?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using <b>HAVING</b> to constraint aggregates</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT PID, sum(Quantity) AS [Total Quantity]<br>
+FROM WP<br>
+GROUP BY PID<br>
+<b>HAVING</b> sum(Quantity) &gt; 100</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">
+&nbsp;15.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>What part do we have in greatest quantity?</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<i>Using ALL as a replacement for MAX in an expression</i></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; color: rgb(0, 153, 0);">
+SELECT PID, sum(Quantity) AS [Max Quantity]<br>
+FROM WP<br>
+GROUP BY PID<br>
+HAVING sum(Quantity) &gt;= <b>ALL</b> (
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; SELECT sum(Quantity)<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM WP<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; GROUP BY PID
+)</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in; text-indent: -0.25in;">&nbsp;16.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp; </span>List
+by warehouse address the total number of parts in the warehouse and the
+total number of parts which have quantity at most 50 in that warehouse.</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+&nbsp;Part 1: Count of parts by warehouse address<br>
+&nbsp;<span style="font-size: 11pt;"><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 153, 0);">SELECT Address, sum(Quantity) AS [Count of Parts]</span></span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span><span style="font-size: 11pt; color: rgb(0, 153, 0);">FROM Warehouse AS W, WP</span><span style="color: rgb(0, 153, 0);">
+</span><span style="font-size: 11pt; color: rgb(0, 153, 0);"><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID</span><span style="color: rgb(0, 153, 0);">
+</span><span style="font-size: 11pt; color: rgb(0, 153, 0);"><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;GROUP BY Address</span><span style="color: rgb(0, 153, 0);">
+</span>&nbsp;<br>
+<br>
+Part 2: Count of parts with quantity at most 50 by warehouse address</p>
+
+<p class="MsoNormal" style="margin-left: 0.5in; color: rgb(0, 153, 0);"><span style="font-size: 11pt;">SELECT Address, sum(Quantity) AS [Count of Limited Parts]<br>
+FROM Warehouse AS W, WP<br>
+WHERE <br>
+&nbsp;&nbsp;&nbsp; WP.WID = W.WID AND<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Quantity &lt;= 50<br>
+GROUP BY Address</span></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+&nbsp;Part 3: Combining Part 1 and Part 2 by address</p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+Wrong answer (doing join first, then select):&nbsp;</p>
+
+<p class="MsoNormal" style="margin-left: 0.5in;">
+<span style="font-size: 11pt;"><span style="color: rgb(0, 153, 0);">SELECT Address, sum(WP.Quantity) AS [Count of Parts],</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; sum(WP2.Quantity) AS [Count of Limited Parts]</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">FROM Warehouse AS W, WP, WP AS WP2</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">WHERE <br>
+&nbsp;&nbsp;&nbsp; WP.WID = W.WID AND</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;WP2.WID = W.WID AND</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;&nbsp;WP2.Quantity &lt;= 50</span><br style="color: rgb(0, 153, 0);">
+<span style="color: rgb(0, 153, 0);">GROUP BY Addres</span>s</span></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+&nbsp;Incomplete answer (doing selects first, then join):</p>
+
+<p class="MsoNormal" style="margin-left: 0.5in; color: rgb(0, 153, 0);">
+<span style="font-size: 11pt;">SELECT Q1.Address, pno AS [Parts], lpno AS [Limited Parts]<br>
+FROM (<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, sum(Quantity) AS [pno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse AS W, WP<br>
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID<br>
+&nbsp;&nbsp;&nbsp; GROUP BY Address<br>
+&nbsp;&nbsp;&nbsp; ) AS Q1, <br>
+&nbsp;&nbsp;&nbsp; (<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, sum(Quantity) AS [lpno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse AS W, WP<br>
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Quantity &lt;= 50<br>
+&nbsp;&nbsp;&nbsp;&nbsp; GROUP BY Address<br>
+&nbsp;&nbsp;&nbsp; ) AS Q2<br>
+WHERE <br>
+&nbsp;&nbsp;&nbsp; Q2.Address = Q1.Address</span></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+&nbsp;Complete answer (including addresses with no quantities less than 51):</p>
+
+<p class="MsoNormal" style="margin-left: 0.5in; color: rgb(0, 153, 0);">
+<span style="font-size: 11pt;">SELECT Q1.Address, pno AS [Parts], lpno AS [Limited Parts]<br>
+FROM (<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, sum(Quantity) AS [pno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse AS W, WP<br>
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID<br>
+&nbsp;&nbsp;&nbsp; GROUP BY Address<br>
+&nbsp;&nbsp;&nbsp; ) AS Q1, <br>
+&nbsp;&nbsp;&nbsp; (<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, sum(Quantity) AS [lpno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse AS W, WP<br>
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Quantity &lt;= 50<br>
+&nbsp;&nbsp;&nbsp; GROUP BY Address<br>
+&nbsp;&nbsp;&nbsp; UNION<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, NULL AS [lpno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse AS W, WP<br>
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;NOT EXISTS (<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; SELECT *<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FROM WP<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;WP.WID = W.WID AND <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Quantity &lt;= 50<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ) AS Q2<br>
+&nbsp;&nbsp;WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Q2.Address = Q1.Address</span></p>
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+UNION here could be replaced by an OUTER JOIN:</p>
+
+<p class="MsoNormal" style="margin-left: 0.5in; color: rgb(0, 153, 0);">
+<span style="font-size: 11pt;">SELECT Q1.Address, pno AS [Parts], lpno AS [Limited Parts]<br>
+FROM (<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, sum(Quantity) AS [pno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse AS W, WP<br>
+&nbsp;&nbsp;&nbsp; WHERE <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = W.WID<br>
+&nbsp;&nbsp;&nbsp; GROUP BY Address<br>
+&nbsp;&nbsp;&nbsp; ) AS Q1, <br>
+&nbsp;&nbsp;&nbsp; (<br>
+&nbsp;&nbsp;&nbsp; SELECT Address, sum(Quantity) AS [lpno]<br>
+&nbsp;&nbsp;&nbsp; FROM Warehouse LEFT JOIN WP ON (<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; WP.WID = Warehouse.WID AND<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Quantity &lt;= 50<br>
+&nbsp;&nbsp;&nbsp; )<br>
+GROUP BY Address<br>
+) AS Q2<br>
+WHERE <br>
+&nbsp;&nbsp;&nbsp; Q2.Address = Q1.Address</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 153, 0); margin-left: 0.0866in;"><span style="color: rgb(51, 0, 51);">---------------------------------------------------------------------------------------------------------------------------------------</span><span style="font-size: 11pt;"></span></p>
+
+<h3>Some more Excercies</h3>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>For the questions below, use the relational schema:</b></p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; color: rgb(0, 0, 153);">Warehouse(WID, City)<br>
+Part(PID, Description, Cost)<br>
+WP(WID, PID, Quantity)</p>
+
+1. How many of PID 1 does WID 2 have in stock?&nbsp;<br>
+
+<span style="font-weight: normal;">2. List warehouses which have at least 6 parts with PID 1 and at least 4 parts with PID 2.</span>&nbsp;<br>
+
+3. List the total cost of all the parts in each warehouse in decreasing order of totals.<br>
+
+--------------------------------------------------------------------------------------------
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"><b>For the questions below, use the relational schema:</b></p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 2pt; color: rgb(0, 0, 153);">Hotel(<u>Hotel_No</u>, Name, Address)<br>
+Room(<u>Hotel_No</u>,<span class="Apple-converted-space">&nbsp;</span><u>Room_No</u>, Type, Price)<br>
+Guest(<u>Guest_No</u>, Name, Address)<br>
+Booking(<u>Hotel_No</u>,<span class="Apple-converted-space">&nbsp;</span><u>Room_No</u>,<span class="Apple-converted-space">&nbsp;</span><u>Date_From</u>, Date_To, Guest_No)</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">1. List IDs, names, and addresses of all hotels.<br>
+2. List IDs, names, and addresses of all hotels in London.<br>
+3. How many hotels are there?<br>
+4. What is the average price of a room?<br>
+5. What is the maximum possible revenue per night from all double rooms?<br>
+6. List the bookings for which no Date_To has been specified.<br>
+7. List the names and addresses of all guests in London, ordered by name.<br>
+8. List all double or family rooms with a price below $40 per night in ascending order of price.<br>
+9. How many different guests have made a booking in August?<br>
+10. List the number of rooms in each hotel.<br>
+11. List the number of rooms in each hotel in London.<br>
+12. What is the average number of bookings per day for each hotel in
+August, 2001? (The average here is the total number of Date_Froms in
+August divided by 31.)<br>
+13. List the price and type of all rooms at the Grosvenor Hotel.<br>
+14. List all guests staying at the Grosvenor Hotel on 8/5/01.<br>
+15. What is the total income from bookings for the Grosvenor Hotel on 8/5/1?<br>
+16. What is the lost income from unoccupied rooms at the Grosvenor Hotel on 8/5/1?<br>
+17. List by hotel number and name the total lost income from unoccupied rooms at that hotel on 8/5/1.<br>
+18. Which hotel has the highest total price of all its rooms, and what is that total?<br>
+19. List the details of all rooms at the Grosvenor Hotel, including the
+name of the guest staying in the room, if the room is occupied on 8/5/1.<br>
+20. List the hotel numbers, guest names, and guest cities for which
+more than one guest from that city is staying at the same hotel on
+8/2/1.<br>
+21. What is the most commonly booked room type for each hotel in London
+over the whole history of the hotel? Include the number of bookings in
+the report.</p>
+
+<h4>You are encouraged to solve the above queries on your own in SQL Server before looking at the following answers.</h4>
+
+<h4><a href="http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson3_SQLans.html">Answers to above excercises</a></h4>
+
+
+
+
+
+
+
+</body></html>

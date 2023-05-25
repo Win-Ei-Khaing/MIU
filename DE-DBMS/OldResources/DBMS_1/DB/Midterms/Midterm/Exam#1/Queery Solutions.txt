@@ -1,0 +1,42 @@
+From Professor
+
+
+5c was asking for details of the product which sold most units ever (across multiple orders). To do this we first need to get the productID of the most-sold product. 
+This info is in the orderDetails table, and can be obtained like this:
+
+SELECT ProductID FROM [OrderDetails]
+Group by ProductID
+ORDER BY SUM(Quantity) DESC
+limit 1
+
+now you can just select all fields (or the subset listed in the exam) from the Products table, where the ID is obtained using the nested query above. 
+So the final answer looks something like this:
+
+Select * from Products where ProductID IN  (
+SELECT ProductID FROM [OrderDetails]
+Group by ProductID
+ORDER BY SUM(Quantity) DESC
+limit 1 )
+
+ 
+
+5d. Same approach. Single nested query. First one will give the ID of the Shipper which shipped most orders, and outer query will just provide the detailed fields:
+
+Select * from Shippers where ShipperID IN (
+SELECT ShipperID FROM [Orders]
+group by ShipperID
+order by Count(OrderId) DESC
+limit 1 )
+
+ 
+
+5e. This is even simpler query. There are no nested queries here, just a JOIN over 4 tables.
+You just need to bring all data into a single set (generate the cartesian product with the proper JOINS), 
+and then just use an aggregate function to see who brought in most revenue. Revenue is the SUM of (Quantity * Price) of all the items an employee sold, across all orders.
+
+SELECT o.EmployeeID, e.LastName, e.FirstName, SUM(Quantity*Price) as totalRevenue
+FROM OrderDetails od, Orders o, Products p, Employees e
+WHERE od.ProductID=p.productID and o.OrderID = od.OrderId and e.EmployeeID = o.EmployeeID
+GROUP by o.EmployeeID
+ORDER BY SUM(Quantity*Price) DESC
+limit 1

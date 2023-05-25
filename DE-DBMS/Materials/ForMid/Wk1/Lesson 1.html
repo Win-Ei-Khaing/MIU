@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson1.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 1</title>
+
+
+</head>
+
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<big style="font-weight: bold;"><span style="font-size: 14pt;">CS422:&nbsp; Database
+Management Systems</span></big><br>
+<b><span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson
+1 - </span></span></b><b style="color: rgb(0, 0, 153);"><span style="font-size: 14pt;">Introduction
+To Database Systems</span></b></p>
+
+<p class="MsoNormal" style="margin: 12pt 0in 0.0001pt; line-height: normal;"><big><b><span style="font-size: 12pt; font-family: Times New Roman;"><span style="color: rgb(0, 0, 153);"></span><o:p></o:p></span></b></big></p>
+
+<p class="MsoNormal" style="line-height: normal;"><u><span style="font-size: 11pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Purpose</span></u><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">: -
+To outline the range of the course and introduce the
+vocabulary<o:p></o:p></span></p>
+
+<span style="font-weight: bold;">Database
+approach arose from
+file-based systems because</span>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal; font-family: Times New Roman,Times,serif;">Definition
+of data was embedded in application programs, rather than being stored
+separately and independently.</li>
+<li class="MsoNormal" style="line-height: normal;">No
+control over access and manipulation of data beyond that imposed by
+application programs.<span style="font-size: 11pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 11pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Result
+- the database and Database
+Management System (DBMS)<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Database:
+- A shared collection of logically related data (and a description of
+this data), designed to meet the information needs of an organization.</li>
+<li class="MsoNormal" style="line-height: normal;">Logically
+related data comprises entities, attributes, and relationships of an
+organization's information.</li>
+<li class="MsoNormal" style="line-height: normal;">System
+catalog (data dictionary or metadata) provides the description of the
+data to enable program-data independence.</li>
+<li class="MsoNormal" style="line-height: normal;">Data
+definition language (DDL):- Permits specification of data types,
+structures and any data constraints. All specifications are stored in
+the database.</li>
+<li class="MsoNormal" style="line-height: normal;">Data
+manipulation language (DML):- General inquiry facility (query language)
+of the data.</li>
+<li class="MsoNormal" style="line-height: normal;">Database
+Management System (DBMS):- A software system that enables users to
+define, create, and maintain the database and which provides controlled
+access to this database.<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Purposes
+of a DBMS<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Access:
+provide one application to access many databases</li>
+<li class="MsoNormal" style="line-height: normal;">Layers:
+hide physical storage considerations from the user</li>
+<li class="MsoNormal" style="line-height: normal;">Views:
+to provide only the data a user needs</li>
+<li class="MsoNormal" style="line-height: normal;">Security:
+restrict access to the data</li>
+<li class="MsoNormal" style="line-height: normal;">Integrity:
+preserve data integrity while supporting change</li>
+<li class="MsoNormal" style="line-height: normal;">Recovery:
+return the database to a consistent state after a failure of any kind</li>
+<li class="MsoNormal" style="line-height: normal;">Concurrency:
+offer simultaneous access to many users</li>
+<li class="MsoNormal" style="line-height: normal;">Backup<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Components
+of DBMS Environment<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Hardware:
+Can range from a PC to a network of computers.</li>
+<li class="MsoNormal" style="line-height: normal;">Software:
+DBMS, operating system, network software (if necessary) and also the
+application programs.</li>
+<li class="MsoNormal" style="line-height: normal;">Data
+used by the organization and a description of this data (a schema).</li>
+<li class="MsoNormal" style="line-height: normal;">Procedures:
+Instructions and rules that should be applied to the design and use of
+the database and DBMS.</li>
+<li class="MsoNormal" style="line-height: normal;">People.</li>
+</ul>
+
+<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><span style="font-weight: bold;"><big>Roles
+in the Database Environment</big></span><o:p></o:p></span>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Data
+Administrator (DA)</li>
+<li class="MsoNormal" style="line-height: normal;">Database
+Administrator (DBA)</li>
+<li class="MsoNormal" style="line-height: normal;">Application
+Programmers</li>
+<li class="MsoNormal" style="line-height: normal;">End
+Users (naive and sophisticated)<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">History
+of Database Systems<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">First-generation:
+Hierarchical and Network</li>
+<li class="MsoNormal" style="line-height: normal;">Second
+generation: Relational</li>
+<li class="MsoNormal" style="line-height: normal;">Third
+generation: Extended Relational, Object-Oriented<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Advantages
+of DBMS<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Control
+of data redundancy.</li>
+<li class="MsoNormal" style="line-height: normal;">Data
+consistency</li>
+<li class="MsoNormal" style="line-height: normal;">More
+information from the same amount of data.</li>
+<li class="MsoNormal" style="line-height: normal;">Sharing
+of data.</li>
+<li class="MsoNormal" style="line-height: normal;">Improved
+data integrity.</li>
+<li class="MsoNormal" style="line-height: normal;">Improved
+security.</li>
+<li class="MsoNormal" style="line-height: normal;">Enforcement
+of standards.</li>
+<li class="MsoNormal" style="line-height: normal;">Economy
+of scale.</li>
+<li class="MsoNormal" style="line-height: normal;">Balanced
+conflicting requirements</li>
+<li class="MsoNormal" style="line-height: normal;">Improved
+data accessibility and responsiveness</li>
+<li class="MsoNormal" style="line-height: normal;">Increased
+productivity</li>
+<li class="MsoNormal" style="line-height: normal;">Improved
+maintenance through data independence</li>
+<li class="MsoNormal" style="line-height: normal;">Increased
+concurrency</li>
+<li class="MsoNormal" style="line-height: normal;">Improved
+backup and recovery services<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Disadvantages
+of DBMS<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Complexity</li>
+<li class="MsoNormal" style="line-height: normal;">Size</li>
+<li class="MsoNormal" style="line-height: normal;">Cost
+of DBMS</li>
+<li class="MsoNormal" style="line-height: normal;">Additional
+hardware costs</li>
+<li class="MsoNormal" style="line-height: normal;">Cost
+of conversion</li>
+<li class="MsoNormal" style="line-height: normal;">Performance</li>
+<li class="MsoNormal" style="line-height: normal;">Higher
+impact of a failure&nbsp;<big><br>
+</big></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">World
+Wide Web<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Organizations
+are now rapidly building new database applications or reengineering
+existing ones to take full advantage of the web</li>
+<li class="MsoNormal" style="line-height: normal;">This
+increases the number of skills that are needed to be a DBA</li>
+<li class="MsoNormal" style="line-height: normal;">XML
+documents are used to pass data between different programs on the
+network</li>
+<li class="MsoNormal" style="line-height: normal;">XSLT
+programs are used to translate XML documents into different formats&nbsp;<big><br>
+</big></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Online
+Transaction Processing (OLTP)<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Retrieval,
+update, or insertion of isolated facts</li>
+<li class="MsoNormal" style="line-height: normal;">To
+serve day-to-day business needs</li>
+<li class="MsoNormal" style="line-height: normal;">Many
+users, small transactions, highly dynamic data reflecting current
+situation<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Online
+Analytical Processing (OLAP)<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Exploration
+of multi-dimensional data</li>
+<li class="MsoNormal" style="line-height: normal;">To
+support decision-making and strategic planning</li>
+<li class="MsoNormal" style="line-height: normal;">Few
+users, large transactions, static historical data<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Data
+Mining<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Search
+for trends in large amounts of data<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+<big><b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;">Data
+Warehouse<o:p></o:p></span></b></big>
+<ul type="disc">
+
+<li class="MsoNormal" style="line-height: normal;">Data
+structure and management system designed to support OLAP and data mining<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;;"><big><o:p></o:p></big></span></li>
+</ul>
+
+</body></html>

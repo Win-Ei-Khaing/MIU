@@ -1,0 +1,671 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson6.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 6</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 6 - Entity-Relationship Modeling</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 14pt;"><span style="color: rgb(0, 0, 153);"></span></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose </span></u><span style="font-size: 12pt;">: -&nbsp;
+Model Business with Entity-Relationship Diagram.<br>
+Implement Entity-Relationship Diagram with Relational DB.</span></p>
+
+An <span style="font-weight: bold;">entity type</span> represents a group of ‘objects’ in the real world with the same properties.<br>
+<ul>
+  <li style="height: 24px;">Strong entity type: <span style="font-style: italic;">not</span> existence dependent on some other entity type.</li>
+  <li>Weak entity type: existence dependent on some other entity type.</li>
+</ul>
+
+<br>
+
+A<span style="font-weight: bold;"> relationship type</span> is a set of associations between one or more participating entity types.
+<br>
+<ul>
+  <li style="height: 7px;">Unary: Staff Supervise Staff (also called recursive relationship)</li>
+</ul>
+<ul>
+  <li style="margin-top: 14px; height: 6px;">Binary: Branch Has Staff</li>
+
+</ul>
+
+
+<ul>
+
+<li>Ternary: Staff Registers Client at Branch</li><li style="margin-top: 0px; height: 10px;">Quaternary: Solicitor Arranges Bid with a Buyer supported by a Financial Institution.</li>
+</ul>
+
+<br>
+
+An <span style="font-weight: bold;">attribute</span> represents a property of an entity or a relationship type.<br>
+
+<ul>
+
+<li style="height: 8px;">Simple: position or salary attribute of Staff</li>
+</ul>
+
+<ul>
+
+<li style="height: 8px;">Composite: address attribute composed of street, city, and postcode attributes</li>
+</ul>
+
+<ul>
+
+<li style="height: 9px;">Single-valued: branchNo attribute of Branch</li>
+</ul>
+
+<ul>
+
+<li style="height: 10px;">Multi-valued: telNo attribute of Branch</li>
+</ul>
+
+<ul>
+
+<li>Derived: duration attribute of Lease, calculated from rentStart and rentFinish attributes.</li>
+</ul>
+
+<br>
+
+<span style="font-weight: bold;">Multiplicity</span> represents the
+number (or range) of possible occurrences of an entity type that may
+relate to a single occurrence of an associated entity type through a
+particular relationship.<br>
+
+<br>
+
+<span style="font-weight: bold;">Enterprise constraints</span> are
+rules that the data in the database must conform to as specified by
+users or database administrators of a database. Multiplicity constrains
+the way that entities are related – it is a representation of the
+policies (or business rules) established by the user or enterprise.<br>
+
+<br>
+
+Multiplicity actually consists of two separate constraints (see Section 12.6.5):<br>
+
+<span style="font-weight: bold;">Cardinality</span> – which
+describes the maximum number of possible relationship occurrences for
+an entity participating in a given relationship type.<br>
+
+<span style="font-weight: bold;">Participation</span> – which determines whether all (mandatory) or only some(optional) entity occurrences participate in a relationship.<br>
+&nbsp;&nbsp; <span style="font-weight: bold;"><br>
+</span>Optional participation is represented as a minimum value of 0,
+and mandatory participation is shown as a minimum value of 1.
+&nbsp;It's important to note that the participation for a given entity
+in a relationship is represented by the minimum value on the opposite
+side of the relationship; that is, the minimum value for the
+multiplicity beside the related entity.<br>
+<br>
+
+<h3>Connection Traps</h3>
+
+<span style="font-weight: bold;">Fan Trap</span>
+<ul>
+
+<li>A fan trap occurs where a model represents a relationship between
+two entity types, but the pathway between certain entity occurrences is
+ambiguous. Resolve the fan trap by restructuringthe original ER diagram
+to represent the correct association between these entities. </li><li>Branch (m) ==<span class="Apple-converted-space">&nbsp;</span>
+<is of="" part="">== (1) Division (1) ==
+<span class="Apple-converted-space">&nbsp;</span>
+<isallocated>== (m) Staff</isallocated></is></li><li>Problem: How to find who works at a given branch?</li><li>Solution: Sort hierachy</li><li>Division (1) ==<span class="Apple-converted-space">&nbsp;</span>
+<operates>== (m) Branch (1) ==<span class="Apple-converted-space">&nbsp;</span><isallocated>== (m) Staff</isallocated></operates>
+</li>
+</ul>
+
+<span style="font-weight: bold;">Chasm Trap</span>
+<ul>
+
+<li>A chasm trap occurs where a model suggests the existence of a
+relationship between entity types, but the pathway does not exist
+between certain entity occurrences. A chasm trap may occur where there
+are one or more relationships with optional participation. Resolve the
+chasm trap byidentifying the missing relationship. </li><li>Branch (1) ==<span class="Apple-converted-space">&nbsp;</span>
+<isallocated>== (m) Staff (1) ---<span class="Apple-converted-space">&nbsp;</span>
+<manages>--- (m) Property</manages></isallocated></li><li>Problem: Find all unmanaged properties associated with a branch</li><li>Solution: Add missing relationship:</li><li>Branch (1) ---<span class="Apple-converted-space">&nbsp;</span>
+<has>== (m) Property</has></li>
+</ul>
+
+<p></p>
+
+<p><span style="font-weight: bold;">More&nbsp;readings:</span><br>
+<a href="http://creately.com/blog/diagrams/er-diagrams-tutorial/">ERD Beginners Tutorial</a><br>
+<a href="http://creately.com/blog/diagrams/er-diagrams-tutorial/">Entity Relationship Modeling using UML</a>&nbsp;</p>
+
+<p>--------------------------------------------------------------------------------------------------------------------------------------------------</p>
+
+<h1 style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Exercises</h1>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Use
+ER diagrams to propose data models for the following business models.
+Each ER diagram should show the cardinalities and participation for all
+relationships.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">You
+might like to start with a rough model containing, for example,
+recursive entities, subtypes with no characteristic attributes, pairs
+of entities linked by multiple relationships, and so on, and then
+refine it so that it conforms to the standards of the ER checklist. (We
+do not need to include in our diagrams descriptions, traceability,
+authority, and other items in italics in the checklist given in the extra notes.) The answers
+will introduce some useful modeling devices not mentioned in the course
+text or lectures. There may be many good ways to answer these
+questions. The answer given is just a possibility.&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Start
+here with the question, have a go, take a look at the checklist, look
+for refinements or corrections for your answer, take a look at my
+answer, like that develop your ER modeling skill.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">Goals: correct use of</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">Relationship cardinality<br>
+Relationship participation<br>
+Strong and weak entities<br>
+Subtypes and supertypes for generalization hierarchies (optional)<br>
+Subtype discriminators for disjoint entities<br>
+Role entities for overlapping subtypes<br>
+Structure entities for aggregation hierarchies (optional)<br>
+Structure entities for recursive relationships&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"></p>
+
+<ol start="1" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">A business employs 113,912 people in 58 different
+types of job at 157 branch offices. Every employee works at at most one
+branch office and has at most one job type.&nbsp;</li>
+</ol>
+
+<ol start="2" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">AgriTech Co. has a policy of moving its employees
+through a variety of jobs to broaden their skill base and understanding
+of the company as a whole. Propose an ER data model that would enable
+AgriTech to view employee work histories.&nbsp;</li>
+</ol>
+
+<ol start="3" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">At TU, every student is assigned to a tutor, though not all tutors have students.&nbsp;</li>
+</ol>
+
+<ol start="4" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">Technical
+Book Inc. uses information from the tables of contents of the books
+they sell to assist in locating books by keyword.&nbsp;</li>
+</ol>
+
+<ol start="5" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">The promotions manager for ComfyCar sales places advertisements in the local newspaper, listing car deals of the day.&nbsp;</li>
+</ol>
+
+<ol start="6" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">KO Marketing maintains contact information for
+all target organizations and individuals. This information includes
+contact name, organization name, home phone, work phone, cell phone,
+fax number, US mailing address, as appropriate.&nbsp;</li>
+</ol>
+
+<ol start="7" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">AXP Co. has 284 employees working in 23 job
+types. New employees at AXP Co. often spend a period as trainees for a
+specific job type.&nbsp;</li>
+</ol>
+
+<ol start="8" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">After further discussion, AXP Co. realizes that
+it does not know precisely which job type the new employee will fill,
+so the company creates a list of trainee job categories, each of which
+corresponds to a set of job types.&nbsp;</li>
+</ol>
+
+<ol start="9" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">Hobbiton Estate Co. offers properties for sale
+and properties for rent. Some properties are available for either
+purchase or rent.&nbsp;</li>
+</ol>
+
+<ol start="10" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">At
+MUM, some faculty members are tutors, some are advisors, and all
+students are in exactly one tutorial or advisor group.&nbsp;</li>
+</ol>
+
+<ol start="11" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">HiHoCo has a company organization chart with 7
+levels of management. Propose a model for personnel data which will
+show who is where in the organization.&nbsp;</li>
+</ol>
+
+<ol start="12" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">Every year, the IRS keeps track of all taxpayers and their dependents, whether or not the dependents pay tax.&nbsp;</li>
+</ol>
+
+<ol start="13" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+<li class="MsoNormal">Wingo Co. raises money for cultural events. Wingo
+has a subscription newsletter, an email marketing list, a donor list,
+and sells T-shirts. Wingo would like a database to track the following
+data:<br>
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span class="Apple-converted-space"></span></span></span><span style="text-decoration: underline;">Newsletter</span>: subscriber name and address, start date of subscription period, end date of subscription period<br>
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"></span></span><span style="text-decoration: underline;">Email list</span>: email address, name, number of emails sent, interest level<span style="text-decoration: underline;"><br>
+Donor list</span>: donor name, email and postal address, donation history<span style="text-decoration: underline;"><br>
+Sales</span>: customer name and address, quantity ordered, sales price, tax, date shipped<br>
+Propose an ER diagram for Wingo.<br>
+<br>
+</li>
+</ol>
+---------------------------------------------------------------------------------------------------------------------------------------
+<h2>&nbsp;Answers to ER Diagram Exercises</h2>
+
+Please note that different ER modeling notations are combined here.<br>
+
+<br>
+
+<span style="font-weight: bold;">1.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>A
+business employs 113,912 people in 58 different types of job at 157
+branch offices. Every employee works at at most one branch office and
+has at most one job type.
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;<span style="color: rgb(0, 153, 0);">The purpose here is to get the cardinalities in the right location. All relationships are optional:</span><br style="color: rgb(0, 153, 0);"><span style="color: rgb(0, 153, 0);">
+&nbsp;</span></p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);"><span style="position: relative; z-index: 5;"><span style="position: absolute; left: 47px; top: -6px; width: 476px; height: 142px;"><img style="width: 476px; height: 142px;" alt="" src="./Lesson 6_files/image001.gif"></span></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;</p><br>
+---------------------------------------------------------------------------------------------------------------------------------------<br>
+
+<br>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: -0.25in;"><span style="font-weight: bold;">&nbsp;2.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>AgriTech
+Co. has a policy of moving its employees through a variety of jobs to
+broaden their skill base and understanding of the company as a whole.
+Propose an ER &nbsp;data model that would enable AgriTech to view employee
+work histories.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;<span style="color: rgb(0, 153, 0);">The purpose here is to refine an M:N relation. All relationships are optional. We start with:</span></p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);">&nbsp;<img style="width: 260px; height: 44px;" alt="" src="./Lesson 6_files/image002.gif"></p>
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;
+&nbsp; &nbsp; &nbsp; then represent the relation by a new
+entity with appropriate attributes and participation:
+</span>
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);">&nbsp;<img style="width: 467px; height: 76px;" alt="" src="./Lesson 6_files/image003.gif"></p>
+---------------------------------------------------------------------------------------------------------------------------------------<br>
+
+<br style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: -0.25in;"><span style="font-weight: bold;">3.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>At TU, every student is assigned to a tutor, though not all tutors have students.</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);">&nbsp;Here we have to get the participation right:</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;<img style="width: 261px; height: 43px;" alt="" src="./Lesson 6_files/image004.gif"></p>
+---------------------------------------------------------------------------------------------------------------------------------------<br>
+
+<br style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: -0.25in;"><span style="font-weight: bold;">4.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Technical Book Inc. uses information from the tables of contents of the books they sell to assist in locating books by keyword.</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;<span style="color: rgb(0, 153, 0);">Here we have two entities, Book and Table of Contents Item. Clearly, the second entity is weak, a child of the first:</span></p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="color: rgb(0, 153, 0);"></span></p>
+
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);"><span style="position: relative; z-index: 138;"><span style="position: absolute; left: 148px; top: -10px; width: 340px; height: 46px;"><img style="width: 340px; height: 46px;" alt="" src="./Lesson 6_files/image005.gif"></span></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;">&nbsp;<br>
+</p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;"></p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">---------------------------------------------------------------------------------------------------------------------------------------&nbsp;<br>
+<br>
+</p>
+
+
+<span style="font-family: &#39;Times New Roman&#39;;"></span><span style="font-weight: bold;">5.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="Apple-converted-space">&nbsp;</span></span>The promotions manager for ComfyCar sales places advertisements in the local newspaper, listing car deals of the day.
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);">&nbsp;It
+might seem that, since an advertisement is meaningless without the cars
+it lists, we should model advertisements with a weak entity:</p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);">&nbsp;<img style="width: 285px; height: 47px;" alt="" src="./Lesson 6_files/image006.gif"></p>
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);"></p>
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp; &nbsp; &nbsp; &nbsp;However,
+the cardinalities are wrong, M:N instead of 1:N. So when we refine it
+with an associative entity, Advertisement becomes a strong entity:</span><br style="color: rgb(0, 153, 0);">
+
+<p class="MsoNormal" style="font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; color: rgb(0, 153, 0);">&nbsp;<img style="width: 510px; height: 49px;" alt="" src="./Lesson 6_files/image007.gif"></p>---------------------------------------------------------------------------------------------------------------------------------------<br>
+
+<br>
+
+<br>
+
+<span style="font-weight: bold;">6.</span>&nbsp;&nbsp;&nbsp;
+KO Marketing maintains contact information for
+all target organizations and individuals. This information includes
+contact name, organization name, home phone, work phone, cell
+phone,
+fax number, US mailing address, as appropriate.<br>
+
+
+&nbsp;&nbsp;&nbsp; <br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span style="color: rgb(0, 153, 0);">&nbsp;This
+example introduces supertypes and subtypes. Some information listed in
+the business model applies to individuals, some to organizations, and
+some to both. In this&nbsp;case, the
+subtypes are disjoint, so we create a first draft:</span><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 276px; height: 105px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image008.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Now
+we need some way to indicate which subtype a supertype entity belongs
+to, so we introduce a discriminator entity, which will become a
+relation that lists the two options,
+Individual and Organization:</span><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 276px; height: 185px;" alt="" src="./Lesson 6_files/image009.gif"><br><br>---------------------------------------------------------------------------------------------------------------------------------------<br>
+
+<br>
+
+<br>
+
+<span style="font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">7.</span>&nbsp;&nbsp;&nbsp; </span>AXP Co. has 284 employees working in 23 job
+types. New employees at AXP Co. often spend a period as trainees for a
+specific job type. <br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 153, 0);">Here we
+see an entity Employee with a subtype Trainee, so we might start with:</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 472px; height: 122px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image010.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; However, since both subtypes have the
+same relationship to the Job Type entity, there are no separate
+attributes or relationships to associate with the two subtypes. This suggests
+collapsing the generalization structure to a discriminator entity:</span><br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 305px; height: 159px;" alt="" src="./Lesson 6_files/image011.gif"><br>
+
+<br>
+---------------------------------------------------------------------------------------------------------------------------------------<br>
+
+<br>
+
+<span style="font-family: &#39;Times New Roman&#39;;"><br>
+<span style="font-weight: bold;">8.</span>&nbsp;&nbsp;&nbsp; </span>After
+further discussion, AXP Co. realizes that
+it does not know precisely which job type the new employee will fill,
+so the company creates a list of trainee job categories, each of which
+corresponds to a set of job types. <br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">Well, that separates out the subtypes of
+Employee in our previous proposal, so we return to the first version,
+add a discriminator entity, and introduce a Job Category entity:</span><br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</span><img style="color: rgb(0, 153, 0); width: 500px; height: 211px;" alt="" src="./Lesson 6_files/image013.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;Conclusion: this design is more flexible.
+The simplification
+in the previous answer should only be applied when there is good reason
+to suppose (business rules) that the&nbsp;subtypes will never
+need distinct
+relationships and attributes.</span><br>
+
+<br>
+&nbsp;---------------------------------------------------------------------------------------------------------------------------------------&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<br>
+
+<ol start="8" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+</ol>
+
+<span style="font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">9.</span>&nbsp;&nbsp;&nbsp; </span>Hobbiton Estate Co. offers properties for sale
+and properties for rent. Some properties are available for either
+purchase or rent. <br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span style="color: rgb(0, 153, 0);">&nbsp; This is a simple case of overlapping subtypes. The basic idea is:</span><br style="color: rgb(0, 153, 0);">
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 371px; height: 104px;" alt="" src="./Lesson 6_files/image014.gif"><br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 153, 0);"> Now, instead of a discriminator, we use a role entity to indicate which roles an entity in Property plays:<br>
+<br>
+</span>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 474px; height: 197px;" alt="" src="./Lesson 6_files/image015.gif"><br>
+
+<br>
+&nbsp;---------------------------------------------------------------------------------------------------------------------------------------&nbsp;&nbsp;
+&nbsp;&nbsp; <br>
+
+<br>
+
+<ol start="9" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+</ol>
+
+<span style="font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">10.</span>&nbsp;&nbsp;&nbsp; </span>At
+MUM, some faculty members are tutors, some are advisors, and all
+students are in exactly one tutorial or advisor group. <br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; Now,
+since there are subtypes for Faculty and Student, we need a
+generalization structure. We might start with:</span><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 270px; height: 92px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image017.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; It is not good to have two entities
+linked by more than one relation. Also, it is not possible in this
+diagram to model participation. So we refine the diagram to:</span><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 512px; height: 132px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image020.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Finally, there must be some way to tell
+which subtype a faculty or student is in. For Faculty, since the
+subtypes overlap, we need a role entity. For Student, since participation is total, a
+discriminator entity will be better than a discriminator attribute:</span><br>
+
+<br>
+
+&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; <img style="width: 535px; height: 308px;" alt="" src="./Lesson 6_files/image021.gif"><br>
+
+<br>---------------------------------------------------------------------------------------------------------------------------------------&nbsp;&nbsp;
+&nbsp; <br>
+
+<br>
+
+<ol start="10" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+</ol>
+
+<span style="font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">11.</span>&nbsp;&nbsp;&nbsp; </span>HiHoCo has a company organization chart with 7
+levels of management. Propose a model for personnel data which will
+show who is where in the organization. <br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; This is an example of a recursive entity:<br style="color: rgb(0, 153, 0);">
+<br style="color: rgb(0, 153, 0);">
+</span><span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; </span><img style="width: 140px; height: 35px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image022.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 153, 0);">We clarify the self-relationship using a structure entity:</span><br>
+
+<br>
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 286px; height: 84px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image023.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<p class="MsoNormal">&nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 153, 0);"> The
+structure entity is weak since it would not exist without the entity it
+structures. The participation symbols indicate that every entity in
+Person Structure relates to exactly one entity in Person through either
+key. This is an extension of the participation concept.&nbsp;</span></p>
+
+<p style="color: rgb(0, 153, 0);" class="MsoNormal">&nbsp;&nbsp;&nbsp;
+It
+would be more accurate to draw two relationships between Person and
+Person Structure. This is one case where a pair of entities are linked
+by more than one relationship, in exception to the
+general rule.&nbsp;</p>
+
+<p style="color: rgb(0, 153, 0);" class="MsoNormal">&nbsp;&nbsp;&nbsp;
+Titles
+or ranks in the organization will be attributes of Person. The
+structure entity has the interpretation that person_id_1 works for
+person_id_2. To model a greater
+variety&nbsp;of relationships, one could add
+a relationship attribute to Person Structure or introduce an
+attributive entity.</p>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="color: rgb(0, 153, 0); width: 481px; height: 84px;" alt="" src="./Lesson 6_files/image024.gif"><br>
+
+<br>
+---------------------------------------------------------------------------------------------------------------------------------------&nbsp;&nbsp;
+&nbsp;<br>
+
+<br>
+
+<span style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;"></span>
+<ol start="11" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in;" type="1">
+
+</ol>
+
+<span style="font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">12.</span>&nbsp;&nbsp;&nbsp; </span>Every year, the IRS keeps track of all taxpayers and their dependents, whether or not the dependents pay tax. <br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 153, 0);"> Here
+we have an overlapping subtype since a dependent may also be a
+taxpayer, and a supertype Person which is a recursive entity. The basic
+pattern is:</span><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 265px; height: 89px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image025.gif"><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Then we add the role entity and the structure entity to arrive at:</span><br style="color: rgb(0, 153, 0);">
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><img style="width: 468px; height: 229px; color: rgb(0, 153, 0);" alt="" src="./Lesson 6_files/image026.gif"><br>
+
+<br style="color: rgb(0, 153, 0);">
+
+<span style="color: rgb(0, 153, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; At this point, we have no relationships
+or attributes to distinguish
+Taxpayer from Dependent, but obviously the IRS would have many.</span><br>
+
+<br>
+---------------------------------------------------------------------------------------------------------------------------------------&nbsp;&nbsp;
+&nbsp;<br>
+
+<br>
+
+<p class="MsoNormal"><span style="font-weight: bold;">13.</span>&nbsp;&nbsp;&nbsp;
+Wingo Co. raises money for cultural events. Wingo
+has a subscription newsletter, an email marketing list, a donor list,
+and sells T-shirts. Wingo would like a database to&nbsp;track the following
+data:<span style="text-decoration: underline;"><br>
+</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="text-decoration: underline;">Newsletter</span>: subscriber name and address, start date of subscription period, end date of subscription period<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"></span>
+</span>
+<span style="text-decoration: underline;">Email list</span>: email address, name, number of emails sent, interest level<span style="text-decoration: underline;"><br></span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="text-decoration: underline;">Donor list</span>: donor name, email and postal address, donation history<span style="text-decoration: underline;"><br></span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="text-decoration: underline;">Sales</span>: customer name and address, quantity ordered, sales price, tax, date shipped<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;Propose an ER diagram for Wingo.</p>
+
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="color: rgb(0, 153, 0);"> 
+&nbsp;Here we note subscriber, email list member, donor, and customer are all
+types of people, so we introduce a generalization hierarchy with
+overlapping subtypes:</span>
+<p class="MsoNormal"></p>
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="color: rgb(0, 153, 0); width: 544px; height: 222px;" alt="" src="./Lesson 6_files/image027.gif"><br>
+<br>
+<br>
+
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson4.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 4</title>
+
+</head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 4 - SQL -&nbsp;Data Definition</span></span></b></p>
+
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center"><b><span style="font-size: 11pt;"><span style="color: rgb(0, 0, 153);"></span></span></b><b style="color: rgb(0, 0, 153);"><span style="font-size: 11pt;"></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose</span></u><span style="font-size: 12pt;">: -&nbsp;</span>
+Read and write SQL queries, translate questions in English into SQL.</p>
+<span style="font-size: 12pt; line-height: 115%; color: black;"></span>
+<h3 style="text-decoration: underline;">Base Data types in SQL</h3>
+Boolean, character, bit (removed from SQL:2003), exact numeric, approximate numeric, datetime, interval, large object.<br>
+<br>
+<h2 style="text-decoration: underline;"><small>SQL Commands for Data Definition (defining database structure)</small></h2>
+
+<span style="font-weight: bold;">CREATE</span> - to create a database schema or table;<br>
+
+<span style="font-weight: bold;">ALTER - </span>to change the structure of a table once it has been created;<br>
+
+<span style="font-weight: bold;">DROP</span> - to delete a table<br>
+
+<br>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">CREATE TABLE &lt;TABLE NAME&gt;<br>(&lt;COLUMN
+NAME&gt; &lt;DATA TYPE&gt; [(&lt;SIZE&gt;)]
+&lt;COLUMN CONSTRAINT LIST&gt; [,...])&nbsp;<br>
+NULL or NOT NULL<br>
+DEFAULT<br>
+UNIQUE<br>
+PRIMARY KEY | PRIMARY KEY (column [,...])<br>
+FOREIGN KEY REFERENCES &lt;TABLE NAME&gt; (&lt;COLUMN NAME&gt; [,...])<br>
+CHECK</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">ALTER TABLE &lt;TABLE NAME&gt; ADD|DROP|MODIFY (COLUMN SPECIFICATION LIST)&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">DROP TABLE &lt;TABLE NAME&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in; text-indent: 0.25in;"><span style="font-size: 10pt;">&nbsp;<br>
+CREATE VIEW &lt;TABLE NAME&gt;<br>
+AS &lt;QUERY&gt;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;">&nbsp;DROP VIEW &lt;VIEW NAME&gt;</span></p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"><span style="font-size: 10pt;"></span></p>
+<h3 style="text-decoration: underline;">Integrity Enhancement Feature</h3>
+<table style="text-align: left; width: 100%;" border="2" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="background-color: rgb(204, 204, 204);" align="undefined" valign="undefined">
+Required data</td>
+      <td align="undefined" valign="undefined">NOT NULL of CREATE/ALTER TABLE.</td>
+    </tr>
+    <tr>
+      <td style="background-color: rgb(204, 204, 204);" align="undefined" valign="undefined">
+Domain constraint</td>
+      <td align="undefined" valign="undefined">CHECK clause of CREATE/ALTER TABLE and CREATE DOMAIN.</td>
+    </tr>
+    <tr>
+      <td style="background-color: rgb(204, 204, 204);" align="undefined" valign="undefined">
+Entity integrity</td>
+      <td align="undefined" valign="undefined">PRIMARY KEY (and UNIQUE) clause of CREATE/ALTER TABLE.</td>
+    </tr>
+    <tr>
+      <td style="background-color: rgb(204, 204, 204);" align="undefined" valign="undefined">
+Referential integrity</td>
+      <td align="undefined" valign="undefined">FOREIGN KEY clause of CREATE/ALTER TABLE</td>
+    </tr>
+    <tr>
+      <td style="background-color: rgb(204, 204, 204);" align="undefined" valign="undefined">
+General constraints</td>
+      <td align="undefined" valign="undefined">CHECK and UNIQUE clauses of CREATE/ALTER TABLE and (CREATE) ASSERTION</td>
+    </tr>
+  </tbody>
+</table>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-left: 0.25in;"></p>
+
+</body></html>

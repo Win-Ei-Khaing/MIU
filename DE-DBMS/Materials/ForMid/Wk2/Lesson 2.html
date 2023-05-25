@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson2.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 2</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<big style="font-weight: bold;"><span style="font-size: 14pt;">CS422:&nbsp; Database
+Management Systems</span></big><br>
+<b><span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson
+2 -&nbsp;</span></span></b><b style="color: rgb(0, 0, 153);"><span style="font-size: 14pt;">The Relational Model</span></b></p>
+
+<p class="MsoNormal" style="margin: 12pt 0in 0.0001pt; line-height: normal; font-family: Times New Roman;"><b><span style="font-size: 12pt;"><span style="color: rgb(0, 0, 153);"></span><o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u><span style="font-size: 12pt;">Purpose</span></u><span style="font-size: 12pt;">: -&nbsp;</span><big><big><big><span style="font-size: 12pt; line-height: 115%; color: black;">Concepts,
+terminology.
+Express queries in relational algebra and relational calculus.</span></big></big></big></p>
+
+<span style="font-family: Times New Roman;">(a)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Relation</span><span style="font-family: Times New Roman;">:-
+A table with columns and rows.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(b)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Attribute:-</span><span style="font-family: Times New Roman;"> A named column
+of a relation.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(c)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Domain:-</span><span style="font-family: Times New Roman;"> The set of
+allowable values for one or more attributes.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(d)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Tuple:</span><span style="font-family: Times New Roman;"> A row of a
+relation.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(e)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Intension:-</span><span style="font-family: Times New Roman;"> The structure
+of a relation together with a specification of the domains and any
+other restrictions on possible values.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(f)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Extension:-</span><span style="font-family: Times New Roman;"> An instance of
+the tuples of a relation.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(g)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Degree:-</span><span style="font-family: Times New Roman;"> The number of
+attributes in a relation.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">(h)
+</span><span style="font-weight: bold; font-family: Times New Roman;">Cardinality:-</span><span style="font-family: Times New Roman;"> The number of
+tuples in a relation.</span><br style="font-family: Times New Roman;">
+
+<br style="font-family: Times New Roman;">
+
+<span style="font-weight: bold; font-family: Times New Roman;">A
+relation has the following properties:</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+has a name that is distinct from all other relation names in the
+relational schema;</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+each cell contains exactly one atomic (single) value;</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+each attribute has a distinct name;</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+the values of an attribute are all from the same domain;</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+each tuple is distinct; there are no duplicate tuples;</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+the order of attributes has no significance;</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman;">•
+the order of tuples has no significance, theoretically. (However, in
+practice, the order may affect the efficiency of accessing tuples.)</span><br style="font-family: Times New Roman;">
+
+<br style="font-family: Times New Roman;">
+
+<ul style="font-family: Times New Roman;">
+
+<li>A mathematical relation is a
+subset of the Cartesian product of two or more sets. &nbsp;In
+database terms, a relation is any subset of the Cartesian product of
+the domains of the attributes. A relation is normally written as a set
+of n-tuples, in which each element is chosen from the appropriate
+domain.</li>
+<li>Relations are physically
+represented as tables, with the rows corresponding to individual tuples
+and the columns to attributes.</li>
+<li>The structure of the
+relation, with domain specifications and other constraints, is part of
+the intension of the database, while the relation with all its tuples
+written out represents an instance or extension of the database.</li>
+<li>Properties of database
+relations are: each cell contains exactly one atomic value, attribute
+names are distinct, attribute values come from the same domain,
+attribute order is immaterial, tuple order is immaterial, and there are
+no duplicate tuples.</li>
+<li>The degree of a relation is
+the number of attributes, while the cardinality is the number of
+tuples. A unary relation has one attribute, a binary relation has two,
+a ternary relation has three, and an n-ary relation has n attributes.</li>
+</ul>
+
+<span style="font-weight: bold; font-family: Times New Roman;">Keys
+in a Relation</span><br style="font-family: Times New Roman;">
+
+<ul style="font-family: Times New Roman;">
+
+<li>A superkey is an attribute,
+or set of attributes, that identifies tuples of a relation uniquely.</li>
+<li>A&nbsp;candidate key is
+a minimal superkey.&nbsp;</li>
+<li>A primary key is the
+candidate key chosen for use in identification of tuples. A relation
+must always have a primary key.&nbsp;</li>
+<li>A foreign key is an
+attribute, or set of attributes, within one relation that is the
+candidate key of another relation.</li>
+</ul>
+
+<div style="text-align: left; font-family: Times New Roman;">
+<p class="MsoNormal" style="line-height: normal;">Note that a key is
+defined with respect to a relational variable, not an instance of the
+variable. Identification of a key must be
+supported by
+business rules.<o:p></o:p></p>
+</div>
+
+<ul style="font-family: Times New Roman;">
+
+</ul>
+
+<span style="font-weight: bold; font-family: Times New Roman;">Integrity
+Constraints</span>
+<ul style="font-family: Times New Roman;">
+
+<li>A null represents a value
+for an attribute that is unknown at the present time or is not
+applicable for this tuple. Null represents the absence of a value.</li>
+<li>Entity integrity is a
+constraint that states that in a base relation no attribute of a
+primary key can be null.</li>
+<li>Referential integrity states
+that foreign key values must match a candidate key value of some tuple
+in the home relation or be wholly null. Apart from relational
+integrity, integrity constraints include, required data, domain, and
+multiplicity constraints; other integrity constraints are called
+general constraints.</li>
+</ul>
+
+<span style="font-weight: bold; font-family: Times New Roman;">Views</span>
+<ul style="font-family: Times New Roman;">
+
+<li>A view in the relational
+model is a virtual or derived relation that is dynamically created from
+the underlying base relation(s) when required. Views provide security
+and allow the designer to customize a user’s model. Not all
+views are updatable.</li>
+</ul>
+
+<span style="font-family: Times New Roman;">-------------------------------------------------------------------------------------------------------------------------------------------------</span><br style="font-family: Times New Roman;">
+
+<span style="font-weight: bold; font-family: Times New Roman;"><br>
+</span>
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><big><span style="font-size: 12pt; color: black;">A&nbsp;<b>relational
+schema</b>&nbsp;is the set of
+attributes
+(with their domains) in a relation.&nbsp;<o:p></o:p></span></big></p>
+
+<big><b style="font-family: Times New Roman;"><span style="font-size: 12pt; line-height: 115%; color: black;">Relational
+variables</span></b></big><span style="font-size: 12pt; line-height: 115%; color: black; font-family: Times New Roman;"><big>:
+<small>when we write “a relation
+R”, we are using R as a
+variable which represents a specific
+relational schema
+and could take as its values or instances any table that is consistent
+with the
+relational schema.</small></big><br>
+<br>
+<br>
+</span><span style="font-weight: bold; font-family: Times New Roman;">Relational
+Algebra
+Operations</span><br style="font-family: Times New Roman;">
+
+<ul style="font-family: Times New Roman;">
+
+<li>Select produces a horizontal
+subset of a relation.&nbsp;</li>
+<li>Project produces a vertical
+subset of a relation by picking out
+particular attributes.&nbsp;</li>
+<li>Product (Cartesian product)
+produces a result relation by
+multiplying one relation by another. If the first relation contained 20
+rows and the second 50, the result relation would contain 20
+× 50
+rows.&nbsp;</li>
+<li>Join produces a result
+relation by (commonly) joining two
+relations over the equal value of an attribute common to both relations.<br>
+</li>
+</ul>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><big><big><span style="font-size: 12pt; color: black;"><span style="font-weight: bold;">Types
+of Joins</span><o:p></o:p></span></big></big></p>
+
+<ul style="font-family: Times New Roman;">
+
+<li><big><big><span style="font-size: 12pt; color: black;"></span><span style="font-size: 7pt; color: black;"></span><span style="font-size: 12pt; color: black;">Theta
+join, equi-join (a particular type of theta join)<o:p></o:p></span></big></big><big><big><span style="font-size: 12pt; color: black;"></span></big></big></li>
+<li><big><big><span style="font-size: 12pt; color: black;">Natural
+join, outer join, inner join<o:p></o:p></span></big></big><big><big><span style="font-size: 12pt; color: black;"></span></big></big></li>
+<li><big><big><span style="font-size: 12pt; color: black;"></span></big></big><span style="font-size: 12pt; color: black;">Semi-join</span></li>
+</ul>
+<span style="font-size: 12pt; color: black;">-----------------------------------------------------------------------------------------------------------------------------------------------------<br>
+<br>
+</span>
+<h2>Relational Model Exercises</h2>
+<br>1. Propose relations for an inventory database which stores counts
+of parts in stock, supplier information, restock levels (when the count
+of a part goes below its restock level, then more of those parts are
+ordered), and the cost of purchasing a part from a supplier. Identify
+all primary keys.<br>
+<b>&nbsp;</b><br>
+&nbsp;<br>
+2. Wingo Co. raises money for cultural events. Wingo has a subscription
+newsletter, an email marketing list, a donor list, and sells T-shirts.
+Wingo would like a database to track the following data:<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Newsletter: subscriber name and address, start date of subscription period, end date of subscription period<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Email list: email address, name, number of emails sent, interest level<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Donor list: donor name, email and postal address, donation history<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Sales: customer name and address, phone, quantity ordered, sales price, tax, date shipped<br>
+&nbsp;<br>
+Propose a relational database for Wingo. Identify all primary keys.<br>
+&nbsp;<br>
+<b>&nbsp;</b><br>
+3. A tree data structure has two relationships for each node, parent
+and children. Represent this data structure by a relational model.
+Identify all primary keys.<br>
+<b>&nbsp;</b><br>
+4. Given a database schema:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hotel(<u>Hno</u>, Name, Street, City, Postcode, Country)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Room(<u>Hno</u>,<span class="Apple-converted-space">&nbsp;</span><u>Rno</u>, Type, Price)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guest(<u>Gno</u>, Name, Street, City, Postcode, Country)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Booking(<u>Hno</u>,<span class="Apple-converted-space">&nbsp;</span><u>Rno</u>,<span class="Apple-converted-space">&nbsp;</span><u>From</u>, To, Gno)<br>
+translate the following questions into relational algebra trees.<br>
+&nbsp;<br>
+a)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by country the number of hotels in each country.<br>
+b)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by Hno and hotel name the total price of rooms in each hotel.<br>
+c)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by country the number of guests in hotels in that country on 3 Jan 2001.<br>
+d)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by Hno and Hotel.Name the number of rooms in each hotel.<br>
+e)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by Hno and Hotel.Name the number of guests in each hotel on 3 Jan 2001.<br>
+f)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by Hno the number of guests staying in a hotel in their own country on 3 Jan 2001.<br>
+g)<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by hotel name the number of unoccupied rooms on 3 Jan 2001.<br>
+&nbsp;<br>
+<span style="font-size: 12pt; color: black;">-----------------------------------------------------------------------------------------------------------------------------------------------------<br>
+<br>
+</span>
+<h2>Answers to Relational Model Exercises</h2>
+&nbsp;<br>
+<span style="font-weight: bold;">1.</span> Propose relations for an
+inventory database which stores counts of parts in stock, supplier
+information, restock levels (when the count of a part goes below its
+restock level, then more of those parts are ordered), and the cost of
+purchasing a part from a supplier. Identify all primary keys.<br>
+<b><i>&nbsp;</i></b><br>
+<b style="color: rgb(0, 167, 0);">ANS:</b><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Part(</span><u style="color: rgb(0, 167, 0);">PartID</u><span style="color: rgb(0, 167, 0);">, Name, Description, Count, RestockLevel)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Supplier(</span><u style="color: rgb(0, 167, 0);">SupplierID</u><span style="color: rgb(0, 167, 0);">, Name, Street, City, State, Zip)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">PartSupplier(</span><u style="color: rgb(0, 167, 0);">PartID</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">SupplierID</u><span style="color: rgb(0, 167, 0);">, Cost)</span><br>
+&nbsp;<br>
+<span style="font-size: 12pt; color: black;">--------------------------------------------------------------------------------------------------------------------</span><br>
+&nbsp;<br>
+<span style="font-weight: bold;">2.</span> Wingo Co. raises money for
+cultural events. Wingo has a subscription newsletter, an email
+marketing list, a donor list, and sells T-shirts. Wingo would like a
+database to track the following data:<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Newsletter: subscriber name and address, start date of subscription period, end date of subscription period<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Email list: email address, name, number of emails sent, interest level<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Donor list: donor name, email and postal address, donation history<br>
+<span style="font-family: Symbol;">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Sales: customer name and address, quantity ordered, sales price, tax, date shipped<br>
+&nbsp;<br>
+Propose a relational database for Wingo. Identify all primary keys.<br>
+&nbsp;<br>
+<b style="color: rgb(0, 167, 0);">Possible Answer</b><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Subscriber(</span><u style="color: rgb(0, 167, 0);">SubID</u><span style="color: rgb(0, 167, 0);">, name, street, city, state, zip, from-date, to-date)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Email(</span><u style="color: rgb(0, 167, 0);">email</u><span style="color: rgb(0, 167, 0);">, name, messages-sent, interest)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Donor(</span><u style="color: rgb(0, 167, 0);">DonorID</u><span style="color: rgb(0, 167, 0);">, name, email, street, city, state, zip)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">DonorHistory(</span><u style="color: rgb(0, 167, 0);">DonorID</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">date</u><span style="color: rgb(0, 167, 0);">, amount)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Sale(</span><u style="color: rgb(0, 167, 0);">InvoiceID</u><span style="color: rgb(0, 167, 0);">, name, street, city, state, zip, quantity, price, tax, date-shipped)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">We could reduce the redundancy by putting names and addresses in a Contact relation:</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Contact(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, name, street, city, state, zip, email)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Subscriber(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, from-date, to-date)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Email(</span><u style="color: rgb(0, 167, 0);">email</u><span style="color: rgb(0, 167, 0);">, name, messages-sent, interest)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">DonorHistory(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">date</u><span style="color: rgb(0, 167, 0);">, amount)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Sale(</span><u style="color: rgb(0, 167, 0);">InvoiceID</u><span style="color: rgb(0, 167, 0);">, ContactID, quantity, price, tax, date-shipped)</span><br style="color: rgb(0, 167, 0);">
+<span style="font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-size: 12pt; font-family: &#39;Times New Roman&#39;; color: rgb(0, 167, 0);"></span><br style="page-break-before: always; color: rgb(0, 167, 0);" clear="all">
+<span style="font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-size: 12pt; font-family: &#39;Times New Roman&#39;; color: rgb(0, 167, 0);"></span><span style="font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none; color: rgb(0, 167, 0);"></span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">We could use the Contact relation as a basis for the Email relation if we separate addresses from names and emails:</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Contact(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, name, email)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">ContactAddress(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, street, city, state, zip)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Subscriber(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, from-date, to-date)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Email(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, messages-sent, interest)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">DonorHistory(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">date</u><span style="color: rgb(0, 167, 0);">, amount)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Sale(</span><u style="color: rgb(0, 167, 0);">InvoiceID</u><span style="color: rgb(0, 167, 0);">, ContactID, quantity, price, tax, date-shipped)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Since Contact represents several
+overlapping categories, subscriber, email list member, donor, and
+customer, it might be useful to have a Contact classifying relation
+based on this set of contact roles:</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Contact(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, name, email)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">ContactRoleType(</span><u style="color: rgb(0, 167, 0);">RoleID</u><span style="color: rgb(0, 167, 0);">, description)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">ContactRole(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">RoleID</u><span style="color: rgb(0, 167, 0);">)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">ContactAddress(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, street, city, state, zip)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Subscriber(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, from-date, to-date)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Email(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">, messages-sent, interest)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">DonorHistory(</span><u style="color: rgb(0, 167, 0);">ContactID</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">date</u><span style="color: rgb(0, 167, 0);">, amount)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Sale(</span><u style="color: rgb(0, 167, 0);">InvoiceID</u><span style="color: rgb(0, 167, 0);">, ContactID, quantity, price, tax, date-shipped)</span><br>
+&nbsp;<br>
+<span style="font-size: 12pt; color: black;">--------------------------------------------------------------------------------------------------------------------</span><br>
+&nbsp;<br>
+<br>
+<span style="font-weight: bold;">3.</span> A tree data structure has
+two relationships for each node, parent and children. Represent this
+data structure by a relational model. Identify all primary keys.<br>
+<b style="color: rgb(223, 111, 223);">&nbsp;</b><br style="color: rgb(223, 111, 223);">
+<b style="color: rgb(0, 167, 0);">ANS:</b><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">Node is a relation with structure;
+it is related to itself through parent and child relationships. We can
+represent the relationships between nodes in a separate NodeStructure
+relation:</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Node(</span><u style="color: rgb(0, 167, 0);">NodeID</u><span style="color: rgb(0, 167, 0);">, NodeData)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NodeStructure(</span><u style="color: rgb(0, 167, 0);">NodeID-1</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">NodeID-2</u><span style="color: rgb(0, 167, 0);">, Relationship)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">We could&nbsp;also classify relationships using a relationship type entity:</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Node(</span><u style="color: rgb(0, 167, 0);">NodeID</u><span style="color: rgb(0, 167, 0);">, NodeData)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NodeStructure(</span><u style="color: rgb(0, 167, 0);">NodeID-1</u><span style="color: rgb(0, 167, 0);">,</span><span style="color: rgb(0, 167, 0);" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(0, 167, 0);">NodeID-2</u><span style="color: rgb(0, 167, 0);">, RelationshipID)</span><br style="color: rgb(0, 167, 0);">
+<span style="color: rgb(0, 167, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RelationshipType(RelationshipID, Description)</span><br>
+&nbsp;<br>
+<span style="color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-size: 12pt; font-family: &#39;Times New Roman&#39;;"></span><span style="font-size: 12pt; color: black;">--------------------------------------------------------------------------------------------------------------------</span><br style="page-break-before: always;" clear="all">
+<span style="color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; font-size: 12pt; font-family: &#39;Times New Roman&#39;;"></span><span style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none;"></span><br>
+<span style="font-weight: bold;">4.</span> Given a database schema:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hotel(<u>Hno</u>, Name, Street, City, Postcode, Country)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Room(<u>Hno</u>,<span class="Apple-converted-space">&nbsp;</span><u>Rno</u>, Type, Price)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guest(<u>Gno</u>, Name, Street, City, Postcode, Country)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Booking(<u>Hno</u>,<span class="Apple-converted-space">&nbsp;</span><u>Rno</u>,<span class="Apple-converted-space">&nbsp;</span><u>From</u>, To, Gno)<br>
+&nbsp; &nbsp;translate the following questions into relational algebra trees.<br>
+&nbsp;<br>
+<span style="font-weight: bold;">a)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">country</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">number of hotels</span><span class="Apple-converted-space">&nbsp;</span>in each country.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 241px; height: 35px;" alt="" src="./Lesson 2_files/image001.gif"><br>
+&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+<span style="font-weight: bold;">b)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Hno<span class="Apple-converted-space">&nbsp;</span></span>and<span style="color: red;"><span class="Apple-converted-space">&nbsp;</span>hotel name</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">total price of rooms</span><span class="Apple-converted-space">&nbsp;</span>in each hotel.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 322px; height: 96px;" alt="" src="./Lesson 2_files/image002.gif"><br>
+&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+<span style="font-weight: bold;">c)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Country</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">number of guests</span><span class="Apple-converted-space">&nbsp;</span>in hotels in that country on<span class="Apple-converted-space">&nbsp;</span><span style="color: blue;">3 Jan 2001</span>.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 415px; height: 96px;" alt="" src="./Lesson 2_files/image003.gif"><br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+<span style="font-weight: bold;">d)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Hno</span><span class="Apple-converted-space">&nbsp;</span>and<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Hotel.Name</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">number of rooms</span><span class="Apple-converted-space">&nbsp;</span>in each hotel.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 288px; height: 96px;" alt="" src="./Lesson 2_files/image004.gif"><br>
+<b><br>
+</b>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+<span style="font-weight: bold;">e)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Hno</span><span class="Apple-converted-space">&nbsp;</span>and<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Hotel.Name</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">number of guests</span><span class="Apple-converted-space">&nbsp;</span>in each hotel on<span class="Apple-converted-space">&nbsp;</span><span style="color: blue;">3 Jan 2001</span>.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 442px; height: 96px;" alt="" src="./Lesson 2_files/image005.gif"><br>
+&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;<br>
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+<span style="font-weight: bold;">f)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">Hno</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">number of guests</span><span class="Apple-converted-space">&nbsp;</span>staying in a hotel<span class="Apple-converted-space">&nbsp;</span><span style="color: blue;">in their own country</span><span class="Apple-converted-space">&nbsp;</span>on<span class="Apple-converted-space">&nbsp;</span><span style="color: blue;">3 Jan 2001</span>.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 522px; height: 125px;" alt="" src="./Lesson 2_files/image006.gif"><br>
+&nbsp;<br>
+&nbsp;<br>
+<span style="position: relative; z-index: 41;"><span style="position: absolute; left: 36px; top: -54px; width: 514px; height: 123px;"></span></span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;<br>
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;" clear="all">
+<span style="font-weight: bold;">g)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>List by<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">hotel name</span><span class="Apple-converted-space">&nbsp;</span>the<span class="Apple-converted-space">&nbsp;</span><span style="color: red;">number</span><span class="Apple-converted-space">&nbsp;</span>of<span class="Apple-converted-space">&nbsp;</span><span style="color: blue;">unoccupied</span><span class="Apple-converted-space">&nbsp;</span>rooms on<span class="Apple-converted-space">&nbsp;</span><span style="color: blue;">3 Jan 2001</span>.<br>
+&nbsp;<br>
+<b><span style="color: rgb(0, 167, 0);">ANS:</span><br>
+<br>
+</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <img style="width: 569px; height: 174px;" alt="" src="./Lesson 2_files/image007.gif">&nbsp;<br>
+&nbsp;<br>
+&nbsp;<span style="color: rgb(0, 167, 0);">where 'D' is the relational algebra difference operator.<br>
+<br>
+</span>
+
+</body></html>

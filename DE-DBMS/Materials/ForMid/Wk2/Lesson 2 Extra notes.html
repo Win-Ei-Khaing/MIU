@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0074)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson2_ExtraNotes.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"> 
+  
+  <title>Lesson 2 Extra notes</title>
+
+
+</head><body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<big style="font-weight: bold;"><span style="font-size: 14pt;">CS422:&nbsp; Database
+Management Systems</span></big><br>
+<b><span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson
+2 -&nbsp;</span></span></b><b style="color: rgb(0, 0, 153);"><span style="font-size: 14pt;">The Relational Model</span></b></p>
+
+<p class="MsoNormal" style="margin: 12pt 0in 0.0001pt; line-height: normal; font-family: Times New Roman;"><b><span style="font-size: 12pt;"><span style="color: rgb(0, 0, 153);"></span><o:p></o:p></span></b></p>
+
+<br>
+
+<span style="color: rgb(0, 0, 0);" class="">e.g. Student, Courses, Grades relations (tables)</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">An attribute in an entity-relationship diagram has a</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">domain</b><span style="color: rgb(0, 0, 0);" class="">, that is, a datatype and a range of valid values. For example, zip code is a five-digit positive number.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">Cartesian product</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">of
+domains is a set containing all possible combinations of elements, one
+from each domain. For example, a chessboard presents the Cartesian
+product of the rows (a-h) with the columns (1-8), with one square for
+each combination b5, h2, etc.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">tuple</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is an element of a Cartesian product.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">relation</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is a subset of a Cartesian
+product. For example, the set of valid values for (city, state, zip
+code) form a relation. Note that this relation contains information,
+whereas the Cartesian product City x State x Zip contains no
+information.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Note: a</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">result set</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is a relation in which the both the columns and the tuples are ordered.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Note: a</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">table</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is
+a physical representation of a relation. In a table, whether it is in a
+document on a hard drive, some sequence of columns and tuples will
+generally be evident.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">relational schema</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is the set of attributes (with their domains) in a relation.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Relational variables</b><span style="color: rgb(0, 0, 0);" class="">:
+when we write “a relation R”, we are using R as a
+variable which represents a specific relational schema and could take
+as its values or instances any table that is consistent with the
+relational schema.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Relational Algebra</b><span style="color: rgb(0, 0, 0);" class="">: five fundamental operations, two standard derived operations</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">select(R,
+proposition)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; S(R, p)</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">project(R,
+attribute set) &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp; P(R, A)</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">union(R1,
+R2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;R1+R2</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">difference(R1,
+R2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; R1-R2</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">product(R1,
+R2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; R1*R2</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">join(R1,
+R2,
+comparison)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; J(R1, R2, p)</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; =
+S(R1*R2, p)</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">divide(R1,
+R2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp;R1 / R2</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; = P(R1-
+(P(R1, att(R1) \ att(R2))*R2) - R1), att(R1) \ att(R2))</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Aggregate
+functions in SQL can be represented in relational algebra by allowing
+the projection operator to project onto aggregate functions on
+attributes which are themselves projected out. <br>
+<br style="color: rgb(0, 0, 0);" class="">
+</span><span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">proposition</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is
+a Boolean expression which evaluates to True or False for each tuple
+without requiring any data except that provided by the tuple. For
+example, on Grades relation, “grade &gt; B” is
+a proposition. A proposition does not contain any “for
+all” or “there exists” quantifiers.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Joins come in various flavors:</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">Theta join, equi-join (a particular type of theta join)</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">Natural join, outer join, inner join</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">Semi-join</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Division—for example, identify all students who have taken all courses.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Relational Calculus (tuple oriented)</b><span style="color: rgb(0, 0, 0);" class="">:</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R = { FQAttSet | predicate }</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">where “FQAttSet” stands for a set of fully-qualified attribute names.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Relational Calculus (domain oriented)</b><span style="color: rgb(0, 0, 0);" class="">:</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R = { AttributeSet | predicate }</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">predicate</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is
+a Boolean expression which may contain attributes not in the set
+“FQAttSet”. All such attributes will be quantified
+by a “for all” or “there
+exists”. For example, to get a list of names of student with
+at least one “A”, we take</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">FQAttSet = Student.name</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">predicate = “there exists Grade.courseID such that</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Student.courseID = Grade.courseID and</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Grade.grade = A”</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Note</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">closure</b><span style="color: rgb(0, 0, 0);" class="">: every operation in relational algebra or relational calculus produces a relation.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Fundamental Theorem</b><span style="color: rgb(0, 0, 0);" class="">:
+Given a set of relations RSet = {R1, ..., Rn}, a relation R can be
+derived from RSet by relational algebra if and only if R can be derived
+from RSet by relational calculus.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Keys</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">in a Relation R</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">A superkey is a set of attributes whose values uniquely identifies each tuple in any instance of R</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">A candidate key is a superkey which does not contain another superkey</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">A primary key is a specific candidate key</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">An alternate key is a candidate key other than the primary key</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">A foreign key is a set of attributes in R which matches a candidate key in a relation S, where S could be R</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Note
+that a key is defined with respect to a relational variable, not an
+instance of the variable. Identification of a key must be supported by
+business rules.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">No
+instance of R can establish that a set of attributes is a superkey for
+R. For example, it may happen that student names in a specific course
+are all different, but this would not imply that the student-name
+attribute is a superkey for a classlist relation. On the other hand, a
+single class in which two students have identical names is sufficient
+to establish that the student-name attribute is not a superkey.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">view</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is
+a derived relation. A view can always be defined by a query on base
+relations. The purpose of a view is to give restricted access to the
+database for both user convenience and data security.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">The principle issue with a view is whether or not it permits updating the base relations from which it is derived.</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">Updates are allowed if the defining query involves a single base relation and contains a candidate key of base relation.</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">A</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><b style="color: rgb(0, 0, 0);" class="">relational database</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">is a set of normalized relations (Lesson 4).</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">Integrity</span><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span class="" style="font-weight: normal; color: rgb(0, 0, 0);">in a relational database</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">Entity Integrity—no attribute of a primary key can be Null</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">·</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">Referential Integrity—a foreign key is either wholly Null or has a match</span><br style="color: rgb(0, 0, 0);" class="">
+
+<span style="color: rgb(0, 0, 0);" class="">&nbsp;</span><b class="" style="font-size: 13px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; color: rgb(0, 0, 0);"><span style="font-size: 12pt;"></span></b><span class="" style="font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none; color: rgb(0, 0, 0);"></span><br style="color: rgb(0, 0, 0);" class="">
+
+<b style="color: rgb(0, 0, 0);" class="">Nulls</b><span style="color: rgb(0, 0, 0);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(0, 0, 0);" class="">may
+be used to indicate incomplete data. The Interim Report 75-02-08 to the
+ANSI X3 (SPARC Study Group 1975) lists 14 different kinds of incomplete
+data that could appear as the result of queries or as attribute values.
+These types include overflows, underflows, errors and other problems
+trying to represent the real world within the limits of a computer.</span>
+<ol class="" start="1" style="font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in; font-family: Times New Roman; color: rgb(0, 0, 0);" type="1">
+
+<li class="MsoNormal"><big>not valid for this individual (e.g., maiden name of male employee)</big></li><li class="MsoNormal"><big>valid, but does not yet exist for this individual (e.g., married name of female, unmarried employee).</big></li><li class="MsoNormal"><big>exists, but not permitted to be logically stored (e.g. religion of this employee).</big></li><li class="MsoNormal"><big>exists, but not knowable for this individual (e.g., last efficiency rating of an employee who worked for another company).</big></li><li class="MsoNormal"><big>exists, but not yet logically stored for this individual (e.g. medical history of newly hired employee)</big></li>
+</ol>
+
+<span style="color: rgb(0, 0, 0);" class="">6.</span><span class="" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0, 0, 0);" class="">logically stored but subsequently logically deleted</span>
+<ol class="" start="7" style="font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; margin-top: 0in; font-family: Times New Roman; color: rgb(0, 0, 0);" type="1">
+
+<li class="MsoNormal"><big>logically stored, but not yet available.</big></li><li class="MsoNormal"><big>available, but undergoing change (may be no longer valid).</big></li><ol start="1" style="margin-top: 0in;" type="a"><li class="MsoNormal"><big>change begun, but new values not yet computed</big></li><li class="MsoNormal"><big>change incomplete, committed values are part new, part old, may be inconsistent</big></li><li class="MsoNormal"><big>change incomplete, but part new values not yet committed</big></li><li class="MsoNormal"><big>change complete but new values not yet committed.</big></li></ol><li class="MsoNormal"><big>available, but of suspect validity (unreliable)</big></li><ol start="1" style="margin-top: 0in;" type="a"><li class="MsoNormal"><big>possible failure in conceptual data acquisition</big></li><li class="MsoNormal"><big>possible failure in internal data maintenance</big></li></ol><li class="MsoNormal"><big>available, but invalid</big></li><ol start="1" style="margin-top: 0in;" type="a"><li class="MsoNormal"><big>not too bad</big></li><li class="MsoNormal"><big>too bad</big></li></ol><li class="MsoNormal"><big>secured for this class of conceptual data</big></li><li class="MsoNormal"><big>secured for this individual object</big></li><li class="MsoNormal"><big>secured at this time</big></li><li class="MsoNormal"><big>derived from null conceptual data (any of the above).</big></li>
+</ol>
+
+</body></html>

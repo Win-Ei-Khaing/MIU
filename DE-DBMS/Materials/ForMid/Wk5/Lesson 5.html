@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0063)http://www.cs.miu.edu/courses/de/cs422/LectureNotes/Lesson5.htm -->
+<html template="true"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <title>Lesson 5</title>
+
+</head>
+<body>
+<p class="MsoNormal" style="text-align: center; font-family: Times New Roman;" align="center">
+<b><span style="font-size: 14pt;">CS422:<span style="">&nbsp; </span>Database Management Systems</span><br>
+<span style="font-size: 14pt;"><o:p>&nbsp;</o:p><br>
+<span style="color: rgb(0, 0, 153);">Lesson 5 - Normalization</span></span></b></p>
+
+<p class="MsoNormal" style="line-height: normal; font-family: Times New Roman;"><u>
+<span style="font-size: 12pt;">Purpose</span></u><span style="font-size: 12pt;">: -
+<span style="font-family: Times New Roman,Times;">&nbsp;</span></span>
+How to&nbsp;define relations to minimize the possibility of insertion,
+update, and deletion anomalies without recourse to software
+implementations of business logic.</p>
+
+<b>Note</b>: The normalization procedure for a relational database
+schema is really common sense, but the work that went in to describing
+the detailed structure of the common sense principles provided the
+basis for automation and validation software.<br>
+
+<h3>Terminology</h3>
+
+A<span class="Apple-converted-space">&nbsp;</span><b>constraint</b><span class="Apple-converted-space">&nbsp;</span>on
+a relational database is a Boolean relation on a set of qualified
+attributes. The basis for a constraint is generally a business rule.
+For example, a constraint that an employee may only work in one
+department at a time is not a logical necessity but could be a rule in
+a particular business.<br>
+
+&nbsp;<br>
+
+A database is in a<span class="Apple-converted-space">&nbsp;</span><b>consistent state</b><span class="Apple-converted-space">&nbsp;</span>if the data in the state does not violate any constraints.<br>
+
+For example, in a relation <span style="font-style: italic;">Staff(EmpName, Department, Location)</span>, there
+could be a constraint that each department has a unique location. If
+different tuples put a department in different locations, then the
+database is in an inconsistent state.<br>
+
+&nbsp;<br>
+
+SQL checks or DBMS triggers can be used to enforce consistency, but
+good design of the database provides a more robust solution for
+enforcement of the simpler constraints.<br>
+
+&nbsp;<br>
+
+Business rules can give rise to two types of constraints on the values
+of attributes in a relation. Let S1, S2, and S3 be sets of attributes
+of a relation R. Then:<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span><b>Functional dependency</b>:
+S1&#8594;S2 if, in every instance of R, if two tuples have the same value of
+S1, then they also have the same value for S2. For example,
+S1=(ZipCode) functionally determines S2=(State). A functional
+dependency limits the possible tuples that can occur in R.<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span><b>Lossless join dependency</b>:
+every instance of R is equal to the join of two or more projections of
+R. For example, if S1=(LoanNo), S2=(CustNo), S3=(CustEmail), and if a
+customer can have more than one loan and more than one email address,
+then every instance of R should be equal to the join of its projections
+R1(LoanNo,CustNo) and R2(CustNo,CustEmail). A lossless join dependency
+may require insertion of multiple rows where one would be expected.<br>
+
+&nbsp;<br>
+
+The<span class="Apple-converted-space">&nbsp;</span><b>determinant</b><span class="Apple-converted-space">&nbsp;</span>of a functional dependency S1&#8594;S2 is the set of attributes S1.<br>
+
+&nbsp;<br>
+
+In any relation, every attribute is functionally dependent on every superkey.<br>
+
+&nbsp;<br>
+
+One cannot tell whether a relation R has a functional or lossless join
+dependency by inspecting instances of it. However, if an instance of R
+violates a proposed dependency, then we can conclude that the
+dependency does not hold for R.<br>
+
+&nbsp;<br>
+
+An instance of a relation R is<span class="Apple-converted-space">&nbsp;</span><b>consistent</b><span class="Apple-converted-space">&nbsp;</span>if it satisfies all the constraints on R.<br>
+
+&nbsp;<br>
+
+A relation R is a<span class="Apple-converted-space">&nbsp;</span><b>lossless join</b><span class="Apple-converted-space">&nbsp;</span>of
+two projections R1 and R2 of R if every consistent instance of R is the
+equi-join of its two projections into instances of R1 and R2.<br>
+
+&nbsp;<br>
+
+If R1 and R2 are projections of a relation R, the equi-join of R1 and
+R2 will be lossless if and only if the attributes in common to R1 and
+R2 form a superkey for one of R1 or R2.<br>
+
+&nbsp;<br>
+
+A relation R is a<span class="Apple-converted-space">&nbsp;</span><b>lossy join</b><span class="Apple-converted-space">&nbsp;</span>of
+two projections R1 and R2 of R if some consistent instance of R is a
+proper subset of the equi-join of its projections into instances of R1
+and R2. The term lossy signifies a loss of information in the passage
+from R to the equi-join of R1 and R2.<br>
+
+&nbsp;<br>
+
+A lossless join is<span class="Apple-converted-space">&nbsp;</span><b>trivial</b><span class="Apple-converted-space">&nbsp;</span>if the join matches attributes of candidate keys.<br>
+
+&nbsp;<br>
+
+<h3><b>Normalization</b><span class="Apple-converted-space">&nbsp;</span></h3>
+
+Normalization is
+a feature of a relation which automatically leads to data consistency
+with respect to most functional dependencies and all lossless join
+dependencies. The basic requirements for a normalized relation are that:<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>All attributes describe the primary key as a whole<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Some instance of the relation cannot be expressed as the join of two or more projections of that instance<br>
+
+<br>
+
+<h4>Purpose of Normalizing Data</h4>
+
+The purpose of normalization is to identify a suitable set of relations that support the data requirements of an enterprise. <br>
+
+The characteristics of a suitable set of relations include the following:<br>
+
+• the minimal number of attributes necessary to support the data requirements of the enterprise;<br>
+
+• attributes with a close logical relationship (described as functional dependency) are found in the same relation;<br>
+
+• minimal redundancy with each attribute represented only once
+with the important exception of attributes that form all or part of
+foreign keys,which are essential for the joining<br>
+
+of related relations.<br>
+
+The benefit of using a database that has a suitable set of relations is
+that the database will be easier for the user to access and maintain
+the data, and take up minimal storage space on the<br>
+
+computer.<br>
+
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; page-break-before: always;" clear="all">
+
+<h4>
+The Stages of Normalization</h4>
+
+<b>1NF</b>: at most one fact in one location.<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>Implied by the definition of a relation as a subset of a Cartesian product.<br>
+
+&nbsp;<br>
+
+<b>2NF</b>: no partial dependencies<br>
+
+A FD S&#8594;X conforms to 2NF if either:<br>
+
+a.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>S is not a proper subset of a candidate key, or<br>
+
+b.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>X is an attribute in a candidate key<br>
+
+A FD S&#8594;X violates 2NF if both:<br>
+
+a.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>S is a proper subset of some candidate key, and<br>
+
+b.<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>X is not an attribute in any candidate key<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>For
+example, in a relation R(A,B,C), primary key (A,B), if functional dependency
+FD(B;C) then split R into two relations, R1(A,B) and R2(B,C).<br>
+
+&nbsp;<br>
+
+<b>3NF</b>: no transitive dependencies<br>
+
+A FD S&#8594;X conforms to 3NF if (a) S contains X, or (b) S is a superkey, or (c) X is an attribute of a candidate key.<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span></span>For
+example, 2NF and not 3NF: relation R(A,B,C) with primary key A, and no
+alternate key, if FD(B;C) then split R into R1(A,B) and R2(B,C).<br>
+
+&nbsp;<br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+</span></span><br>
+
+<span style="font-family: Symbol;"><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><br>
+
+<h3>
+Normalization Exercises</h3>
+
+&nbsp;<br>
+
+<span style="font-weight: bold;">
+1. &nbsp;</span>List the possible superkeys and identify the possible candidate keys for the following relation.<br>
+
+<br>
+
+<table class="MsoNormalTable" style="border: medium none ; font-size: 1em; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody>
+<tr>
+<td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">A</td>
+<td style="border-style: solid; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">B</td>
+<td style="border-style: solid; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">C</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">a1</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">b1</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">c1</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">a2</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">b2</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">c3</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">a1</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">b1</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">c2</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">a3</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">b1</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">c2</td>
+</tr>
+</tbody>
+</table>
+
+&nbsp;<br>
+
+<span style="color: rgb(214, 36, 196);">ANS: <br>
+Superkeys = ABC, AC</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Candidate keys = AC</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;; color: rgb(214, 36, 196);"><span class="Apple-converted-space">&nbsp;</span></span><br>
+
+&nbsp;<br>
+
+&nbsp;<br>
+
+<span style="font-weight: bold;">
+2.</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>A relation R of journal holdings has a schema <span style="font-style: italic;">R(Title, Keywords, Holdings)</span><br>
+
+&nbsp;<br>
+
+A few tuples might look like:<br>
+
+&nbsp;
+<table class="MsoNormalTable" style="border: medium none ; font-size: 1em; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody>
+<tr>
+<td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">Title</td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">Keywords</td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">Holdings</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">SIGSAM Algorithms</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">Computing, algorithms</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">Dec 1990 to Feb 1995</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">SIGSAM Algorithms</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">Computing, algorithmics</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">Jan 1998 to present</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">The Network Expert</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">Computer Science, networks</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">Sept 1999 to present</td>
+</tr>
+</tbody>
+</table>
+
+&nbsp;<br>
+
+<span style="font-family: Times New Roman; font-weight: bold;">
+a)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman;">&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">What normal forms are violated?</span><br>
+
+<span style="font-family: Times New Roman;"><span style="color: rgb(214, 36, 196);">ANS: &nbsp;</span>
+<br><span style="color: rgb(214, 36, 196);">
+1NF: Keywords is a repeating field, Holdings contains two separable data items</span><br style="color: rgb(214, 36, 196);"><span style="color: rgb(214, 36, 196);">
+2NF: The only candidate key is (Title, Holdings),
+but there is a functional dependency <span style="font-style: italic;">(Title &#8594; Keywords)</span>. So we have a
+partial dependency of Keywords on the primary key, (Title, Holdings).</span> </span><br style="color: rgb(255, 255, 51);">
+
+<br>
+
+<span style="font-family: Times New Roman; font-weight: bold;">
+b)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">What problems does this cause?<br>
+<span style="color: rgb(214, 36, 196);">ANS: </span></span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">1NF:
+There is no control over keywords, so the same intention may be
+represented by numerous variations. For example, algorithms or
+algorithmics, computing or computer science.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">2NF: If we want to add a keyword for a journal title, we may have to add it on more than one row.</span><br>
+
+<br>
+
+<span style="font-family: Times New Roman; font-weight: bold;">
+c)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Propose a normalized version of the relation.</span><br>
+
+<span style="color: rgb(214, 36, 196);">ANS:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">1NF: Repeat tuples so that each tuples has one keyword. Split the attribute Holdings into two attributes, DateFrom and DateTo.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">2NF: Split R into</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R1(</span><u style="color: rgb(214, 36, 196); font-style: italic;">Title</u><span style="color: rgb(214, 36, 196); font-style: italic;">,</span><span style="color: rgb(214, 36, 196); font-style: italic;" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(214, 36, 196); font-style: italic;">DateFrom</u><span style="color: rgb(214, 36, 196); font-style: italic;">, DateTo)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R2(</span><u style="color: rgb(214, 36, 196); font-style: italic;">Title</u><span style="color: rgb(214, 36, 196); font-style: italic;">,</span><span style="color: rgb(214, 36, 196); font-style: italic;" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(214, 36, 196); font-style: italic;">Keyword</u><span style="color: rgb(214, 36, 196); font-style: italic;">)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Repeating
+the title of a journal in many tuples is potentially a waste of space
+and might be trying to update. There is a question of policy here: if a
+journal changes its title, does one keep the backissues with their
+original title? The answer is generally yes. So we do not need to worry
+about updates, though we should note that the current design fails to
+retrieve all holdings of a journal which has changed its name.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">We could avoid the repeated title and save space by using:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R1(</span><u style="color: rgb(214, 36, 196); font-style: italic;">TitleID</u><span style="color: rgb(214, 36, 196); font-style: italic;">,</span><span style="color: rgb(214, 36, 196); font-style: italic;" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(214, 36, 196); font-style: italic;">DateFrom</u><span style="color: rgb(214, 36, 196); font-style: italic;">, DateTo)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R2(</span><u style="color: rgb(214, 36, 196); font-style: italic;">TitleID</u><span style="color: rgb(214, 36, 196); font-style: italic;">,</span><span style="color: rgb(214, 36, 196); font-style: italic;" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(214, 36, 196); font-style: italic;">Keyword</u><span style="color: rgb(214, 36, 196); font-style: italic;">)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R3(</span><u style="color: rgb(214, 36, 196); font-style: italic;">TitleID</u><span style="color: rgb(214, 36, 196); font-style: italic;">, Title)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">It
+is possible, however, that the cost in time spent in doing the join for
+almost every query might outweigh the savings in space.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">We could also eliminate the confusion of keywords by introducing a Keyword relation:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R1(</span><u style="color: rgb(214, 36, 196); font-style: italic;">TitleID</u><span style="color: rgb(214, 36, 196); font-style: italic;">,</span><span style="color: rgb(214, 36, 196); font-style: italic;" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(214, 36, 196); font-style: italic;">DateFrom</u><span style="color: rgb(214, 36, 196); font-style: italic;">, DateTo)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R2(</span><u style="color: rgb(214, 36, 196); font-style: italic;">TitleID</u><span style="color: rgb(214, 36, 196); font-style: italic;">,</span><span style="color: rgb(214, 36, 196); font-style: italic;" class="Apple-converted-space">&nbsp;</span><u style="color: rgb(214, 36, 196); font-style: italic;">KeywordID</u><span style="color: rgb(214, 36, 196); font-style: italic;">)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R3(</span><u style="color: rgb(214, 36, 196); font-style: italic;">TitleID</u><span style="color: rgb(214, 36, 196); font-style: italic;">, Title)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">R4(</span><u style="color: rgb(214, 36, 196); font-style: italic;">KeywordID</u><span style="color: rgb(214, 36, 196); font-style: italic;">, Keyword)</span><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+
+<br style="color: rgb(0, 0, 0); font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; page-break-before: always;" clear="all">
+
+<span style="font-weight: bold;">
+3.</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Given the relational schema:<br>
+
+<span style="font-style: italic;">
+Manager(BranchID, BranchEID, Name, Phone, Secretary,</span><br style="font-style: italic;">
+
+<span style="font-style: italic;">
+SecretaryPhone, SalaryHistory, Branch, BranchDirector)</span><br>
+
+<br>
+
+and the sample relation<br>
+
+<table class="MsoNormalTable" style="border: medium none ; font-size: 1em; font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 0.5in; border-collapse: collapse;" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">BID</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">BEID</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">Name</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">Phone</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">Sec</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">SecPh</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">SalHist</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">Branch</td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224); font-family: Times New Roman;" valign="top">BrDir</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">4</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">7</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Jim</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">413</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Ann</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">241</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">1999, $20000<br>
+2000, $30000</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Bangor</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Eric</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">5</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">7</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">John</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">502</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Alice</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">679</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">2000, $35000</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Biloxi</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Earl</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">4</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">2</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Jesse</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">658</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Ann</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">241</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">2000, $40000</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Bangor</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Eric</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">4</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">2</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Jesse</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">659</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Ann</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">241</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">2000, $40000</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Bangor</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; font-family: Times New Roman;" valign="top">Eric</td></tr></tbody>
+</table>
+
+&nbsp;<br>
+
+<span style="font-weight: bold;">
+a)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Make a minimal change to put the relation into 1NF.<br>
+
+<span style="color: rgb(214, 36, 196);">ANS: </span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">Manager(BID, BEID, Name, Phone, Sec, SecPh, Branch, BrDr)</span><br style="color: rgb(214, 36, 196); font-style: italic;">
+
+<span style="color: rgb(214, 36, 196); font-style: italic;">SalaryHistory(BID, BEID, Year, Salary)</span><br style="color: rgb(214, 36, 196);">
+
+<br>
+
+<span style="font-weight: bold;">
+b)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Make a minimal change to put your answer to (a) into 2NF.<br>
+
+<span style="color: rgb(214, 36, 196);">ANS: </span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">The only candidate key is <span style="font-style: italic;">(BID, BEID, Phone)</span>. There are partial dependencies on <span style="font-style: italic;">BID</span> and on <span style="font-style: italic;">(BID, BEID)</span>:<br>
+</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Branch(BID, Name, Director)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Manager(BID, BEID, Name, Sec, SecPh)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Phone(BID, BEID, Phone)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">SalaryHistory(BID, BEID, Year, Salary)</span><br>
+
+<br>
+
+<span style="font-weight: bold;">
+c)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Make a minimal change to put your answer to (b) into 3NF.<br>
+
+<span style="color: rgb(214, 36, 196);">
+ANS:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">There is one transitive dependency, <span style="font-style: italic;">(Sec&#8594;SecPh)<br>
+</span></span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Branch(BID, Name, Director)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Manager(BID, BEID, Name, SecID)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Secretary(SecID, Name, SecPh)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Phone(BID, BEID, PhNo)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">SalaryHistory(BID, BEID, Year, Salary)</span><br>
+
+<br>
+
+<br>
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+4.</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman;"><span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">In a relation R(A,B,C,D), A is the primary key, BC is an alternate key, and there is a functional dependency D&#8594;C.</span><br style="font-weight: bold; font-family: Times New Roman;">
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+&nbsp;</span><br style="font-weight: bold; font-family: Times New Roman;">
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+a)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Show that this is possible by constructing an instance of R with these properties.</span><span style="font-weight: bold; font-family: Times New Roman;"><br></span><span style="font-family: Times New Roman;"><span style="color: rgb(214, 36, 196);">
+ANS:</span></span><span style="font-weight: bold; font-family: Times New Roman;"><br style="color: rgb(214, 36, 196);">
+</span><span style="color: rgb(214, 36, 196);">&nbsp;
+</span>
+<table class="MsoNormalTable" style="border: medium none ; font-size: 1em; border-collapse: collapse; color: rgb(214, 36, 196);" border="1" cellpadding="0" cellspacing="0">
+
+<tbody>
+<tr>
+<td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top"><b>A</b></td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">B</td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">C</td>
+<td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top">D</td>
+</tr>
+<tr>
+<td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">1</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">a</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">7</td>
+<td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">x</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">2</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">a</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">8</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">y</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">3</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">b</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">7</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">x</td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">4</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">c</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">7</td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top">z</td>
+</tr></tbody>
+</table>
+
+<b>&nbsp;</b><br style="font-weight: bold; font-family: Times New Roman;">
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+b)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Are there any other alternate keys?</span><br style="font-weight: bold; font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">As the example shows, neither B, nor C, nor D is an alternate key.</span><span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);"><br>
+AB, AC, and AD are not minimal, so they are not alternate keys. Since
+BC is an alternate key and (D&#8594;C), we see that BD is also an
+alternate key. <br>
+From the example, we find that CD is not an alternate key.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Each
+set of three attributes, BCD, ACD, ABD, and ABC, properly contain an
+alternate key and so are not themselves alternate keys. Similarly for
+ABCD.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">So, BD is the only other alternate key.</span><br>
+
+<span style="font-weight: bold; font-family: Times New Roman;"><br></span><span style="font-weight: bold; font-family: Times New Roman;">c)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman;"><span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Is there an insertion anomaly?</span><br style="font-weight: bold; font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS:</span><span style="font-weight: bold; font-family: Times New Roman; color: rgb(214, 36, 196);"><br style="font-family: Times New Roman;"></span><span style="font-family: Times New Roman; color: rgb(214, 36, 196);">
+Yes. If we insert a row (5, c, 9, x), then A and BC are still candidate keys, but (D&#8594;C) no longer holds.</span>
+<br style="font-family: Times New Roman;">
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+<br>
+d)</span>
+<span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman;">&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Is there an update anomaly?</span><br style="font-weight: bold; font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS:<br>
+Yes. If we update row (1, a, 7, x) to (1, a, 9, x), again DC will be violated.</span><br>
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+<br>
+e)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Is there a deletion anomaly?</span>
+<br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS: </span>
+<span style="font-weight: bold; font-family: Times New Roman; color: rgb(214, 36, 196);"><br></span><span style="font-family: Times New Roman; color: rgb(214, 36, 196);">
+Yes. If we delete row (3, a, 8, y), then the association (8, y) of C and D will be lost.</span><br>
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+<br>
+f)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Propose a normalization of R.</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS:<br>
+</span><span style="color: rgb(214, 36, 196);">We must split R(A, B, C, D) into R1=(A,B,D) and R2=(C,D):</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">After normalization: R1</span>
+<table class="MsoNormalTable" style="border: medium none ; font-size: 1em; font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; margin-left: 1.6in; border-collapse: collapse; color: rgb(214, 36, 196);" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top"><small><b>A</b></small></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top"><small>B</small></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top"><small>D</small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>1</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>a</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>x</small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>2</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>a</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>y</small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>3</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>b</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>x</small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>4</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>c</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>z</small></td></tr></tbody>
+</table>
+
+<span style="color: rgb(214, 36, 196);">R2</span><br style="color: rgb(214, 36, 196);">
+
+<table class="MsoNormalTable" style="border: medium none ; font-size: 1em; font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; border-collapse: collapse; margin-left: 7.1pt; margin-right: 7.1pt; color: rgb(214, 36, 196);" align="left" border="1" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="border: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top"><small>C</small></td><td style="border-style: solid solid solid none; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt; background-color: rgb(224, 224, 224);" valign="top"><small><b>D</b></small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>8</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>y</small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>7</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>x</small></td></tr><tr><td style="border-style: none solid solid; border-left: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>7</small></td><td style="border-style: none solid solid none; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; padding: 0in 5.4pt;" valign="top"><small>z</small></td></tr></tbody>
+</table>
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br>
+
+<br>
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+<br>
+g)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Is there an insertion anomaly?</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS:<br>
+Yes.The delicate point is the functional dependency FD(BC, D). Perhaps we
+can have two tuples with the same BC values but different D values?
+Looking at the first row of R, (1, a, 7, x), we aim at a tuple (5, a,
+7, q). This tuple comes from inserting (5, a, q) into R1 and (7, q)
+into R2.</span><br>
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+<br>
+h)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Is there an update anomaly?</span><br style="font-family: Times New Roman;">
+
+<span style="font-family: Times New Roman; color: rgb(214, 36, 196);">ANS:<br>
+Yes. It is
+possible to update (8, y) in R2 to (7, y). Then when we create R from
+the join of R1 and R2, BC will no longer be a candidate key.</span><br>
+
+<span style="font-weight: bold; font-family: Times New Roman;">
+<br>
+i)</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-weight: bold; font-family: Times New Roman;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-style: normal; font-variant: normal; font-size: 7pt; line-height: normal; font-family: Times New Roman;">&nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="font-family: Times New Roman;">Is there a deletion anomaly?<br><span style="color: rgb(214, 36, 196);">
+ANS:</span></span><span style="font-weight: bold; font-family: Times New Roman; color: rgb(214, 36, 196);"><br></span><span style="font-family: Times New Roman; color: rgb(214, 36, 196);">
+No.
+Deleting a row from R1 or R2 will not lead to unexpected data loss.
+There is the issue of whether to cascade the deletions from R2 to R1,
+but this does not count as an anomaly.</span><span style="font-weight: bold; font-family: Times New Roman;"><br style="color: rgb(214, 36, 196);">
+<br>
+<br>
+</span><span style="font-weight: bold;">
+5.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>A relation R(A,B,C,D) has functional dependencies (AB&#8594;C), (B&#8594;D)<br>
+
+What normal forms are violated? Propose a normalization of R.<br>
+
+<span style="color: rgb(214, 36, 196);">ANS:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">2NF is violated.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">AB is the only candidate key. Then there is partial dependency on&nbsp;this candidate key in B&#8594;D.</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">&nbsp;</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Split R into R1(A,B,C) and R2(B,D).</span><br>
+
+&nbsp;&nbsp;<span style="font-weight: bold;"></span><br>
+
+&nbsp;<br>
+
+<span style="font-weight: bold;">6.</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Suppose we have a relational schema R(A,B,C,D,E) for which the following functional dependencies hold:<br>
+
+A<span style="font-family: Times New Roman;">&#8594;</span>C<span style="font-family: Times New Roman;"></span>,E <br>
+
+B<span style="font-family: Times New Roman;">&#8594;</span>D, <br>
+
+BC<span style="font-family: Times New Roman;">&#8594;</span>E, <br>
+
+DE<span style="font-family: Times New Roman;">&#8594;</span>B<br>
+
+&nbsp;<br>
+
+<span style="font-weight: bold;">
+a)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Find all the candidate keys for R.<br>
+
+<span style="color: rgb(214, 36, 196);">ANS:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">Since A is not determined by any of the given FD's, any candidate key must contain A. Taking each pair as a determinant:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">A </span><span style="color: rgb(214, 36, 196);">&#8594; </span><span style="color: rgb(214, 36, 196);">ACE</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">AB </span><span style="font-weight: bold;"><span style="color: rgb(214, 36, 196);">&#8594; </span></span><span style="color: rgb(214, 36, 196);">ABCE</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);"> ABCDE</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">AC </span><span style="color: rgb(214, 36, 196);">&#8594; </span><span style="color: rgb(214, 36, 196);">ACE</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">AD&nbsp;</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);"> ACDE </span><span style="color: rgb(214, 36, 196);">&#8594; </span><span style="color: rgb(214, 36, 196);">ABCDE</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">AE&nbsp;</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);"> ACE</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">So AB and AD are the only candidate keys.</span><br>
+
+&nbsp;<br>
+
+<span style="color: rgb(214, 36, 196);">There
+are no others. A candidate key cannot properly contain AB or AD. The
+only attribute set that fits these conditions is ACE, which does not
+determine B or E.</span><br>
+
+<br>
+
+<span style="font-weight: bold;">
+b)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Show that R is not in 2NF.<br>
+
+<span style="color: rgb(214, 36, 196);">
+ANS: </span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">
+If we choose either AB or AD as primary key, then (A </span><span style="color: rgb(214, 36, 196);"></span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);"> </span><span style="color: rgb(214, 36, 196);">C,E) violates 2NF.</span><br>
+
+<br>
+
+<span style="font-weight: bold;">
+c)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Propose a lossless join decomposition of R that puts it into 3NF.<br>
+
+<span style="color: rgb(214, 36, 196);">ANS:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">One possibility is to first factor out B&#8594;D, second factor out A&#8594;C,E:</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">R(</span><u style="color: rgb(214, 36, 196);">AB</u><span style="color: rgb(214, 36, 196);">CDE) = R1(</span><u style="color: rgb(214, 36, 196);">B</u><span style="color: rgb(214, 36, 196);">D) join</span><sub style="color: rgb(214, 36, 196);">B</sub><span style="color: rgb(214, 36, 196);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(214, 36, 196);">R2(</span><u style="color: rgb(214, 36, 196);">AB</u><span style="color: rgb(214, 36, 196);">CE)</span><br style="color: rgb(214, 36, 196);">
+
+<span style="color: rgb(214, 36, 196);">= R1(</span><u style="color: rgb(214, 36, 196);">B</u><span style="color: rgb(214, 36, 196);">D) join</span><sub style="color: rgb(214, 36, 196);">B</sub><span style="color: rgb(214, 36, 196);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(214, 36, 196);">( R3(</span><u style="color: rgb(214, 36, 196);">AB</u><span style="color: rgb(214, 36, 196);">) join</span><sub style="color: rgb(214, 36, 196);">A</sub><span style="color: rgb(214, 36, 196);" class="Apple-converted-space">&nbsp;</span><span style="color: rgb(214, 36, 196);">R4(</span><u style="color: rgb(214, 36, 196);">A</u><span style="color: rgb(214, 36, 196);">CE) )</span><br>
+
+<br>
+
+<span style="font-weight: bold;">
+d)</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;"><span style="font-weight: bold;">&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;<span class="Apple-converted-space">&nbsp;</span></span>Does your splitting preserve dependencies? (Do not worry if it does not!)<br>
+
+<span style="color: rgb(214, 36, 196);">ANS: </span><br style="color: rgb(214, 36, 196);">
+
+<span style="font-family: &#39;Trebuchet MS&#39;,Verdana,Geneva,Arial,Helvetica,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline ! important; float: none; color: rgb(214, 36, 196);"></span><span style="color: rgb(214, 36, 196);">No. (A</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);">C,E) and (B</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);">D) are preserved, but (BC</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);">E) and (DE</span><span style="color: rgb(214, 36, 196);">&#8594;</span><span style="color: rgb(214, 36, 196);">B) are broken.</span>
+</body></html>
